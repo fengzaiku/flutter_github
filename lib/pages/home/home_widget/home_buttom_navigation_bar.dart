@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_github/common/iconfont.dart';
 class HomeButtomNavigationBarWidgte extends StatefulWidget {
   HomeButtomNavigationBarWidgte({Key key}) : super(key: key);
 
@@ -21,15 +21,16 @@ class _HomeButtomNavigationBarWidgteState extends State<HomeButtomNavigationBarW
         items: <BottomNavigationBarItem> [
           BottomNavigationBarItem(
             title: Text("动态"),
-            icon: Icon(Icons.local_activity)
+            icon: Icon(FgIcons.dynamic)
           ),
           BottomNavigationBarItem(
             title: Text("趋势"),
-            icon: Icon(Icons.lock)
+            icon: Icon(FgIcons.uptrend)
+            // icon: Icon(FgIcons.electrocardiogram)
           ),
           BottomNavigationBarItem(
             title: Text("我的"),
-            icon: Icon(Icons.person)
+            icon: Icon(FgIcons.person)
           )
         ],
         currentIndex: this.currentIndex,
