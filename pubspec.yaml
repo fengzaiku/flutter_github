@@ -1,4 +1,4 @@
-name: app
+name: flutter_github
 description: A new Flutter project.
 
 # The following defines the version and build number for your application.
@@ -24,6 +24,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   flutter_redux: ^0.5.3
+  flare_flutter: ^1.6.4
   
 dev_dependencies:
   flutter_test:
@@ -43,7 +44,13 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - statics/images/welcome.png
+    - statics/images/
+    # - statics/images/logo.png
+    # - statics/images/default_img.png
+
+    - statics/flr/
+    # - statics/animations/loading_world_now.flr
+    # - statics/animations/Space-Demo.flr
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
