@@ -5,7 +5,7 @@ class FgIcons{
   static const IconData person = const IconData(
     0xe63a,
     fontFamily: 'FgIcons', 
-      // matchTextDirection: true
+    matchTextDirection: true
   );
   // 动态
   static const IconData dynamic = const IconData(
