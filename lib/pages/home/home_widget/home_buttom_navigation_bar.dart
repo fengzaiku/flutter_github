@@ -26,7 +26,6 @@ class _HomeButtomNavigationBarWidgteState extends State<HomeButtomNavigationBarW
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      
       items: <BottomNavigationBarItem> [
         BottomNavigationBarItem(
           title: Text("动态"),
