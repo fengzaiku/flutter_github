@@ -13,7 +13,7 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget>
     with SingleTickerProviderStateMixin {
   final List _tabs = <String>["dahai", "xiaohai"];
 
-  List<Widget> sliderver(BuildContext context, bool innerBoxIsScrolled) {
+  List<Widget> _sliderver(BuildContext context, bool innerBoxIsScrolled) {
     return <Widget>[
       SliverPersistentHeader(
         delegate: SliverPersistentHeaderDelegateWidget(
@@ -52,7 +52,7 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget>
           physics: const AlwaysScrollableScrollPhysics(),
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             // These are the slivers that show up in the "outer" scroll view.
-            return sliderver(context, innerBoxIsScrolled);
+            return _sliderver(context, innerBoxIsScrolled);
           },
           // body: ListView.builder(
           //   physics: const AlwaysScrollableScrollPhysics(),
