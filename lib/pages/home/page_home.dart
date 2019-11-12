@@ -16,7 +16,7 @@ class HomePageWidget extends StatefulWidget {
 class _HomePageWidgetState extends State<HomePageWidget> {
   // final TabController tabController;
   final PageController _controller = PageController();
-  // int _currentIndex = 0;
+  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         controller: _controller,
         onPageChanged: (int index) {
           setState(() {
-            // _currentIndex = index;
+            _currentIndex = index;
           });
         },
         // scrollDirection: Axis.vertical,
@@ -39,7 +39,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           MyCenterPageWidget()
         ],
       ),
-      bottomNavigationBar: HomeButtomNavigationBarWidgte(
+      bottomNavigationBar: HomeButtonNavigationBarWidget(
+        currentIndex: _currentIndex,
         onChanged: (int index) {
           print(index);
           setState(() {
