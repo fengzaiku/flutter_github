@@ -45,49 +45,53 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        DefaultTabController(
-          length: _tabs.length, // This is the number of tabs.
-          child: NestedScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
-              // These are the slivers that show up in the "outer" scroll view.
-              return sliderver(context, innerBoxIsScrolled);
-            },
-            body: TabBarView(
-              // These are the contents of the tab views, below the tabs.
-              children: _tabs.map((name) {
-                return CustomScrollView(
-                  key: PageStorageKey<String>(name),
-                  slivers: <Widget>[
-                    // SliverOverlapInjector(
-                    //   // This is the flip side of the SliverOverlapAbsorber above.
-                    //   handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
-                    //       context),
-                    // ),
-                    SliverPadding(
-                      padding: const EdgeInsets.all(8.0),
-                      sliver: SliverFixedExtentList(
-                        itemExtent: 48.0,
-                        delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                            return ListTile(
-                              title: Text('Item $index'),
-                            );
-                          },
-                          childCount: 30,
-                        ),
+    return Scaffold(
+      body: DefaultTabController(
+        length: _tabs.length, // This is the number of tabs.
+        child: NestedScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            // These are the slivers that show up in the "outer" scroll view.
+            return sliderver(context, innerBoxIsScrolled);
+          },
+          // body: ListView.builder(
+          //   physics: const AlwaysScrollableScrollPhysics(),
+          //   itemBuilder: (context, index) {
+          //     return Text("$index");
+          //   },
+          //   itemCount: 50,
+          // ),
+          body: TabBarView(
+            // These are the contents of the tab views, below the tabs.
+            children: _tabs.map((name) {
+              return CustomScrollView(
+                key: PageStorageKey<String>(name),
+                slivers: <Widget>[
+                  // SliverOverlapInjector(
+                  //   // This is the flip side of the SliverOverlapAbsorber above.
+                  //   handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                  //       context),
+                  // ),
+                  SliverPadding(
+                    padding: const EdgeInsets.all(8.0),
+                    sliver: SliverFixedExtentList(
+                      itemExtent: 48.0,
+                      delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                          return ListTile(
+                            title: Text('Item $index'),
+                          );
+                        },
+                        childCount: 30,
                       ),
                     ),
-                  ],
-                );
-              }).toList(),
-            ),
+                  ),
+                ],
+              );
+            }).toList(),
           ),
-        )
-      ],
+        ),
+      ),
     );
   }
 }
