@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter/rendering.dart';
+import 'package:flutter/rendering.dart';
 // import 'package:flutter_github/widget/sliver_persistent_header_delegate.dart';
 
 class TendencyPageWidget extends StatefulWidget {
@@ -87,33 +87,29 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget> {
             return SafeArea(
               top: false,
               bottom: false,
-              child: Builder(
-                builder: (BuildContext context) {
-                  return CustomScrollView(
-                    key: PageStorageKey<String>(name),
-                    slivers: <Widget>[
-                      SliverOverlapInjector(
-                        // This is the flip side of the SliverOverlapAbsorber above.
-                        handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
-                            context),
+              child: CustomScrollView(
+                key: PageStorageKey<String>(name),
+                slivers: <Widget>[
+                  SliverOverlapInjector(
+                    // This is the flip side of the SliverOverlapAbsorber above.
+                    handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                        context),
+                  ),
+                  SliverPadding(
+                    padding: const EdgeInsets.all(8.0),
+                    sliver: SliverFixedExtentList(
+                      itemExtent: 48.0,
+                      delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                          return ListTile(
+                            title: Text('Item $index'),
+                          );
+                        },
+                        childCount: 30,
                       ),
-                      SliverPadding(
-                        padding: const EdgeInsets.all(8.0),
-                        sliver: SliverFixedExtentList(
-                          itemExtent: 48.0,
-                          delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                              return ListTile(
-                                title: Text('Item $index'),
-                              );
-                            },
-                            childCount: 30,
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
+                    ),
+                  ),
+                ],
               ),
             );
           }).toList(),
