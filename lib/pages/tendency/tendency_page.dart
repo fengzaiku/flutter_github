@@ -16,6 +16,7 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget>
   List<Widget> _sliderver(BuildContext context, bool innerBoxIsScrolled) {
     return <Widget>[
       SliverPersistentHeader(
+        pinned: true,
         delegate: SliverPersistentHeaderDelegateWidget(
             minHeight: 65,
             maxHeight: 65,
@@ -27,16 +28,27 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget>
             ),
             builder: (BuildContext context, double shrinkOffset,
                 bool overlapsContent) {
-              return TabBar(
-                // These are the widgets to put in each tab in the tab bar.
-                // tabs: _tabs.map((String name) => Tab(text: name)).toList(),
-                tabs: _tabs.map((name) {
-                  return Tab(
-                      child: Text(
-                    name,
-                    style: TextStyle(color: Colors.black),
-                  ));
-                }).toList(),
+              final double lr = 10 - shrinkOffset / 65 * 10;
+              print("shrinkOffset------------------------------$lr");
+              return Padding(
+                padding:
+                    EdgeInsets.only(bottom: 15, top: lr, left: lr, right: lr),
+                child: Container(
+                  // These are the widgets to put in each tab in the tab bar.
+                  // tabs: _tabs.map((String name) => Tab(text: name)).toList(),
+                 child: Text("标题"),
+                ),
+                // child: TabBar(
+                //   // These are the widgets to put in each tab in the tab bar.
+                //   // tabs: _tabs.map((String name) => Tab(text: name)).toList(),
+                //   tabs: _tabs.map((name) {
+                //     return Tab(
+                //         child: Text(
+                //       name,
+                //       style: TextStyle(color: Colors.black),
+                //     ));
+                //   }).toList(),
+                // ),
               );
             }),
       ),
