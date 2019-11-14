@@ -9,9 +9,11 @@ class TendencyPageWidget extends StatefulWidget {
   _TendencyPageWidgetState createState() => _TendencyPageWidgetState();
 }
 
+enum WhyFarther { harder, smarter, selfStarter, tradingCharter }
+
 class _TendencyPageWidgetState extends State<TendencyPageWidget>
     with SingleTickerProviderStateMixin {
-  final List _tabs = <String>["dahai", "xiaohai"];
+  // final List _tabs = <String>["dahai"];
 
   List<Widget> _sliderver(BuildContext context, bool innerBoxIsScrolled) {
     return <Widget>[
@@ -30,25 +32,43 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget>
                 bool overlapsContent) {
               final double lr = 10 - shrinkOffset / 65 * 10;
               print("shrinkOffset------------------------------$lr");
-              return Padding(
-                padding:
-                    EdgeInsets.only(bottom: 15, top: lr, left: lr, right: lr),
-                child: Container(
-                  // These are the widgets to put in each tab in the tab bar.
-                  // tabs: _tabs.map((String name) => Tab(text: name)).toList(),
-                 child: Text("标题"),
+              // return SizedBox.expand(
+              //   child: Padding(
+              //      padding:
+              //         EdgeInsets.only(top: lr, bottom: 15, left: lr, right: lr),
+              //     child: Text("dahaihasdoasduiioadssu"),
+              //   ),
+              // );
+              return SizedBox.expand(
+                child: Padding(
+                  padding:
+                      EdgeInsets.only(bottom: 15, top: lr, left: lr, right: lr),
+                  child: PopupMenuButton<WhyFarther>(
+                    onSelected: (WhyFarther result) {
+                      print("$result");
+                    },
+                    child: Text("惦记我"),
+                    itemBuilder: (BuildContext context) =>
+                        <PopupMenuEntry<WhyFarther>>[
+                      const PopupMenuItem<WhyFarther>(
+                        value: WhyFarther.harder,
+                        child: Text('Working a lot harder'),
+                      ),
+                      const PopupMenuItem<WhyFarther>(
+                        value: WhyFarther.smarter,
+                        child: Text('Being a lot smarter'),
+                      ),
+                      const PopupMenuItem<WhyFarther>(
+                        value: WhyFarther.selfStarter,
+                        child: Text('Being a self-starter'),
+                      ),
+                      const PopupMenuItem<WhyFarther>(
+                        value: WhyFarther.tradingCharter,
+                        child: Text('Placed in charge of trading charter'),
+                      ),
+                    ],
+                  ), // These are the widgets to put in each tab in the tab bar.
                 ),
-                // child: TabBar(
-                //   // These are the widgets to put in each tab in the tab bar.
-                //   // tabs: _tabs.map((String name) => Tab(text: name)).toList(),
-                //   tabs: _tabs.map((name) {
-                //     return Tab(
-                //         child: Text(
-                //       name,
-                //       style: TextStyle(color: Colors.black),
-                //     ));
-                //   }).toList(),
-                // ),
               );
             }),
       ),
@@ -58,9 +78,7 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: DefaultTabController(
-        length: _tabs.length, // This is the number of tabs.
-        child: NestedScrollView(
+      body: NestedScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             // These are the slivers that show up in the "outer" scroll view.
@@ -73,37 +91,31 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget>
           //   },
           //   itemCount: 50,
           // ),
-          body: TabBarView(
-            // These are the contents of the tab views, below the tabs.
-            children: _tabs.map((name) {
-              return CustomScrollView(
-                key: PageStorageKey<String>(name),
-                slivers: <Widget>[
-                  // SliverOverlapInjector(
-                  //   // This is the flip side of the SliverOverlapAbsorber above.
-                  //   handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
-                  //       context),
-                  // ),
-                  SliverPadding(
-                    padding: const EdgeInsets.all(8.0),
-                    sliver: SliverFixedExtentList(
-                      itemExtent: 48.0,
-                      delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
-                          return ListTile(
-                            title: Text('Item $index'),
-                          );
-                        },
-                        childCount: 30,
+          body: CustomScrollView(
+                  key: PageStorageKey<String>("dahai"),
+                  slivers: <Widget>[
+                    // SliverOverlapInjector(
+                    //   // This is the flip side of the SliverOverlapAbsorber above.
+                    //   handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                    //       context),
+                    // ),
+                    SliverPadding(
+                      padding: const EdgeInsets.all(8.0),
+                      sliver: SliverFixedExtentList(
+                        itemExtent: 48.0,
+                        delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                            return ListTile(
+                              title: Text('Item $index'),
+                            );
+                          },
+                          childCount: 30,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              );
-            }).toList(),
-          ),
+                  ],
+                ),
         ),
-      ),
     );
   }
 }
