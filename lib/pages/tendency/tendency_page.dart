@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_github/widget/refresh.dart';
+import 'package:flutter_github/widget/tendency_item.dart';
 import 'package:flutter_github/widget/sliver_persistent_header_delegate.dart';
 
 class TendencyPageWidget extends StatefulWidget {
@@ -31,6 +33,7 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget>
             builder: (BuildContext context, double shrinkOffset,
                 bool overlapsContent) {
               final double lr = 10 - shrinkOffset / 65 * 10;
+              final double rd = 10 - shrinkOffset / 8 * 10;
               print("shrinkOffset------------------------------$lr");
               // return SizedBox.expand(
               //   child: Padding(
@@ -43,31 +46,89 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget>
                 child: Padding(
                   padding:
                       EdgeInsets.only(bottom: 15, top: lr, left: lr, right: lr),
-                  child: PopupMenuButton<WhyFarther>(
-                    onSelected: (WhyFarther result) {
-                      print("$result");
-                    },
-                    child: Text("惦记我"),
-                    itemBuilder: (BuildContext context) =>
-                        <PopupMenuEntry<WhyFarther>>[
-                      const PopupMenuItem<WhyFarther>(
-                        value: WhyFarther.harder,
-                        child: Text('Working a lot harder'),
-                      ),
-                      const PopupMenuItem<WhyFarther>(
-                        value: WhyFarther.smarter,
-                        child: Text('Being a lot smarter'),
-                      ),
-                      const PopupMenuItem<WhyFarther>(
-                        value: WhyFarther.selfStarter,
-                        child: Text('Being a self-starter'),
-                      ),
-                      const PopupMenuItem<WhyFarther>(
-                        value: WhyFarther.tradingCharter,
-                        child: Text('Placed in charge of trading charter'),
-                      ),
-                    ],
-                  ), // These are the widgets to put in each tab in the tab bar.
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(rd),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Expanded(
+                          child: PopupMenuButton<WhyFarther>(
+                            onSelected: (WhyFarther result) {
+                              print("$result");
+                            },
+                            child: Center(
+                              child: Text(
+                                "惦记我",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            itemBuilder: (BuildContext context) =>
+                                <PopupMenuEntry<WhyFarther>>[
+                              const PopupMenuItem<WhyFarther>(
+                                value: WhyFarther.harder,
+                                child: Text('今日'),
+                              ),
+                              const PopupMenuItem<WhyFarther>(
+                                value: WhyFarther.smarter,
+                                child: Text('本周'),
+                              ),
+                              const PopupMenuItem<WhyFarther>(
+                                value: WhyFarther.selfStarter,
+                                child: Text('本月'),
+                              ),
+                            ],
+                          ),
+                        ),
+                        VerticalDivider(
+                          color: Colors.white,
+                          width: 1,
+                          thickness:1,
+                          indent: 15,
+                          endIndent: 15,
+                        ),
+                        Expanded(
+                          child: PopupMenuButton<WhyFarther>(
+                            onSelected: (WhyFarther result) {
+                              print("$result");
+                            },
+                            child: Center(
+                              child: Text(
+                                "惦记我1111",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            itemBuilder: (BuildContext context) =>
+                                <PopupMenuEntry<WhyFarther>>[
+                              const PopupMenuItem<WhyFarther>(
+                                value: WhyFarther.harder,
+                                child: Text('Working a lot harder'),
+                              ),
+                              const PopupMenuItem<WhyFarther>(
+                                value: WhyFarther.smarter,
+                                child: Text('Being a lot smarter'),
+                              ),
+                              const PopupMenuItem<WhyFarther>(
+                                value: WhyFarther.selfStarter,
+                                child: Text('Being a self-starter'),
+                              ),
+                              const PopupMenuItem<WhyFarther>(
+                                value: WhyFarther.tradingCharter,
+                                child:
+                                    Text('Placed in charge of trading charter'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               );
             }),
@@ -78,44 +139,22 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: NestedScrollView(
+      body: NestedScrollViewRefreshIndicator(
+        child: NestedScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          // These are the slivers that show up in the "outer" scroll view.
+          return _sliderver(context, innerBoxIsScrolled);
+        },
+        body: ListView.builder(
           physics: const AlwaysScrollableScrollPhysics(),
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            // These are the slivers that show up in the "outer" scroll view.
-            return _sliderver(context, innerBoxIsScrolled);
+          itemBuilder: (context, index) {
+            return TendencyItemWidget();
           },
-          // body: ListView.builder(
-          //   physics: const AlwaysScrollableScrollPhysics(),
-          //   itemBuilder: (context, index) {
-          //     return Text("$index");
-          //   },
-          //   itemCount: 50,
-          // ),
-          body: CustomScrollView(
-                  key: PageStorageKey<String>("dahai"),
-                  slivers: <Widget>[
-                    // SliverOverlapInjector(
-                    //   // This is the flip side of the SliverOverlapAbsorber above.
-                    //   handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
-                    //       context),
-                    // ),
-                    SliverPadding(
-                      padding: const EdgeInsets.all(8.0),
-                      sliver: SliverFixedExtentList(
-                        itemExtent: 48.0,
-                        delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                            return ListTile(
-                              title: Text('Item $index'),
-                            );
-                          },
-                          childCount: 30,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+          itemCount: 10,
         ),
+      ),
+      ),
     );
   }
 }
