@@ -29,13 +29,17 @@ class _NestedScrollViewRefreshIndicatorState
     extends State<NestedScrollViewRefreshIndicator>
     with TickerProviderStateMixin {
   AnimationController _positionController;
+  AnimationController _scaleController;
   Animation<double> _positionFactor;
+  Animation<double> _scaleFactor;
   Animation<double> _value;
   Animation<Color> _valueColor;
 
+  bool _isIndicatorAtTop = false;
   double _dragOffset;
   _RefreshIndicatorMode _mode;
   Future<void> _pendingController;
+
   static final Animatable<double> _sizePositionTween =
       Tween<double>(begin: 0, end: 0.75);
 
@@ -45,6 +49,9 @@ class _NestedScrollViewRefreshIndicatorState
     _positionController = AnimationController(vsync: this);
     _positionFactor = _positionController.drive(Tween(begin: 0, end: 1.5));
     _value = _positionController.drive(_sizePositionTween);
+
+    _scaleController = AnimationController(vsync: this);
+    _scaleFactor = _scaleController.drive(Tween(begin: 1.0, end: 0));
   }
 
   @override
@@ -61,22 +68,48 @@ class _NestedScrollViewRefreshIndicatorState
   @override
   void dispose() {
     _positionController.dispose();
+    _scaleController.dispose();
     super.dispose();
   }
 
   bool _start(AxisDirection direction) {
+    switch (direction) {
+      case AxisDirection.down:
+        _isIndicatorAtTop = true;
+        break;
+      case AxisDirection.up:
+        _isIndicatorAtTop = false;
+        break;
+      default:
+//        _isIndicatorAtTop = null;
+    }
     _dragOffset = 0.0;
+    _scaleController.value = 0.0;
     _positionController.value = 0.0;
     return true;
   }
 
   Future<void> _dismiss(_RefreshIndicatorMode newMode) async {
-    _dragOffset = null;
-    _positionController.animateTo(0.0, duration: Duration(milliseconds: 200));
-    _positionController.value = 0.0;
-    setState(() {
-      _mode = null;
-    });
+    switch (newMode) {
+      case _RefreshIndicatorMode.done:
+        print("adadsasdasda");
+        await _scaleController.animateTo(1.0,
+            duration: Duration(milliseconds: 200));
+        break;
+      case _RefreshIndicatorMode.canceled:
+        await _positionController.animateTo(0.0,
+            duration: Duration(milliseconds: 200));
+        break;
+      default:
+//
+    }
+    if(mounted){
+      _dragOffset = null;
+      _isIndicatorAtTop = false;
+      setState(() {
+        _mode = null;
+      });
+    }
   }
 
   bool _handleNotification(ScrollNotification notification) {
@@ -94,8 +127,8 @@ class _NestedScrollViewRefreshIndicatorState
       _dragOffset -= notification.overscroll / 2;
       double newValue =
           _dragOffset / (notification.metrics.viewportDimension / 4);
-      print(
-          "notification.overscroll--------------------------------------------${notification.overscroll}");
+      print("notification.overscroll------------------${notification.overscroll}");
+      print("scaleFactor.value------------------------${_scaleController.value}");
       _positionController.value = newValue.clamp(0.0, 2.0);
 //      print(notification.metrics.viewportDimension);
 //      print(notification.overscroll/notification.metrics.viewportDimension);
@@ -133,7 +166,6 @@ class _NestedScrollViewRefreshIndicatorState
   }
 
   void _show() {
-//    final _pendingController =
     final Completer completer = Completer();
     _pendingController = completer.future;
     _positionController
@@ -154,6 +186,10 @@ class _NestedScrollViewRefreshIndicatorState
     });
   }
 
+  Future show() {
+    return _pendingController;
+  }
+
   @override
   Widget build(BuildContext context) {
     final bool showIndeterminateIndicator =
@@ -170,27 +206,27 @@ class _NestedScrollViewRefreshIndicatorState
       children: <Widget>[
         child,
         Positioned(
-          top: 0,
-          bottom: null,
+          top: _isIndicatorAtTop ? 0 : null,
+          bottom: !_isIndicatorAtTop ? 0 : null,
           left: 0,
           right: 0,
           child: SizeTransition(
+            axisAlignment: _isIndicatorAtTop ? 1 : -1,
             sizeFactor: _positionFactor,
             child: Container(
-              // padding: EdgeInsets.only(top: 10),
-              alignment: Alignment.topCenter,
-              // child: RefreshProgressIndicator(
-              //         // value: _value.value,
-              //           // valueColor: Animation.,
-              //           ),
-              child: AnimatedBuilder(
-                animation: _positionController,
-                builder: (BuildContext context, Widget child) {
-                  return RefreshProgressIndicator(
-                    value: showIndeterminateIndicator ? null : _value.value,
-                    valueColor: _valueColor,
-                  );
-                },
+               padding: _isIndicatorAtTop ? EdgeInsets.only(top: 10) : EdgeInsets.only(bottom: 10),
+              alignment: _isIndicatorAtTop ? Alignment.topCenter : Alignment.bottomCenter,
+              child: ScaleTransition(
+                scale: _scaleFactor,
+                child: AnimatedBuilder(
+                  animation: _positionController,
+                  builder: (BuildContext context, Widget child) {
+                    return RefreshProgressIndicator(
+                      value: showIndeterminateIndicator ? null : _value.value,
+                      valueColor: _valueColor,
+                    );
+                  },
+                ),
               ),
             ),
           ),
