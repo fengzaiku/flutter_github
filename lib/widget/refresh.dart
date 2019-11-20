@@ -14,9 +14,10 @@ enum _RefreshIndicatorMode {
 class NestedScrollViewRefreshIndicator extends StatefulWidget {
   final Widget child;
   final NestedScrollViewRefreshCallback onRefresh;
+  final Color color;
 
   NestedScrollViewRefreshIndicator(
-      {Key key, @required this.child, this.onRefresh})
+      {Key key, @required this.child, this.color, this.onRefresh})
       : super(key: key);
 
   @override
@@ -30,6 +31,7 @@ class _NestedScrollViewRefreshIndicatorState
   AnimationController _positionController;
   Animation<double> _positionFactor;
   Animation<double> _value;
+  Animation<Color> _valueColor;
 
   double _dragOffset;
   _RefreshIndicatorMode _mode;
@@ -43,6 +45,17 @@ class _NestedScrollViewRefreshIndicatorState
     _positionController = AnimationController(vsync: this);
     _positionFactor = _positionController.drive(Tween(begin: 0, end: 1.5));
     _value = _positionController.drive(_sizePositionTween);
+  }
+
+  @override
+  void didChangeDependencies() {
+    final ThemeData theme = Theme.of(context);
+
+    _valueColor = _positionController.drive(ColorTween(
+            begin: (widget.color ?? theme.accentColor).withOpacity(0.0),
+            end: (widget.color ?? theme.accentColor).withOpacity(1.0))
+        .chain(CurveTween(curve: const Interval(0.0, 1.0 / 1.5))));
+    super.didChangeDependencies();
   }
 
   @override
@@ -126,18 +139,18 @@ class _NestedScrollViewRefreshIndicatorState
     _positionController
         .animateTo(1 / 1.5, duration: Duration(milliseconds: 150))
         .then<void>((void value) {
-          setState(() {
-            _mode = _RefreshIndicatorMode.refresh;
-          });
+      setState(() {
+        _mode = _RefreshIndicatorMode.refresh;
+      });
 
-          final Future<void> requestFuture = widget.onRefresh();
+      final Future<void> requestFuture = widget.onRefresh();
 
-          if(requestFuture == null)return;
+      if (requestFuture == null) return;
 
-          requestFuture.whenComplete((){
-              completer.complete();
-              _dismiss(_RefreshIndicatorMode.done);
-          });
+      requestFuture.whenComplete(() {
+        completer.complete();
+        _dismiss(_RefreshIndicatorMode.done);
+      });
     });
   }
 
@@ -175,7 +188,7 @@ class _NestedScrollViewRefreshIndicatorState
                 builder: (BuildContext context, Widget child) {
                   return RefreshProgressIndicator(
                     value: showIndeterminateIndicator ? null : _value.value,
-                    // valueColor: Animation.,
+                    valueColor: _valueColor,
                   );
                 },
               ),
