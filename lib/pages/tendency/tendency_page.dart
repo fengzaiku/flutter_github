@@ -21,6 +21,7 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget>
     return <Widget>[
       SliverPersistentHeader(
         pinned: true,
+//        floating: true,
         delegate: SliverPersistentHeaderDelegateWidget(
             minHeight: 65,
             maxHeight: 65,
@@ -34,7 +35,7 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget>
                 bool overlapsContent) {
               final double lr = 10 - shrinkOffset / 65 * 10;
               final double rd = 10 - shrinkOffset / 8 * 10;
-              print("shrinkOffset------------------------------$lr");
+//              print("shrinkOffset------------------------------$lr");
               // return SizedBox.expand(
               //   child: Padding(
               //      padding:
@@ -136,6 +137,9 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget>
     ];
   }
 
+  Future _onRefreshGetDate(){
+    return Future.delayed(Duration(milliseconds: 1000)).then((value) {});
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -154,6 +158,7 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget>
           itemCount: 10,
         ),
       ),
+        onRefresh: _onRefreshGetDate
       ),
     );
   }
