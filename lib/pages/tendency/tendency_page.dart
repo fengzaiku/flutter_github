@@ -15,7 +15,6 @@ enum WhyFarther { harder, smarter, selfStarter, tradingCharter }
 
 class _TendencyPageWidgetState extends State<TendencyPageWidget>
     with SingleTickerProviderStateMixin {
-  // final List _tabs = <String>["dahai"];
 
   List<Widget> _sliderver(BuildContext context, bool innerBoxIsScrolled) {
     return <Widget>[
@@ -60,6 +59,7 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget>
                             onSelected: (WhyFarther result) {
                               print("$result");
                             },
+                            offset: Offset(0, 65),
                             child: Center(
                               child: Text(
                                 "惦记我",
@@ -70,17 +70,19 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget>
                             ),
                             itemBuilder: (BuildContext context) =>
                                 <PopupMenuEntry<WhyFarther>>[
-                              const PopupMenuItem<WhyFarther>(
+                              PopupMenuItem<WhyFarther>(
                                 value: WhyFarther.harder,
-                                child: Text('今日'),
+                                child: ListTile(title: Text("今日"),),
                               ),
-                              const PopupMenuItem<WhyFarther>(
+                              PopupMenuDivider(),
+                              PopupMenuItem<WhyFarther>(
                                 value: WhyFarther.smarter,
-                                child: Text('本周'),
+                                child: ListTile(title: Text("今月"),),
                               ),
-                              const PopupMenuItem<WhyFarther>(
+//                              PopupMenuDivider(),
+                              PopupMenuItem<WhyFarther>(
                                 value: WhyFarther.selfStarter,
-                                child: Text('本月'),
+                                child: ListTile(title: Text("今年"),),
                               ),
                             ],
                           ),
@@ -88,7 +90,7 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget>
                         VerticalDivider(
                           color: Colors.white,
                           width: 1,
-                          thickness:1,
+                          thickness: 1,
                           indent: 15,
                           endIndent: 15,
                         ),
@@ -97,6 +99,7 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget>
                             onSelected: (WhyFarther result) {
                               print("$result");
                             },
+                            offset: Offset(0, 65),
                             child: Center(
                               child: Text(
                                 "惦记我1111",
@@ -137,29 +140,31 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget>
     ];
   }
 
-  Future _onRefreshGetDate(){
-    return Future.delayed(Duration(milliseconds: 1000)).then((value) {});
+  Future _onRefreshGetDate() {
+    return Future.delayed(Duration(milliseconds: 5000)).then((value) {});
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: NestedScrollViewRefreshIndicator(
-        child: NestedScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          // These are the slivers that show up in the "outer" scroll view.
-          return _sliderver(context, innerBoxIsScrolled);
-        },
-        body: ListView.builder(
-          physics: const AlwaysScrollableScrollPhysics(),
-          itemBuilder: (context, index) {
-            return TendencyItemWidget();
-          },
-          itemCount: 10,
-        ),
-      ),
-        onRefresh: _onRefreshGetDate
-      ),
+          child: NestedScrollView(
+//            dragStartBehavior:DragStartBehavior(DragStartBehavior.down),
+            physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              // These are the slivers that show up in the "outer" scroll view.
+              return _sliderver(context, innerBoxIsScrolled);
+            },
+            body: ListView.builder(
+              physics: const AlwaysScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                return TendencyItemWidget();
+              },
+              itemCount: 10,
+            ),
+          ),
+          onRefresh: _onRefreshGetDate),
     );
   }
 }

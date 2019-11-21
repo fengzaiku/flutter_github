@@ -9,6 +9,7 @@ enum _RefreshIndicatorMode {
   refresh,
   canceled,
   snap,
+  armed, // 拖拽到足够大然后释放刷新
 }
 
 class NestedScrollViewRefreshIndicator extends StatefulWidget {
@@ -103,7 +104,7 @@ class _NestedScrollViewRefreshIndicatorState
       default:
 //
     }
-    if(mounted){
+    if (mounted) {
       _dragOffset = null;
       _isIndicatorAtTop = false;
       setState(() {
@@ -123,25 +124,53 @@ class _NestedScrollViewRefreshIndicatorState
       return false;
     }
 
-    if (notification is OverscrollNotification) {
+//    print("_valueColor.value------------------------${_valueColor.value.alpha}");
+    if (notification is OverscrollNotification &&
+        notification.metrics.extentAfter > 0 &&
+        _mode != _RefreshIndicatorMode.refresh) {
       _dragOffset -= notification.overscroll / 2;
       double newValue =
           _dragOffset / (notification.metrics.viewportDimension / 4);
-      print("notification.overscroll------------------${notification.overscroll}");
-      print("scaleFactor.value------------------------${_scaleController.value}");
+//      print("notification.overscroll------------------${notification.overscroll}");
+//      print("scaleFactor.value------------------------${_scaleController.value}");
+//      print("_valueColor.value------------------------${_valueColor.value.alpha}");
       _positionController.value = newValue.clamp(0.0, 2.0);
+
+      // 已经下拉到足够大，可以去刷新页面
+      if (_RefreshIndicatorMode.drag == _mode &&
+          _valueColor.value.alpha == 255) {
+        _mode = _RefreshIndicatorMode.armed;
+      }
 //      print(notification.metrics.viewportDimension);
 //      print(notification.overscroll/notification.metrics.viewportDimension);
 //      print(_dragOffset);
 //      print(newValue);
     }
-
-    if (notification is ScrollEndNotification) {
-      _show();
+    if (notification is ScrollUpdateNotification) {
+      if (_mode == _RefreshIndicatorMode.drag ||
+          _mode == _RefreshIndicatorMode.armed) {
+        if (notification.metrics.extentBefore > 0 &&
+            _mode != _RefreshIndicatorMode.refresh) {
+          _dismiss(_RefreshIndicatorMode.canceled);
+        }
+      }
     }
 
-    print(
-        "notification--------------------------------------------${notification.runtimeType}");
+    if (notification is ScrollEndNotification) {
+      switch (_mode) {
+        case _RefreshIndicatorMode.armed:
+          _show();
+          break;
+        // 在下拉还没有触发，刷新的时候，停止下拉时。则立即停止
+        case _RefreshIndicatorMode.drag:
+          _dismiss(_RefreshIndicatorMode.canceled);
+          break;
+        default:
+//
+      }
+    }
+
+//    print("notification--------------------------------------------${notification.runtimeType}");
 //    print("当前位置--------------------------------------------${notification.metrics.pixels}");
 //    print("是否在顶部或底部------------------------------------${notification.metrics.atEdge}");
 //    print("垂直或水平滚动--------------------------------------${notification.metrics.axis}");
@@ -190,6 +219,16 @@ class _NestedScrollViewRefreshIndicatorState
     return _pendingController;
   }
 
+  bool _handleGlowNotification(OverscrollIndicatorNotification notification) {
+//    if(_mode == _RefreshIndicatorMode.refresh){
+//      notification.disallowGlow();
+//      return true;
+//    }
+//    print("notification.depth:${notification.depth}-------------notification.leading:${notification.leading}");
+//    notification.disallowGlow();
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     final bool showIndeterminateIndicator =
@@ -199,6 +238,7 @@ class _NestedScrollViewRefreshIndicatorState
     Widget child = NotificationListener<ScrollNotification>(
       onNotification: _handleNotification,
       child: NotificationListener<OverscrollIndicatorNotification>(
+        onNotification: _handleGlowNotification,
         child: widget.child,
       ),
     );
@@ -214,8 +254,12 @@ class _NestedScrollViewRefreshIndicatorState
             axisAlignment: _isIndicatorAtTop ? 1 : -1,
             sizeFactor: _positionFactor,
             child: Container(
-               padding: _isIndicatorAtTop ? EdgeInsets.only(top: 10) : EdgeInsets.only(bottom: 10),
-              alignment: _isIndicatorAtTop ? Alignment.topCenter : Alignment.bottomCenter,
+              padding: _isIndicatorAtTop
+                  ? EdgeInsets.only(top: 10)
+                  : EdgeInsets.only(bottom: 10),
+              alignment: _isIndicatorAtTop
+                  ? Alignment.topCenter
+                  : Alignment.bottomCenter,
               child: ScaleTransition(
                 scale: _scaleFactor,
                 child: AnimatedBuilder(
