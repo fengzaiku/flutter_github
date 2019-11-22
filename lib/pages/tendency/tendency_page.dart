@@ -150,14 +150,14 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget>
       body: NestedScrollViewRefreshIndicator(
           child: NestedScrollView(
 //            dragStartBehavior:DragStartBehavior(DragStartBehavior.down),
-            physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+            physics:  AlwaysScrollableScrollPhysics(),
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
               // These are the slivers that show up in the "outer" scroll view.
               return _sliderver(context, innerBoxIsScrolled);
             },
             body: ListView.builder(
-              physics: const AlwaysScrollableScrollPhysics(),
+//              physics: const AlwaysScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return TendencyItemWidget();
               },
