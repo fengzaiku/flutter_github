@@ -50,6 +50,7 @@ class IconTextWidget extends StatelessWidget {
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
+//        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Icon(
             icon,
