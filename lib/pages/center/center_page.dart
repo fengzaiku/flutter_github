@@ -137,12 +137,6 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget> with TickerProv
                                     height: 140,
                                     fit: BoxFit.cover,
                                   ),
-//                                  child: FadeInImage(
-//                                    image: NetworkImage("http://e.hiphotos.baidu.com/image/pic/item/4610b912c8fcc3cef70d70409845d688d53f20f7.jpg"),
-////                                  width: 40,
-////                                  height: 40,
-//                                    fit: BoxFit.cover,
-//                                  ),
                                 ),
                               ),
                             )
@@ -157,8 +151,31 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget> with TickerProv
           },
           body: ListView.builder(
             itemBuilder: (BuildContext context, int index){
-              return ListTile(
-                title: Text("text $index"),
+              return FgCardItemWidget(
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+//                      mainAxisAlignment: MainAxisAlignment.start,
+//                      crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          UserIconWidget(),
+                          Text("与在校"),
+                          Expanded(
+                            child: Align(
+                              alignment: Alignment.topRight,
+                              child: Text("${index+1} 天前"),
+                            ),
+                          )
+                        ],
+                      ),
+                      Text("卡技术大会卡机但是空手道解放和看见士大夫 $index")
+                    ],
+                  ),
+                ),
               );
             },
             itemCount: 30,
