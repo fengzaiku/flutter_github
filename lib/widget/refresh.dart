@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_github/pages/tendency/refresh.dart';
 
 enum _RefreshIndicatorMode {
   drag,
@@ -14,7 +12,7 @@ enum _RefreshIndicatorMode {
 
 class NestedScrollViewRefreshIndicator extends StatefulWidget {
   final Widget child;
-  final NestedScrollViewRefreshCallback onRefresh;
+  final Future<void> Function() onRefresh;
   final Color color;
 
   NestedScrollViewRefreshIndicator(
@@ -124,16 +122,13 @@ class _NestedScrollViewRefreshIndicatorState
       return false;
     }
 
-//    print("_valueColor.value------------------------${_valueColor.value.alpha}");
     if (notification is OverscrollNotification &&
         notification.metrics.extentAfter > 0 &&
         _mode != _RefreshIndicatorMode.refresh) {
       _dragOffset -= notification.overscroll / 2;
       double newValue =
           _dragOffset / (notification.metrics.viewportDimension / 4);
-//      print("notification.overscroll------------------${notification.overscroll}");
-//      print("scaleFactor.value------------------------${_scaleController.value}");
-//      print("_valueColor.value------------------------${_valueColor.value.alpha}");
+
       _positionController.value = newValue.clamp(0.0, 2.0);
 
       // 已经下拉到足够大，可以去刷新页面
@@ -141,10 +136,6 @@ class _NestedScrollViewRefreshIndicatorState
           _valueColor.value.alpha == 255) {
         _mode = _RefreshIndicatorMode.armed;
       }
-//      print(notification.metrics.viewportDimension);
-//      print(notification.overscroll/notification.metrics.viewportDimension);
-//      print(_dragOffset);
-//      print(newValue);
     }
     if (notification is ScrollUpdateNotification) {
       if (_mode == _RefreshIndicatorMode.drag ||
@@ -169,20 +160,27 @@ class _NestedScrollViewRefreshIndicatorState
 //
       }
     }
-
-//    print("notification--------------------------------------------${notification.runtimeType}");
+    print(
+        "notification.depth:---------------------------------------${notification.depth}");
+    print(
+        "notification--------------------------------------------${notification.runtimeType}");
 //    print("当前位置--------------------------------------------${notification.metrics.pixels}");
 //    print("是否在顶部或底部------------------------------------${notification.metrics.atEdge}");
 //    print("垂直或水平滚动--------------------------------------${notification.metrics.axis}");
 //    print("滚动方向是down还是up--------------------------------${notification.metrics.axisDirection}");
 //    print("视口底部距离列表底部有多大--------------------------${notification.metrics.extentAfter}");
-//    print("视口顶部距离列表顶部有多大--------------------------${notification.metrics.extentBefore}");
+    print(
+        "视口顶部距离列表顶部有多大--------------------------${notification.metrics.extentBefore}");
 //    print("视口范围内的列表长度--------------------------------${notification.metrics.extentInside}");
 //    print("最大滚动距离，列表长度-视口长度---------------------${notification.metrics.maxScrollExtent}");
 //    print("最小滚动距离----------------------------------------${notification.metrics.minScrollExtent}");
-//    print("视口长度--------------------------------------------${notification.metrics.viewportDimension}");
+    print(
+        "视口长度--------------------------------------------${notification.metrics.viewportDimension}");
 //    print("是否越过边界----------------------------------------${notification.metrics.outOfRange}");
-
+    if (notification is UserScrollNotification) {
+      print(
+          "滚动方向是down还是up--------------------------------${notification.direction}");
+    }
 //     print(notification.metrics.axisDirection);
     switch (notification.metrics.axisDirection) {
       case AxisDirection.down:
@@ -204,14 +202,17 @@ class _NestedScrollViewRefreshIndicatorState
         _mode = _RefreshIndicatorMode.refresh;
       });
 
-      final Future<void> requestFuture = widget.onRefresh();
+      if (widget.onRefresh != null) {
+        final Future<void> requestFuture = widget.onRefresh();
 
-      if (requestFuture == null) return;
-
-      requestFuture.whenComplete(() {
+        requestFuture.whenComplete(() {
+          completer.complete();
+          _dismiss(_RefreshIndicatorMode.done);
+        });
+      } else {
         completer.complete();
         _dismiss(_RefreshIndicatorMode.done);
-      });
+      }
     });
   }
 
@@ -220,12 +221,16 @@ class _NestedScrollViewRefreshIndicatorState
   }
 
   bool _handleGlowNotification(OverscrollIndicatorNotification notification) {
+    if (notification.depth == 1) {
+      notification.disallowGlow();
+      return true;
+    }
 //    if(_mode == _RefreshIndicatorMode.refresh){
 //      notification.disallowGlow();
 //      return true;
 //    }
 //    print("notification.depth:${notification.depth}-------------notification.leading:${notification.leading}");
-//    notification.disallowGlow();
+//
     return false;
   }
 

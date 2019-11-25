@@ -36,10 +36,10 @@ class _CenterItemListWidgetState extends State<CenterItemListWidget> {
 
   List<Widget> _getItemList() {
     List itemList = List<Widget>();
-//    List keysList = itemListMap.keys;
-//    print("${keysList}");
-    itemListMap.forEach((name,item) {
+    List<String> keysList = List.from(itemListMap.keys);
+    String lastElement = keysList.removeLast();
 
+    itemListMap.forEach((name,item) {
       itemList.add(FlutterGithubColumnFlatButtonWidget(
         onPressed: widget.onPressed,
         children: <Widget>[
@@ -47,7 +47,9 @@ class _CenterItemListWidgetState extends State<CenterItemListWidget> {
           Text("${item["value"]}", style: TextStyle(color: Colors.white))
         ],
       ));
-      itemList.add(VerticalDivider(width: 1, color: Colors.grey, thickness: 1));
+      if(lastElement != name){
+        itemList.add(VerticalDivider( color:Colors.white30,thickness: 1,));
+      }
     });
     return itemList.toList();
   }
@@ -57,47 +59,6 @@ class _CenterItemListWidgetState extends State<CenterItemListWidget> {
     return SizedBox.expand(
       child: Row(
         children: _getItemList(),
-//        children: <Widget>[
-//          FlutterGithubColumnFlatButtonWidget(
-//            onPressed: widget.onPressed,
-//            children: <Widget>[
-//              Text("仓库", style: TextStyle(color: Colors.white)),
-//              Text("22", style: TextStyle(color: Colors.white))
-//            ],
-//          ),
-//          VerticalDivider(width: 1, color: Colors.grey, thickness: 1),
-//          FlutterGithubColumnFlatButtonWidget(
-//            onPressed: widget.onPressed,
-//            children: <Widget>[
-//              Text("粉丝", style: TextStyle(color: Colors.white)),
-//              Text("2", style: TextStyle(color: Colors.white))
-//            ],
-//          ),
-//          VerticalDivider(width: 1, color: Colors.grey, thickness: 1),
-//          FlutterGithubColumnFlatButtonWidget(
-//            onPressed: widget.onPressed,
-//            children: <Widget>[
-//              Text("关注", style: TextStyle(color: Colors.white)),
-//              Text("0", style: TextStyle(color: Colors.white))
-//            ],
-//          ),
-//          VerticalDivider(width: 1, color: Colors.grey, thickness: 1),
-//          FlutterGithubColumnFlatButtonWidget(
-//            onPressed: widget.onPressed,
-//            children: <Widget>[
-//              Text("星标", style: TextStyle(color: Colors.white)),
-//              Text("16", style: TextStyle(color: Colors.white))
-//            ],
-//          ),
-//          VerticalDivider(width: 1, color: Colors.grey, thickness: 1),
-//          FlutterGithubColumnFlatButtonWidget(
-//            onPressed: widget.onPressed,
-//            children: <Widget>[
-//              Text("荣耀", style: TextStyle(color: Colors.white)),
-//              Text("0", style: TextStyle(color: Colors.white))
-//            ],
-//          ),
-//        ],
       ),
     );
   }
