@@ -25,9 +25,9 @@ class RefreshLoadedWidget extends StatefulWidget {
 
 class _RefreshLoadedWidgetState extends State<RefreshLoadedWidget> {
   Widget _getListItem(BuildContext context, int index) {
-//    if (index == 29) {
-//      return _buildProgressIndicator();
-//    }
+    if (index == 29) {
+      return _buildProgressIndicator();
+    }
     return widget.itemBuilder(context, index);
   }
 
@@ -38,6 +38,11 @@ class _RefreshLoadedWidgetState extends State<RefreshLoadedWidget> {
           headerSliverBuilder: widget.headerSliverBuilder,
           body: NotificationListener(
             onNotification: (ScrollNotification notification) {
+                print("---------------------------------------------------------------------");
+                print("notification.depth1-------------------------${notification.depth}");
+              if(notification.metrics.pixels >= notification.metrics.maxScrollExtent){
+                return true;
+              }
 //              print(notification);
               return false;
             },
@@ -65,8 +70,8 @@ class _RefreshLoadedWidgetState extends State<RefreshLoadedWidget> {
             width: 10,
           ),
           Text(
-              "已全部加载",
-            style: TextStyle(color: Colors.black87,fontSize: 14),
+            "已全部加载",
+            style: TextStyle(color: Colors.black87, fontSize: 14),
           ),
         ],
       ),

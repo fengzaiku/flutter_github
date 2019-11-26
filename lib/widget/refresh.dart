@@ -11,13 +11,6 @@ enum _RefreshIndicatorMode {
   armed, // 拖拽到足够大然后释放刷新
 }
 
-enum _ScrollDirection {
- down,    //向下
- up,      //向上
- left,    //向左
- right    //向右
-}
-
 class NestedScrollViewRefreshIndicator extends StatefulWidget {
   final Widget child;
   final Future<void> Function() onRefresh;
@@ -46,10 +39,6 @@ class _NestedScrollViewRefreshIndicatorState
   double _dragOffset;
   _RefreshIndicatorMode _mode;
   Future<void> _pendingController;
-  _ScrollDirection  _direction;
-
-  double _currentPosition = 0.0;
-  static const int _differenceValue = 20;
 
   static final Animatable<double> _sizePositionTween =
       Tween<double>(begin: 0, end: 0.75);
@@ -126,8 +115,6 @@ class _NestedScrollViewRefreshIndicatorState
   }
 
   bool _handleNotification(ScrollNotification notification) {
-//    判断滚动方向
-    _judgeScrollDirection(notification);
     // 手指按下
     if (notification is ScrollNotification &&
         _mode == null &&
@@ -177,9 +164,9 @@ class _NestedScrollViewRefreshIndicatorState
 //
       }
     }
-//    print("notification.depth:---------------------------------------${notification.depth}");
+   print("notification.depth3:---------------------------------------${notification.depth}");
 //    print("notification--------------------------------------------${notification.runtimeType}");
-//    print("当前位置--------------------------------------------${notification.metrics.pixels}");
+  //  print("当前位置--------------------------------------------${notification.metrics.pixels}");
 //    print("是否在顶部或底部------------------------------------${notification.metrics.atEdge}");
 //    print("垂直或水平滚动--------------------------------------${notification.metrics.axis}");
 //    print("滚动方向是down还是up--------------------------------${notification.metrics.axisDirection}");
@@ -187,14 +174,14 @@ class _NestedScrollViewRefreshIndicatorState
 //    print("视口底部距离列表底部有多大--------------------------${notification.metrics.extentAfter}");
 //    print("视口顶部距离列表顶部有多大--------------------------${notification.metrics.extentBefore}");
 //    print("视口范围内的列表长度--------------------------------${notification.metrics.extentInside}");
-//    print("最大滚动距离，列表长度-视口长度---------------------${notification.metrics.maxScrollExtent}");
+   print("最大滚动距离，列表长度-视口长度---------------------${notification.metrics.maxScrollExtent}");
 //    print("最小滚动距离----------------------------------------${notification.metrics.minScrollExtent}");
-//    print("视口长度--------------------------------------------${notification.metrics.viewportDimension}");
+  //  print("视口长度--------------------------------------------${notification.metrics.viewportDimension}");
 //    print("是否越过边界----------------------------------------${notification.metrics.outOfRange}");
 //    print("_direction滚动方向是--------------------------------${_direction}");
-    if (notification is UserScrollNotification) {
-      print("UserScrollNotification滚动方向是--------------------------------${notification.direction}");
-    }
+    // if (notification is UserScrollNotification) {
+    //   print("UserScrollNotification滚动方向是--------------------------------${notification.direction}");
+    // }
 //     print(notification.metrics.axisDirection);
     switch (notification.metrics.axisDirection) {
       case AxisDirection.down:
@@ -202,59 +189,7 @@ class _NestedScrollViewRefreshIndicatorState
       default:
 //
     }
-//    print("-------------------------------->$notification");
     return true;
-  }
-
-  void _judgeScrollDirection(scrollInfo){
-    switch(scrollInfo.metrics.axisDirection){
-      case AxisDirection.down:
-        if(scrollInfo.metrics.pixels - _currentPosition >= _differenceValue){
-          _direction = _ScrollDirection.down;
-          _currentPosition = scrollInfo.metrics.pixels;
-        }
-
-        if(_currentPosition - scrollInfo.metrics.pixels >= _differenceValue){
-          _direction = _ScrollDirection.up;
-          _currentPosition = scrollInfo.metrics.pixels;
-        }
-        break;
-      case AxisDirection.up:
-        if(scrollInfo.metrics.pixels - _currentPosition >= _differenceValue){
-          _direction = _ScrollDirection.up;
-          _currentPosition = scrollInfo.metrics.pixels;
-        }
-
-        if(_currentPosition - scrollInfo.metrics.pixels >= _differenceValue){
-          _direction = _ScrollDirection.down;
-          _currentPosition = scrollInfo.metrics.pixels;
-        }
-        break;
-      case AxisDirection.right:
-        if(scrollInfo.metrics.pixels - _currentPosition >= _differenceValue){
-          _direction = _ScrollDirection.left;
-          _currentPosition = scrollInfo.metrics.pixels;
-        }
-
-        if(_currentPosition - scrollInfo.metrics.pixels >= _differenceValue){
-          _direction = _ScrollDirection.right;
-          _currentPosition = scrollInfo.metrics.pixels;
-        }
-        break;
-      case AxisDirection.left:
-        if(scrollInfo.metrics.pixels - _currentPosition >= _differenceValue){
-          _direction = _ScrollDirection.right;
-          _currentPosition = scrollInfo.metrics.pixels;
-        }
-
-        if(_currentPosition - scrollInfo.metrics.pixels >= _differenceValue){
-          _direction = _ScrollDirection.left;
-          _currentPosition = scrollInfo.metrics.pixels;
-        }
-        break;
-      default:
-//
-    }
   }
 
   void _show() {
@@ -285,20 +220,12 @@ class _NestedScrollViewRefreshIndicatorState
     return _pendingController;
   }
 
-  bool _handleGlowNotification(OverscrollNotification notification) {
-//    if(notification is OverscrollNotification){
-      print("direction -----------------------------------滚动了${notification.overscroll}");
-//    }
-//    if (notification.depth == 1) {
-//      notification.disallowGlow();
-//      return true;
-//    }
-//    if(_mode == _RefreshIndicatorMode.refresh){
-//      notification.disallowGlow();
-//      return true;
-//    }
-//    print("notification.depth:${notification.depth}-------------notification.leading:${notification.leading}");
-//
+  bool _handleGlowNotification(OverscrollIndicatorNotification notification) {
+    // print("notification.depth2-------------------------${notification.depth}");
+    if(_mode == _RefreshIndicatorMode.drag){
+      notification.disallowGlow();
+      return true;
+    }
     return false;
   }
 
@@ -313,7 +240,7 @@ class _NestedScrollViewRefreshIndicatorState
     Widget child = NotificationListener<ScrollNotification>(
       key: _key,
       onNotification: _handleNotification,
-      child: NotificationListener<OverscrollNotification>(
+      child: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: _handleGlowNotification,
         child: widget.child,
       ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class FlutterGithubColumnFlatButtonWidget extends StatelessWidget {
-  List children = List<Widget>();
-  VoidCallback onPressed;
-  int flex;
+  final List children;
+  final VoidCallback onPressed;
+  final int flex;
   FlutterGithubColumnFlatButtonWidget({
     @required this.onPressed,
     @required this.children,

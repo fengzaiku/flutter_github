@@ -131,7 +131,6 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget>
               }),
         ),
         SliverPersistentHeader(
-//            pinned: true,
           delegate: SliverPersistentHeaderDelegateWidget(
               minHeight: 210,
               maxHeight: 210,

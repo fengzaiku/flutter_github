@@ -15,7 +15,6 @@ enum WhyFarther { harder, smarter, selfStarter, tradingCharter }
 
 class _TendencyPageWidgetState extends State<TendencyPageWidget>
     with SingleTickerProviderStateMixin {
-
   List<Widget> _sliderver(BuildContext context, bool innerBoxIsScrolled) {
     return <Widget>[
       SliverPersistentHeader(
@@ -72,17 +71,23 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget>
                                 <PopupMenuEntry<WhyFarther>>[
                               PopupMenuItem<WhyFarther>(
                                 value: WhyFarther.harder,
-                                child: ListTile(title: Text("今日"),),
+                                child: ListTile(
+                                  title: Text("今日"),
+                                ),
                               ),
                               PopupMenuDivider(),
                               PopupMenuItem<WhyFarther>(
                                 value: WhyFarther.smarter,
-                                child: ListTile(title: Text("今月"),),
+                                child: ListTile(
+                                  title: Text("今月"),
+                                ),
                               ),
 //                              PopupMenuDivider(),
                               PopupMenuItem<WhyFarther>(
                                 value: WhyFarther.selfStarter,
-                                child: ListTile(title: Text("今年"),),
+                                child: ListTile(
+                                  title: Text("今年"),
+                                ),
                               ),
                             ],
                           ),
@@ -150,11 +155,17 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget>
       body: NestedScrollViewRefreshIndicator(
           child: NestedScrollView(
 //            dragStartBehavior:DragStartBehavior(DragStartBehavior.down),
-            physics:  AlwaysScrollableScrollPhysics(),
+            physics: AlwaysScrollableScrollPhysics(),
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
               // These are the slivers that show up in the "outer" scroll view.
-              return _sliderver(context, innerBoxIsScrolled);
+              // return _sliderver(context, innerBoxIsScrolled);
+              return <Widget>[
+                SliverAppBar(
+                  pinned:true,
+                  title: Text("大海啊"),
+                ),
+              ];
             },
             body: ListView.builder(
 //              physics: const AlwaysScrollableScrollPhysics(),

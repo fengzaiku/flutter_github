@@ -12,26 +12,11 @@ class CenterItemListWidget extends StatefulWidget {
 
 class _CenterItemListWidgetState extends State<CenterItemListWidget> {
   Map itemListMap = <String, Map>{
-    "warehouse":{
-      "name": "仓库",
-      "value": 12
-    },
-    "fans":{
-      "name": "粉丝",
-      "value": 2
-    },
-    "attention":{
-      "name": "关注",
-      "value": 0
-    },
-    "star":{
-      "name": "星标",
-      "value": 2
-    },
-    "glory":{
-      "name": "荣耀",
-      "value": 9
-    },
+    "warehouse": {"name": "仓库", "value": 12},
+    "fans": {"name": "粉丝", "value": 2},
+    "attention": {"name": "关注", "value": 0},
+    "star": {"name": "星标", "value": 2},
+    "glory": {"name": "荣耀", "value": 9},
   };
 
   List<Widget> _getItemList() {
@@ -39,7 +24,7 @@ class _CenterItemListWidgetState extends State<CenterItemListWidget> {
     List<String> keysList = List.from(itemListMap.keys);
     String lastElement = keysList.removeLast();
 
-    itemListMap.forEach((name,item) {
+    itemListMap.forEach((name, item) {
       itemList.add(FlutterGithubColumnFlatButtonWidget(
         onPressed: widget.onPressed,
         children: <Widget>[
@@ -47,8 +32,11 @@ class _CenterItemListWidgetState extends State<CenterItemListWidget> {
           Text("${item["value"]}", style: TextStyle(color: Colors.white))
         ],
       ));
-      if(lastElement != name){
-        itemList.add(VerticalDivider( color:Colors.white30,thickness: 1,));
+      if (lastElement != name) {
+        itemList.add(VerticalDivider(
+          color: Colors.white30,
+          thickness: 1,
+        ));
       }
     });
     return itemList.toList();
