@@ -157,6 +157,7 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget>
                         FgCardItemWidget(
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
+//                            physics: BouncingScrollPhysics(),
                             child: Container(
                               child: Image.network(
                                 "http://e.hiphotos.baidu.com/image/pic/item/4610b912c8fcc3cef70d70409845d688d53f20f7.jpg",
