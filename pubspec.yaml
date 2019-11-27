@@ -27,6 +27,7 @@ dependencies:
   flare_flutter: ^1.6.4
   flutter_spinkit: ^4.0.0
   flutter_easyrefresh: ^2.0.4
+  webview_flutter: ^0.3.16
 dev_dependencies:
   flutter_test:
     sdk: flutter

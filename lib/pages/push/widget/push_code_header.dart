@@ -4,12 +4,7 @@ import 'package:flutter_github/widget/flutter_github_card.dart';
 import 'package:flutter_github/widget/icon_text.dart';
 import 'package:flutter_github/widget/user_icon.dart';
 
-class PushCodeHeaderWidget extends StatefulWidget {
-  @override
-  _PushCodeHeaderWidgetState createState() => _PushCodeHeaderWidgetState();
-}
-
-class _PushCodeHeaderWidgetState extends State<PushCodeHeaderWidget> {
+class PushCodeHeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FgCardItemWidget(
