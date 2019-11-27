@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_github/common/iconfont.dart';
@@ -7,6 +8,8 @@ import 'package:flutter_github/widget/pull_load.dart';
 import 'package:flutter_github/widget/center_item_list.dart';
 import 'package:flutter_github/widget/flutter_github_card.dart';
 import 'package:flutter_github/widget/sliver_persistent_header_delegate.dart';
+
+import 'package:flutter_github/pages/push/push_detail_page.dart';
 
 class MyCenterPageWidget extends StatefulWidget {
   MyCenterPageWidget({Key key}) : super(key: key);
@@ -177,28 +180,38 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget>
       ];
     }, itemBuilder: (BuildContext context, int index) {
       return FgCardItemWidget(
-        child: Padding(
-          padding: EdgeInsets.all(10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
+        child: FlatButton(
+          onPressed: (){
+            print("不要点击我");
+            Navigator.push(context, CupertinoPageRoute(builder: (context) => PushDetailPageWidget()));
+          },
+          child: Padding(
+            padding: EdgeInsets.all(10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
 //                      mainAxisAlignment: MainAxisAlignment.start,
 //                      crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  UserIconWidget(),
-                  Text("与在校"),
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.topRight,
-                      child: Text("${index + 1} 天前"),
+                  children: <Widget>[
+                    UserIconWidget(
+                      onPressed: (){
+                        print("什么情况");
+                      },
                     ),
-                  )
-                ],
-              ),
-              Text("卡技术大会卡机但是空手道解放和看见士大夫 $index")
-            ],
+                    Text("与在校"),
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: Text("${index + 1} 天前"),
+                      ),
+                    )
+                  ],
+                ),
+                Text("卡技术大会卡机但是空手道解放和看见士大夫 $index")
+              ],
+            ),
           ),
         ),
       );

@@ -62,4 +62,19 @@ class FgIcons{
     0xe600,
     fontFamily: 'FgIcons',
   );
+  // 编辑
+  static const IconData  edit = const IconData(
+    0xe639,
+    fontFamily: 'FgIcons',
+  );
+  // 加
+  static const IconData  add = const IconData(
+    0xe61a,
+    fontFamily: 'FgIcons',
+  );
+  // 减
+  static const IconData  reduce = const IconData(
+    0xe60d,
+    fontFamily: 'FgIcons',
+  );
 }
