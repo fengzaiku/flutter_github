@@ -10,6 +10,8 @@ import 'package:flutter_github/widget/flutter_github_card.dart';
 import 'package:flutter_github/widget/sliver_persistent_header_delegate.dart';
 
 import 'package:flutter_github/pages/push/push_detail_page.dart';
+import 'package:flutter_github/pages/repository/repo_list_page.dart';
+import 'package:flutter_github/pages/user/user_list.dart';
 
 class MyCenterPageWidget extends StatefulWidget {
   MyCenterPageWidget({Key key}) : super(key: key);
@@ -20,6 +22,39 @@ class MyCenterPageWidget extends StatefulWidget {
 
 class _MyCenterPageWidgetState extends State<MyCenterPageWidget>
     with TickerProviderStateMixin<MyCenterPageWidget> {
+  Map itemListMap = <String, Map>{
+    "warehouse": {"name": "仓库", "value": 12},
+    "fans": {"name": "粉丝", "value": 2},
+    "attention": {"name": "关注", "value": 0},
+    "star": {"name": "星标", "value": 2},
+    "glory": {"name": "荣耀", "value": 9},
+  };
+
+  void _jumpToChildrenPage(name) {
+    Widget _current;
+    print(name);
+    switch (name) {
+      case "warehouse":
+        _current = RepositoryListWidget();
+        break;
+      case "fans":
+        _current = UserListWidget();
+        break;
+      case "attention":
+        _current = UserListWidget();
+        break;
+      case "star":
+        _current = RepositoryListWidget();
+        break;
+      case "glory":
+        _current = RepositoryListWidget();
+        break;
+      default:
+//
+    }
+    Navigator.push(context, CupertinoPageRoute(builder: (context) => _current));
+  }
+
   @override
   Widget build(BuildContext context) {
     return RefreshLoadedWidget(
@@ -36,6 +71,7 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget>
               builder: (BuildContext context, double shrinkOffset,
                   bool overlapsContent) {
                 return FgCardItemWidget(
+                  padding: EdgeInsets.all(0),
                   elevation: 0,
                   color: Colors.black,
                   margin: EdgeInsets.all(0.0),
@@ -119,6 +155,7 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget>
                     "shrinkOffset------------------------------------------$shrinkOffset");
                 double radius = ((70 - shrinkOffset) / 70) * 10;
                 return FgCardItemWidget(
+                  padding: EdgeInsets.all(0),
                   elevation: 0,
                   color: Colors.black,
                   margin: EdgeInsets.all(0.0),
@@ -127,91 +164,94 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget>
                         bottomLeft: Radius.circular(radius),
                         bottomRight: Radius.circular(radius)),
                   ),
-                  child: CenterItemListWidget(
-                    onPressed: () {},
+                  child: NavigationListItemWidget(
+                    onPressed: _jumpToChildrenPage,
+                    itemListMap: itemListMap,
                   ),
                 );
               }),
         ),
         SliverPersistentHeader(
           delegate: SliverPersistentHeaderDelegateWidget(
-              minHeight: 210,
-              maxHeight: 210,
-              snapConfig: FloatingHeaderSnapConfiguration(vsync: this),
-              builder: (BuildContext context, double shrinkOffset,
-                  bool overlapsContent) {
-                return SizedBox.expand(
-                  child: Container(
-                    color: Colors.white,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.only(left: 10),
-                          height: 50,
-                          child: Text(
-                            "个人动态",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                          alignment: Alignment.centerLeft,
+            minHeight: 210,
+            maxHeight: 210,
+            snapConfig: FloatingHeaderSnapConfiguration(vsync: this),
+            builder: (BuildContext context, double shrinkOffset,
+                bool overlapsContent) {
+              return SizedBox.expand(
+                child: Container(
+                  color: Colors.white,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.only(left: 10),
+                        height: 50,
+                        child: Text(
+                          "个人动态",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
-                        FgCardItemWidget(
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
+                        alignment: Alignment.centerLeft,
+                      ),
+                      FgCardItemWidget(
+                        padding: EdgeInsets.all(0),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
 //                            physics: BouncingScrollPhysics(),
-                            child: Container(
-                              child: Image.network(
-                                "http://e.hiphotos.baidu.com/image/pic/item/4610b912c8fcc3cef70d70409845d688d53f20f7.jpg",
-                                width:
-                                    MediaQuery.of(context).size.width * 3 / 2,
-                                height: 140,
-                                fit: BoxFit.cover,
-                              ),
+                          child: Container(
+                            child: Image.network(
+                              "http://e.hiphotos.baidu.com/image/pic/item/4610b912c8fcc3cef70d70409845d688d53f20f7.jpg",
+                              width: MediaQuery.of(context).size.width * 3 / 2,
+                              height: 140,
+                              fit: BoxFit.cover,
                             ),
                           ),
-                        )
-                      ],
-                    ),
+                        ),
+                      )
+                    ],
                   ),
-                );
-              }),
+                ),
+              );
+            },
+          ),
         )
       ];
     }, itemBuilder: (BuildContext context, int index) {
       return FgCardItemWidget(
+        padding: EdgeInsets.all(10),
         child: FlatButton(
-          onPressed: (){
+          onPressed: () {
             print("不要点击我");
-            Navigator.push(context, CupertinoPageRoute(builder: (context) => PushDetailPageWidget()));
+            Navigator.push(
+                context,
+                CupertinoPageRoute(
+                    builder: (context) => PushDetailPageWidget()));
           },
-          child: Padding(
-            padding: EdgeInsets.all(10),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
 //                      mainAxisAlignment: MainAxisAlignment.start,
 //                      crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    UserIconWidget(
-                      onPressed: (){
-                        print("什么情况");
-                      },
+                children: <Widget>[
+                  UserIconWidget(
+                    onPressed: () {
+                      print("什么情况");
+                    },
+                  ),
+                  Text("与在校"),
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: Text("${index + 1} 天前"),
                     ),
-                    Text("与在校"),
-                    Expanded(
-                      child: Align(
-                        alignment: Alignment.topRight,
-                        child: Text("${index + 1} 天前"),
-                      ),
-                    )
-                  ],
-                ),
-                Text("卡技术大会卡机但是空手道解放和看见士大夫 $index")
-              ],
-            ),
+                  )
+                ],
+              ),
+              Text("卡技术大会卡机但是空手道解放和看见士大夫 $index")
+            ],
           ),
         ),
       );

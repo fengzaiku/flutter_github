@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_github/widget/flutter_github_common_widget.dart';
 
-class NavigationListItemWidget extends StatelessWidget {
+class NavigationListWidget extends StatefulWidget {
+  final VoidCallback onPressed;
 
-  final ValueChanged<String> onPressed;
-  final Map<String, Map> itemListMap;
-  NavigationListItemWidget({Key key, @required this.onPressed, this.itemListMap}) : super(key: key);
+  NavigationListWidget({Key key, @required this.onPressed}) : super(key: key);
+
+  @override
+  _NavigationListWidgetState createState() => _NavigationListWidgetState();
+}
+
+class _NavigationListWidgetState extends State<NavigationListWidget> {
+  Map itemListMap = <String, Map>{
+    "warehouse": {"name": "仓库", "value": 12},
+    "fans": {"name": "粉丝", "value": 2},
+    "attention": {"name": "关注", "value": 0},
+    "star": {"name": "星标", "value": 2},
+    "glory": {"name": "荣耀", "value": 9},
+  };
 
   List<Widget> _getItemList() {
     List itemList = List<Widget>();
@@ -14,9 +26,7 @@ class NavigationListItemWidget extends StatelessWidget {
 
     itemListMap.forEach((name, item) {
       itemList.add(FlutterGithubColumnFlatButtonWidget(
-        onPressed: (){
-          onPressed?.call(name);
-        },
+        onPressed: widget.onPressed,
         children: <Widget>[
           Text(item["name"], style: TextStyle(color: Colors.white)),
           Text("${item["value"]}", style: TextStyle(color: Colors.white))

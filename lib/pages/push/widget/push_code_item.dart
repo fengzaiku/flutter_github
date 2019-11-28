@@ -18,7 +18,7 @@ class PushCodeItemWidget extends StatelessWidget {
             style: TextStyle(color: Colors.grey, fontSize: 13),
           ),
         ),
-        FgCardItemWidget(
+        FgCardItemWidget(padding: EdgeInsets.all(10),
           margin: EdgeInsets.only(left: 10, top: 5, right: 10, bottom: 15),
           child: ListTile(
             leading: Icon(FgIcons.code),

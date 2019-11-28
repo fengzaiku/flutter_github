@@ -85,7 +85,7 @@ class _CodeDetailPageWidgetState extends State<CodeDetailPageWidget> {
       // to allow calling Scaffold.of(context) so we can show a snackbar.
       body: Builder(builder: (BuildContext context) {
         return WebView(
-          initialUrl: 'https://www.baidu.com',
+          initialUrl: 'https://www.sina.com.cn/',
           javascriptMode: JavascriptMode.unrestricted,
           onWebViewCreated: (WebViewController webViewController) {
             _controller.complete(webViewController);
@@ -95,14 +95,14 @@ class _CodeDetailPageWidgetState extends State<CodeDetailPageWidget> {
           javascriptChannels: <JavascriptChannel>[
             _toasterJavascriptChannel(context),
           ].toSet(),
-          navigationDelegate: (NavigationRequest request) {
-            if (request.url.startsWith('https://www.youtube.com/')) {
-              print('blocking navigation to $request}');
-              return NavigationDecision.prevent;
-            }
-            print('allowing navigation to $request');
-            return NavigationDecision.navigate;
-          },
+//          navigationDelegate: (NavigationRequest request) {
+//            if (request.url.startsWith('https://www.youtube.com/')) {
+//              print('blocking navigation to $request}');
+//              return NavigationDecision.prevent;
+//            }
+//            print('allowing navigation to $request');
+//            return NavigationDecision.navigate;
+//          },
           onPageFinished: (String url) {
             print('Page finished loading: $url');
           },

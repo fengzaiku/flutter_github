@@ -9,7 +9,6 @@ class PushCodeHeaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return FgCardItemWidget(
       color: Colors.black87,
-      child: Padding(
         padding: EdgeInsets.all(10),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,7 +67,6 @@ class PushCodeHeaderWidget extends StatelessWidget {
             )
           ],
         ),
-      ),
     );
   }
 }

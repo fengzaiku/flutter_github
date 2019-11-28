@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_github/widget/refresh.dart';
-import 'package:flutter_github/widget/tendency_item.dart';
+import 'package:flutter_github/widget/reposition_item.dart';
 import 'package:flutter_github/widget/sliver_persistent_header_delegate.dart';
 
 class TendencyPageWidget extends StatefulWidget {
@@ -159,18 +159,18 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget>
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
               // These are the slivers that show up in the "outer" scroll view.
-              // return _sliderver(context, innerBoxIsScrolled);
-              return <Widget>[
-                SliverAppBar(
-                  pinned:true,
-                  title: Text("大海啊"),
-                ),
-              ];
+               return _sliderver(context, innerBoxIsScrolled);
+//              return <Widget>[
+//                SliverAppBar(
+//                  pinned:true,
+//                  title: Text("大海啊"),
+//                ),
+//              ];
             },
             body: ListView.builder(
 //              physics: const AlwaysScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                return TendencyItemWidget();
+                return RepositionItemWidget();
               },
               itemCount: 10,
             ),
