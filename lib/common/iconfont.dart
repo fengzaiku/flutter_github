@@ -77,4 +77,9 @@ class FgIcons{
     0xe60d,
     fontFamily: 'FgIcons',
   );
+  // 眼睛
+  static const IconData  watcher = const IconData(
+    0xe617,
+    fontFamily: 'FgIcons',
+  );
 }

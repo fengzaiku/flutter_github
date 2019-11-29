@@ -12,48 +12,63 @@ class TabarPageWidget extends StatefulWidget {
   final ValueChanged<int> onTap;
 
   final Widget bottomNavigationBar;
-
-  final PageController _pageController = PageController();
-//  final TabController _tabController;
+  final Widget floatingActionButton;
+  final FloatingActionButtonLocation floatingActionButtonLocation;
 
   TabarPageWidget({
     Key key,
     this.title,
-    this.tabItems,
-    this.tabViews,
+    @required this.tabItems,
+    @required this.tabViews,
     this.onTap,
     this.onPageChanged,
-//    this._tabController,
     this.bottomNavigationBar,
+    this.floatingActionButton,
+    this.floatingActionButtonLocation,
   }) : super(key: key);
 
   @override
   _TabarPageWidgetState createState() => _TabarPageWidgetState();
 }
 
-class _TabarPageWidgetState extends State<TabarPageWidget> {
+class _TabarPageWidgetState extends State<TabarPageWidget> with TickerProviderStateMixin<TabarPageWidget>{
+  TabController _tabController;
+
+  @override
+  void initState() {
+    _tabController = TabController(
+      length: widget.tabItems.length,
+      vsync: this,
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: widget.title,
         bottom: TabBar(
-//          controller: widget._tabController,
+          controller: _tabController,
           tabs: widget.tabItems,
           onTap: (int index) {
             widget.onTap?.call(index);
-            return index;
           },
         ),
       ),
-      body: PageView(
-        controller: widget._pageController,
+      body: TabBarView(
+        controller: _tabController,
         children: widget.tabViews,
-        onPageChanged: (int index) {
-          widget.onPageChanged?.call(index);
-        },
       ),
+      floatingActionButton: widget.floatingActionButton,
       bottomNavigationBar: widget.bottomNavigationBar,
+      floatingActionButtonLocation: widget.floatingActionButtonLocation,
     );
   }
 }

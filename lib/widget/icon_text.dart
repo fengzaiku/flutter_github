@@ -7,6 +7,7 @@ class IconTextWidget extends StatelessWidget {
   final String    text;
   final TextStyle textStyle;
   final double    textWidth;
+  final double    iconSpace;
 
   IconTextWidget(
       {
@@ -17,6 +18,7 @@ class IconTextWidget extends StatelessWidget {
         this.text = '',
         this.textStyle,
         this.textWidth = 0,
+        this.iconSpace = 5,
         }
       )
       : super(key: key);
@@ -49,15 +51,15 @@ class IconTextWidget extends StatelessWidget {
 
     return Container(
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-//        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Icon(
             icon,
             color: iconColor,
             size:  iconSize,
           ),
-          SizedBox(width: 5),
+          SizedBox(width: iconSpace),
           _renderText()
         ],
       ),
