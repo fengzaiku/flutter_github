@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_easyrefresh/material_header.dart';
 import 'package:flutter_github/pages/repository/sliver_app_bar.dart';
+import 'package:flutter_github/pages/repository/widget/rep_dynamic_head_card.dart';
 import 'package:flutter_github/widget/sliver_persistent_header_delegate.dart';
 
 class RepositoryDynamicPageWidget extends StatefulWidget {
@@ -19,51 +20,9 @@ class _RepositoryDynamicPageWidgetState
       header: MaterialHeader(),
       slivers: <Widget>[
         SliverToBoxAdapter(
-          child: Container(
-            height: 200,
-            child: Text("大海卡河水库的哈萨克觉得"),
-          ),
+          child: RepositionDynamicHeadCardWidget(),
         ),
         CustomerSliverAppbarWidget(),
-//        SliverAppBar(
-//          elevation: 5,
-//          leading: Container(
-//            child: Text('text'),
-//          ),
-//          forceElevated: true,
-//          expandedHeight: 250.0,
-//          floating: true,
-////          snap: true,
-////          pinned: true,
-//          flexibleSpace: FlexibleSpaceBar(
-//            title: const Text('SliverAppBar'),
-//            background: Image.network(
-//              'https://cn.bing.com/th?id=OIP.xq1C2fmnSw5DEoRMC86vJwD6D6&pid=Api&rs=1',
-//              fit: BoxFit.fill,
-//            ),
-//            //标题是否居中
-//            centerTitle: true,
-//            //标题间距
-//            titlePadding: EdgeInsetsDirectional.only(start: 0, bottom: 16),
-//            collapseMode: CollapseMode.none,
-//          ),
-//        ),
-//        SliverPersistentHeader(
-//          pinned: true,
-//          delegate: SliverPersistentHeaderDelegateWidget(
-//            minHeight: 150,
-//            maxHeight: 150,
-//            snapConfig: FloatingHeaderSnapConfiguration(
-//              vsync: this
-//            ),
-//            builder: (BuildContext context, double shrinkOffset, bool overlapsContent){
-//              return Container(
-//                height: 100,
-//                child: Text("这里石头"),
-//              );
-//            }
-//          ),
-//        ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (context, index) {
