@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_easyrefresh/material_header.dart';
+import 'package:flutter_github/pages/repository/sliver_app_bar.dart';
 import 'package:flutter_github/widget/sliver_persistent_header_delegate.dart';
 
 class RepositoryDynamicPageWidget extends StatefulWidget {
@@ -11,12 +12,19 @@ class RepositoryDynamicPageWidget extends StatefulWidget {
 }
 
 class _RepositoryDynamicPageWidgetState
-    extends State<RepositoryDynamicPageWidget> with TickerProviderStateMixin<RepositoryDynamicPageWidget>{
+    extends State<RepositoryDynamicPageWidget> with TickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     return EasyRefresh.custom(
       header: MaterialHeader(),
       slivers: <Widget>[
+        SliverToBoxAdapter(
+          child: Container(
+            height: 200,
+            child: Text("大海卡河水库的哈萨克觉得"),
+          ),
+        ),
+        CustomerSliverAppbarWidget(),
 //        SliverAppBar(
 //          elevation: 5,
 //          leading: Container(
@@ -40,22 +48,22 @@ class _RepositoryDynamicPageWidgetState
 //            collapseMode: CollapseMode.none,
 //          ),
 //        ),
-        SliverPersistentHeader(
-          pinned: true,
-          delegate: SliverPersistentHeaderDelegateWidget(
-            minHeight: 150,
-            maxHeight: 150,
-            snapConfig: FloatingHeaderSnapConfiguration(
-              vsync: this
-            ),
-            builder: (BuildContext context, double shrinkOffset, bool overlapsContent){
-              return Container(
-                height: 100,
-                child: Text("这里石头"),
-              );
-            }
-          ),
-        ),
+//        SliverPersistentHeader(
+//          pinned: true,
+//          delegate: SliverPersistentHeaderDelegateWidget(
+//            minHeight: 150,
+//            maxHeight: 150,
+//            snapConfig: FloatingHeaderSnapConfiguration(
+//              vsync: this
+//            ),
+//            builder: (BuildContext context, double shrinkOffset, bool overlapsContent){
+//              return Container(
+//                height: 100,
+//                child: Text("这里石头"),
+//              );
+//            }
+//          ),
+//        ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (context, index) {
