@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_easyrefresh/material_header.dart';
 import 'package:flutter_github/pages/repository/sliver_app_bar.dart';
 import 'package:flutter_github/pages/repository/widget/rep_dynamic_head_card.dart';
-import 'package:flutter_github/widget/sliver_persistent_header_delegate.dart';
+import 'package:flutter_github/widget/author_push_item.dart';
 
 class RepositoryDynamicPageWidget extends StatefulWidget {
   @override
@@ -26,9 +25,7 @@ class _RepositoryDynamicPageWidgetState
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (context, index) {
-              return Container(
-                child: Text("text $index"),
-              );
+              return AuthorPushItemWidget();
             },
             childCount: 40,
           ),

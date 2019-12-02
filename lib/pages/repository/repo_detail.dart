@@ -5,12 +5,13 @@ import 'package:flutter_github/widget/tabar_widget.dart';
 
 class RepositionDetailPageWidget extends StatefulWidget {
   @override
-  _RepositionDetailPageWidgetState createState() => _RepositionDetailPageWidgetState();
+  _RepositionDetailPageWidgetState createState() =>
+      _RepositionDetailPageWidgetState();
 }
 
-class _RepositionDetailPageWidgetState extends State<RepositionDetailPageWidget> with TickerProviderStateMixin<RepositionDetailPageWidget>{
-
-  List _tabs = ["动态","详情","ISSUE","文件"];
+class _RepositionDetailPageWidgetState extends State<RepositionDetailPageWidget>
+    with TickerProviderStateMixin<RepositionDetailPageWidget> {
+  List _tabs = ["动态", "详情", "ISSUE", "文件"];
   TabController _tabController;
 
   @override
@@ -27,13 +28,14 @@ class _RepositionDetailPageWidgetState extends State<RepositionDetailPageWidget>
     _tabController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return TabarPageWidget(
       tabItems: _tabs.map((name) => Tab(text: name)).toList(),
       floatingActionButton: FloatingActionButton(
         child: Text("关注"),
-        onPressed: (){
+        onPressed: () {
           print("迪纳基");
         },
       ),

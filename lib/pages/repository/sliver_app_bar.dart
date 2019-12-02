@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_github/pages/repository/widget/rep_detail_select_bar.dart';
 import 'package:flutter_github/widget/sliver_persistent_header_delegate.dart';
 
 class CustomerSliverAppbarWidget extends StatefulWidget {
@@ -14,21 +15,16 @@ class _CustomerSliverAppbarWidgetState extends State<CustomerSliverAppbarWidget>
   Widget build(BuildContext context) {
     return SliverPersistentHeader(
       pinned: true,
-      floating: true,
+//      floating: true,
       delegate: SliverPersistentHeaderDelegateWidget(
-        minHeight: 65,
-        maxHeight: 65,
+        minHeight: 45,
+        maxHeight: 45,
         snapConfig: FloatingHeaderSnapConfiguration(
             vsync: this
         ),
         builder: (BuildContext context, double shrinkOffset, bool overlapsContent){
-          print("shrinkOffset--------------------$shrinkOffset");
-          return Container(
-            color: Colors.black87,
-            child: Center(
-              child: Text("世界你好吗？"),
-            ),
-          );
+//          return RepositionDetailSelectWidget();
+          return RepositionDetailSelectWidget(shrinkOffset);
         },
       ),
     );
