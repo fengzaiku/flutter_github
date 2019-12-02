@@ -12,12 +12,14 @@ class DividerVertical {
 }
 
 class RowSelectItem {
-  String  selectKey;
-  dynamic selectValue;
+  String    selectKey;
+  IconData  selectIcon;
+  dynamic   selectValue;
 
   RowSelectItem({
     this.selectKey,
     this.selectValue,
+    this.selectIcon,
   });
 }
 
@@ -63,6 +65,7 @@ class RowSelectListWidget extends StatelessWidget {
       selects.add(builder(items[i], i));
 
       if (showDivider && i < (items.length - 1)) {
+        print("横线渲染了");
         selects.add(VerticalDivider(
           width:      divider?.width,
           thickness:  divider?.thickness,

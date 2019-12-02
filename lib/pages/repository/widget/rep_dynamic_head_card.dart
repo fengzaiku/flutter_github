@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_github/common/iconfont.dart';
 import 'package:flutter_github/widget/center_item_list.dart';
 import 'package:flutter_github/widget/flutter_github_card.dart';
+import 'package:flutter_github/widget/icon_text.dart';
+import 'package:flutter_github/widget/row_select_divider_list.dart';
+import 'package:flutter_github/widget/row_select_list.dart';
 
 class RepositionDynamicHeadCardWidget extends StatefulWidget {
   @override
@@ -64,19 +68,40 @@ class _RepositionDynamicHeadCardWidgetState
             alignment: Alignment.centerRight,
             child: Text("创建于2019-07-15", style: TextStyle(color: Colors.white),),
           ),
-          Container(
+//          Container(
+//            width: 400,
+//            child: ,
+//          ),
+          RowSelectDividerListWidget(
             margin: EdgeInsets.only(top: 10),
-            padding: EdgeInsets.only(top: 10),
-            height: 50,
+//            padding: EdgeInsets.only(top: 10),
             decoration: BoxDecoration(
                 border: Border(
                     top: Divider.createBorderSide(context, color: Colors.white,width: 1)
                 )
             ),
-            child: NavigationListItemWidget(
-              onPressed: _jumpToChildrenPage,
-              itemListMap: itemListMap,
-            ),
+            items: <RowSelectItem>[
+              RowSelectItem(selectKey: "start",selectValue: "100", selectIcon: FgIcons.star),
+              RowSelectItem(selectKey: "dynamic",selectValue: "2", selectIcon: FgIcons.dynamic),
+//              RowSelectItem(selectKey: "watcher",selectValue: "30", selectIcon: FgIcons.watcher),
+//              RowSelectItem(selectKey: "issue",selectValue: "40", selectIcon: FgIcons.electrocardiogram),
+            ],
+            builder: (RowSelectItem item, int index){
+              return Expanded(
+                child: FlatButton(
+                  child: IconTextWidget(
+                    icon: item.selectIcon,
+                    iconColor: Colors.white,
+                    iconSize: 14,
+                    text: item.selectValue,
+                    textStyle: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: (){
+                    print("${item.selectKey}");
+                  },
+                ),
+              );
+            },
           ),
         ],
       ),
