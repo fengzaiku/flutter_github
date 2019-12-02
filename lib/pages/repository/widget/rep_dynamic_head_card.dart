@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_github/common/iconfont.dart';
-import 'package:flutter_github/widget/center_item_list.dart';
 import 'package:flutter_github/widget/flutter_github_card.dart';
 import 'package:flutter_github/widget/icon_text.dart';
 import 'package:flutter_github/widget/row_select_divider_list.dart';
@@ -14,17 +13,6 @@ class RepositionDynamicHeadCardWidget extends StatefulWidget {
 
 class _RepositionDynamicHeadCardWidgetState
     extends State<RepositionDynamicHeadCardWidget> {
-  Map itemListMap = <String, Map>{
-    "warehouse": {"name": "仓库", "value": 12},
-    "fans": {"name": "粉丝", "value": 2},
-    "attention": {"name": "关注", "value": 0},
-    "star": {"name": "星标", "value": 2},
-//    "glory": {"name": "荣耀", "value": 9},
-  };
-
-  void _jumpToChildrenPage(name) {
-    print(name);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,10 +56,6 @@ class _RepositionDynamicHeadCardWidgetState
             alignment: Alignment.centerRight,
             child: Text("创建于2019-07-15", style: TextStyle(color: Colors.white),),
           ),
-//          Container(
-//            width: 400,
-//            child: ,
-//          ),
           RowSelectDividerListWidget(
             margin: EdgeInsets.only(top: 10),
 //            padding: EdgeInsets.only(top: 10),
