@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_github/widget/row_select_divider_list.dart';
-import 'package:flutter_github/widget/row_select_list.dart';
+import 'package:flutter_github/utils/widget_standard.dart';
 
 class RepositionDetailSelectWidget extends StatefulWidget {
   final double shrinkOffset;

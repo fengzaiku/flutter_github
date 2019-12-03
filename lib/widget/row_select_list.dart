@@ -1,27 +1,5 @@
 import 'package:flutter/material.dart';
-
-class DividerVertical {
-  double  width;
-  double  thickness;
-  double  indent;
-  double  endIndent;
-  Color   color;
-
-  DividerVertical(
-      {this.width, this.thickness, this.indent, this.endIndent, this.color});
-}
-
-class RowSelectItem {
-  String    selectKey;
-  IconData  selectIcon;
-  dynamic   selectValue;
-
-  RowSelectItem({
-    this.selectKey,
-    this.selectValue,
-    this.selectIcon,
-  });
-}
+import 'package:flutter_github/utils/widget_standard.dart';
 
 typedef WidgetFunctionBuilder = Widget Function(RowSelectItem item, int index);
 
@@ -38,9 +16,11 @@ class RowSelectListWidget extends StatelessWidget {
   final CrossAxisAlignment          crossAxisAlignment;
   final MainAxisAlignment           mainAxisAlignment;
 
+  final double                      spacing;
+  final double                      runSpacing;
 
-  bool showDivider;
-
+  bool    showDivider;
+  bool    showWrap;
   RowSelectListWidget(
       {
         Key key,
@@ -49,11 +29,14 @@ class RowSelectListWidget extends StatelessWidget {
         this.boxWidth,
         this.boxHeight,
         this.showDivider = false,
+        this.showWrap = false,
         this.divider,
         this.margin,
         this.padding,
-        this.decoration,
         this.color,
+        this.decoration,
+        this.spacing,
+        this.runSpacing,
         this.mainAxisAlignment = MainAxisAlignment.spaceBetween,
         this.crossAxisAlignment = CrossAxisAlignment.center,
       }) : super(key: key);
@@ -64,8 +47,7 @@ class RowSelectListWidget extends StatelessWidget {
 
       selects.add(builder(items[i], i));
 
-      if (showDivider && i < (items.length - 1)) {
-        print("横线渲染了");
+      if (showDivider && i < (items.length - 1) && !showWrap) {
         selects.add(VerticalDivider(
           width:      divider?.width,
           thickness:  divider?.thickness,
@@ -80,17 +62,23 @@ class RowSelectListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width:      boxWidth == null ? MediaQuery.of(context).size.width : boxWidth,
-      height:     boxHeight,
-      margin:     margin,
-      padding:    padding,
-      decoration: decoration,
-      color:      color,
-      child:Row(
-        crossAxisAlignment: crossAxisAlignment,
-        mainAxisAlignment: mainAxisAlignment,
-        children: _getSelectList(),
+    return IntrinsicHeight(
+      child: Container(
+        width:      boxWidth == null ? MediaQuery.of(context).size.width : boxWidth,
+        height:     boxHeight,
+        margin:     margin,
+        padding:    padding,
+        decoration: decoration,
+        color:      color,
+        child: showWrap ? Wrap(
+          spacing: spacing?? 0.0,
+          runSpacing: runSpacing??0.0,
+          children: _getSelectList(),
+        ) : Row(
+          crossAxisAlignment: crossAxisAlignment,
+          mainAxisAlignment: mainAxisAlignment,
+          children: _getSelectList(),
+        ),
       ),
     );
   }
