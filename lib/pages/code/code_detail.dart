@@ -45,7 +45,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-//import 'package:webview_flutter/webview_flutter.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 const String kNavigationExamplePage = '''
 <!DOCTYPE html><html>
@@ -85,13 +85,13 @@ class _CodeDetailPageWidgetState extends State<CodeDetailPageWidget> {
       // We're using a Builder here so we have a context that is below the Scaffold
       // to allow calling Scaffold.of(context) so we can show a snackbar.
       body: Builder(builder: (BuildContext context) {
-        return Text("kdsjfhgkjdhfghdkfjg");
-//      return WebView(
-//        initialUrl: 'https://flutter.dev',
-//        onWebViewCreated: (WebViewController webViewController) {
-//            _controller.complete(webViewController);
-//          },
-//      );
+        // return Text("kdsjfhgkjdhfghdkfjg");
+     return WebView(
+       initialUrl: 'https://blog.csdn.net/q9104422999/article/details/100030344',
+       javascriptMode: JavascriptMode.unrestricted,
+       onWebViewCreated: (WebViewController webViewController) {
+         },
+     );
 //        return WebView(
 //          initialUrl: 'https://www.sina.com.cn/',
 //          javascriptMode: JavascriptMode.unrestricted,
