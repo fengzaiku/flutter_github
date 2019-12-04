@@ -29,7 +29,7 @@ dependencies:
   flutter_easyrefresh: ^2.0.4
   webview_flutter: ^0.3.16
   zefyr: ^0.8.0
-#  flutter_markdown: ^0.3.2
+  flutter_markdown: ^0.3.0
   io: ^0.3.3
 dev_dependencies:
   flutter_test:

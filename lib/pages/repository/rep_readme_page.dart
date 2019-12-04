@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:zefyr/zefyr.dart';
-import 'package:quill_delta/quill_delta.dart';
-import 'package:notus/convert.dart';
-//import 'package:flutter_markdown/flutter_markdown.dart';
+//import 'package:flutter/cupertino.dart';
+//import 'package:zefyr/zefyr.dart';
+//import 'package:quill_delta/quill_delta.dart';
+//import 'package:notus/convert.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 class RepositionReadmePageWidget extends StatefulWidget {
 
@@ -11,9 +12,6 @@ class RepositionReadmePageWidget extends StatefulWidget {
 }
 
 class _RepositionReadmePageWidgetState extends State<RepositionReadmePageWidget> {
-  ZefyrController _controller;
-  Delta delta;
-
   final String _markdownData = """
   This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -62,36 +60,15 @@ To learn React, check out the [React documentation](https://reactjs.org/).
   """;
 
   @override
-  void initState() {
-//    delta = notusMarkdown.decode(_markdownData);
-//    print("delta-------------------------${delta}");
-//    _controller = ZefyrController(NotusDocument.fromDelta(delta));
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-//    _controller.dispose();
-    super.dispose();
-  }
-  @override
   Widget build(BuildContext context) {
-    return Container(
-      child: SafeArea(
-//        child: ZefyrScaffold(
-//          child: ZefyrEditor(
-//            padding: EdgeInsets.all(16),
-//            controller: _controller,
-////            focusNode: _focusNode,
-//          ),
-//        ),
-        child: Text("sdlkjflskdjf "),
-//        child: Markdown(
-//          selectable: true,
-//          data: _markdownData,
-//          imageDirectory: 'https://raw.githubusercontent.com',
-//        ),
-      ),
+    return Scaffold(
+        body: SafeArea(
+          child: MarkdownBody(
+//            selectable: true,
+            data: _markdownData,
+//            imageDirectory: 'https://raw.githubusercontent.com',
+          ),
+        )
     );
   }
 }
