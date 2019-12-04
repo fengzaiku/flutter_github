@@ -5,6 +5,6 @@
 
 version:
   revision: 5b07015393539822da275ab9a348b9e9ce92a29e
-  channel: beta
+  channel: unknown
 
 project_type: app
