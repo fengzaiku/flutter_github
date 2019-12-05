@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-//import 'package:flutter/cupertino.dart';
-//import 'package:zefyr/zefyr.dart';
-//import 'package:quill_delta/quill_delta.dart';
-//import 'package:notus/convert.dart';
- import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 class RepositionReadmePageWidget extends StatefulWidget {
 
@@ -66,11 +62,11 @@ class _RepositionReadmePageWidgetState extends State<RepositionReadmePageWidget>
           child: ListView.builder(
             itemCount: 1,
               itemBuilder: (BuildContext context, int index){
-                  return MarkdownBody(
-                    selectable: true,
-                    data: _markdownData,
-                    imageDirectory: 'https://raw.githubusercontent.com',
-                  );
+                 return MarkdownBody(
+                   selectable: true,
+                   data: _markdownData,
+                   imageDirectory: 'https://raw.githubusercontent.com',
+                 );
               }
           ),
         )

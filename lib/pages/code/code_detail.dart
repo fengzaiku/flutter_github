@@ -85,13 +85,12 @@ class _CodeDetailPageWidgetState extends State<CodeDetailPageWidget> {
       // We're using a Builder here so we have a context that is below the Scaffold
       // to allow calling Scaffold.of(context) so we can show a snackbar.
       body: Builder(builder: (BuildContext context) {
-        // return Text("kdsjfhgkjdhfghdkfjg");
-     return WebView(
-       initialUrl: 'https://blog.csdn.net/q9104422999/article/details/100030344',
-       javascriptMode: JavascriptMode.unrestricted,
-       onWebViewCreated: (WebViewController webViewController) {
-         },
-     );
+        return WebView(
+          initialUrl:
+              'https://blog.csdn.net/q9104422999/article/details/100030344',
+          javascriptMode: JavascriptMode.unrestricted,
+          onWebViewCreated: (WebViewController webViewController) {},
+        );
 //        return WebView(
 //          initialUrl: 'https://www.sina.com.cn/',
 //          javascriptMode: JavascriptMode.unrestricted,
@@ -99,7 +98,7 @@ class _CodeDetailPageWidgetState extends State<CodeDetailPageWidget> {
 //            _controller.complete(webViewController);
 //          },
 //           TODO(iskakaushik): Remove this when collection literals makes it to stable.
-          // ignore: prefer_collection_literals
+        // ignore: prefer_collection_literals
 //          javascriptChannels: <JavascriptChannel>[
 //            _toasterJavascriptChannel(context),
 //          ].toSet(),

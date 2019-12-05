@@ -6,11 +6,11 @@ typedef SliverBuilder = Widget Function(
     BuildContext context, double shrinkOffset, bool overlapsContent);
 
 class FlutterSliverAppbarWidget extends StatefulWidget {
-  final bool pinned;
-  final bool floating;
+  final bool          pinned;
+  final bool          floating;
   final SliverBuilder builder;
-  final double minHeight;
-  final double maxHeight;
+  final double        minHeight;
+  final double        maxHeight;
 
   FlutterSliverAppbarWidget(
       {Key key,

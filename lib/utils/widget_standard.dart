@@ -13,11 +13,14 @@ class DividerVertical {
 
 class RowSelectItem {
   String    selectKey;
+  String    selectName;
+  dynamic    selectValue;
   IconData  selectIcon;
-  dynamic   selectValue;
+
 
   RowSelectItem({
     this.selectKey,
+    this.selectName,
     this.selectValue,
     this.selectIcon,
   });
