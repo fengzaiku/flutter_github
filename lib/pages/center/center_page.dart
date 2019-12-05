@@ -9,7 +9,6 @@ import 'package:flutter_github/pages/center/widget/center_select_item.dart';
 import 'package:flutter_github/widget/flutter_sliver_app_bar.dart';
 import 'package:flutter_github/widget/user_icon.dart';
 import 'package:flutter_github/widget/icon_text.dart';
-import 'package:flutter_github/pages/center/widget/center_select_item.dart';
 import 'package:flutter_github/widget/flutter_github_card.dart';
 
 import 'package:flutter_github/pages/repository/repo_list_page.dart';
@@ -49,12 +48,16 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget>
     Navigator.push(context, CupertinoPageRoute(builder: (context) => _current));
   }
 
+  Future<void> _onReferesh() {
+    return Future.delayed(Duration(milliseconds: 1000));
+  }
+
   @override
   Widget build(BuildContext context) {
     return EasyRefresh.custom(
         header: MaterialHeader(),
-        onRefresh: () {},
-        onLoad: () {},
+        onRefresh: _onReferesh,
+        onLoad: _onReferesh,
         slivers: <Widget>[
           SliverToBoxAdapter(
             child: FgCardItemWidget(

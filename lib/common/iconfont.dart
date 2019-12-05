@@ -82,4 +82,19 @@ class FgIcons{
     0xe617,
     fontFamily: 'FgIcons',
   );
+  // 文件
+  static const IconData  file = const IconData(
+    0xe68f,
+    fontFamily: 'FgIcons',
+  );
+  // 向右箭头
+  static const IconData  rightArrow = const IconData(
+    0xe6ab,
+    fontFamily: 'FgIcons',
+  );
+  // 搜索
+  static const IconData  search = const IconData(
+    0xe60f,
+    fontFamily: 'FgIcons',
+  );
 }

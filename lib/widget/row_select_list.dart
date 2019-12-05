@@ -18,9 +18,9 @@ class RowSelectListWidget extends StatelessWidget {
 
   final double                      spacing;
   final double                      runSpacing;
+  final bool                        showDivider;
+  final bool                        showWrap;
 
-  bool    showDivider;
-  bool    showWrap;
   RowSelectListWidget(
       {
         Key key,

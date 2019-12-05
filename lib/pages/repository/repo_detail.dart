@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_github/pages/repository/rep_readme_page.dart';
 import 'package:flutter_github/pages/repository/repo_dynamic_page.dart';
+import 'package:flutter_github/pages/repository/repo_file_page.dart';
+import 'package:flutter_github/pages/repository/repo_issue_page.dart';
 import 'package:flutter_github/pages/repository/widget/rep_bottom_bar.dart';
 import 'package:flutter_github/widget/tabar_widget.dart';
 
@@ -45,8 +47,8 @@ class _RepositionDetailPageWidgetState extends State<RepositionDetailPageWidget>
       tabViews: <Widget>[
         RepositoryDynamicPageWidget(),
         RepositionReadmePageWidget(),
-        Text("深刻理解电话反馈及时答复"),
-        Text("深刻理解电话反馈及时答复"),
+        RepositionIssuePageWidget(),
+        RepositionFileListWidget(),
       ],
 //      tabItems: <Widget>[],
     );
