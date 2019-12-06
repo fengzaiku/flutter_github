@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_easyrefresh/material_header.dart';
+import 'package:flutter_github/pages/dynamic/widget/dynamic_item.dart';
 import 'package:flutter_github/pages/repository/widget/rep_dynamic_head_card.dart';
-import 'package:flutter_github/pages/center/widget/author_list_item.dart';
 import 'package:flutter_github/pages/repository/widget/rep_detail_select_bar.dart';
 import 'package:flutter_github/widget/flutter_sliver_app_bar.dart';
 
@@ -34,7 +34,7 @@ class _RepositoryDynamicPageWidgetState
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (context, index) {
-              return AuthorPushItemWidget();
+              return DynamicItemWidget(needUserIcon: false,);
             },
             childCount: 40,
           ),

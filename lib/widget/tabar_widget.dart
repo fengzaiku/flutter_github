@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_github/common/iconfont.dart';
 
 class TabarPageWidget extends StatefulWidget {
   final Widget title;
@@ -31,7 +32,8 @@ class TabarPageWidget extends StatefulWidget {
   _TabarPageWidgetState createState() => _TabarPageWidgetState();
 }
 
-class _TabarPageWidgetState extends State<TabarPageWidget> with TickerProviderStateMixin<TabarPageWidget>{
+class _TabarPageWidgetState extends State<TabarPageWidget>
+    with TickerProviderStateMixin<TabarPageWidget> {
   TabController _tabController;
 
   @override
@@ -54,6 +56,43 @@ class _TabarPageWidgetState extends State<TabarPageWidget> with TickerProviderSt
     return Scaffold(
       appBar: AppBar(
         title: widget.title,
+        actions: <Widget>[
+          PopupMenuButton(
+            onCanceled: (){
+
+            },
+            onSelected: (select){
+              print(select);
+            },
+            child: Icon(FgIcons.ellipsis),
+            itemBuilder: (BuildContext context){
+              return [
+                PopupMenuItem(
+                  value: "浏览器打开",
+//                  textStyle: TextStyle(color: Colors.black),
+                  child: Text('浏览器打开'),
+                ),
+                PopupMenuItem(
+                  value: "复制链接",
+                  child: Text('复制链接'),
+                ),
+                PopupMenuItem(
+                  value: "分享",
+                  child: Text('分享'),
+                ),
+                PopupMenuItem(
+                  value: "版本",
+                  child: Text('版本'),
+                ),
+                PopupMenuItem(
+                  value: "分支",
+                  child: Text('分支'),
+                ),
+              ];
+            },
+          ),
+          SizedBox(width: 20,)
+        ],
         bottom: TabBar(
           controller: _tabController,
           tabs: widget.tabItems,

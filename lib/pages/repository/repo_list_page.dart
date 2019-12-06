@@ -11,27 +11,29 @@ class RepositoryListWidget extends StatefulWidget {
 class _RepositoryListWidgetState extends State<RepositoryListWidget> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("仓库列表")),
-      body: EasyRefresh.custom(
-        header: MaterialHeader(),
-        onRefresh: () async {
-          await Future.delayed(Duration(seconds: 2), () {
-            setState(() {
+    return Material(
+      child: Scaffold(
+        appBar: AppBar(title: Text("仓库列表")),
+        body: EasyRefresh.custom(
+          header: MaterialHeader(),
+          onRefresh: () async {
+            await Future.delayed(Duration(seconds: 2), () {
+              setState(() {
 //                _count = 20;
+              });
             });
-          });
-        },
-        slivers: <Widget>[
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return RepositionItemWidget();
-              },
-              childCount: 10,
-            ),
-          )
-        ],
+          },
+          slivers: <Widget>[
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                  return RepositionItemWidget();
+                },
+                childCount: 10,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

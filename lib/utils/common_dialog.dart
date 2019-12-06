@@ -44,12 +44,13 @@ class CommonDialog {
           return AboutDialog(
             applicationName: 'APP名称',
             applicationVersion: '1.0.9527',
-            applicationIcon: Icon(Icons.settings_applications),
-            // applicationLegalese:'北京',
+            applicationIcon: SizedBox(
+              width: 40,
+              height: 40,
+              child: Icon(Icons.settings_applications),
+            ),
+             applicationLegalese:'北京',
             children: <Widget>[
-              Text('我是文本'),
-              Text('我是文本'),
-              Text('我是文本'),
               Text('我是文本'),
             ],
           );

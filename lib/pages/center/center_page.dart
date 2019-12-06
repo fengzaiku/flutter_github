@@ -4,8 +4,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_easyrefresh/material_header.dart';
 import 'package:flutter_github/common/iconfont.dart';
-import 'package:flutter_github/pages/center/widget/author_list_item.dart';
 import 'package:flutter_github/pages/center/widget/center_select_item.dart';
+import 'package:flutter_github/pages/dynamic/widget/dynamic_item.dart';
 import 'package:flutter_github/widget/flutter_sliver_app_bar.dart';
 import 'package:flutter_github/widget/user_icon.dart';
 import 'package:flutter_github/widget/icon_text.dart';
@@ -21,8 +21,7 @@ class MyCenterPageWidget extends StatefulWidget {
   _MyCenterPageWidgetState createState() => _MyCenterPageWidgetState();
 }
 
-class _MyCenterPageWidgetState extends State<MyCenterPageWidget>
-    with TickerProviderStateMixin<MyCenterPageWidget> {
+class _MyCenterPageWidgetState extends State<MyCenterPageWidget> {
   void _jumpToChildrenPage<String>(name) {
     Widget _current;
     print(name);
@@ -193,7 +192,7 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget>
           SliverList(
             delegate:
                 SliverChildBuilderDelegate((BuildContext context, int index) {
-              return AuthorPushItemWidget();
+              return DynamicItemWidget();
             }, childCount: 20),
           ),
         ]);

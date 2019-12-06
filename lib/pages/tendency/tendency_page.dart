@@ -9,8 +9,7 @@ class TendencyPageWidget extends StatefulWidget {
   _TendencyPageWidgetState createState() => _TendencyPageWidgetState();
 }
 
-class _TendencyPageWidgetState extends State<TendencyPageWidget>
-    with SingleTickerProviderStateMixin {
+class _TendencyPageWidgetState extends State<TendencyPageWidget>{
   Future<void> _onRefreshGetDate() {
     return Future.delayed(Duration(milliseconds: 1000)).then((value) {});
   }

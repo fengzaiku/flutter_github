@@ -32,7 +32,7 @@ class _FlutterSliverAppbarWidgetState extends State<FlutterSliverAppbarWidget>
   Widget build(BuildContext context) {
     return SliverPersistentHeader(
       pinned: widget.pinned,
-//      floating: widget.floating,
+      floating: widget.floating,
       delegate: SliverPersistentHeaderDelegateWidget(
         minHeight: widget.minHeight,
         maxHeight: widget.maxHeight,

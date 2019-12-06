@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_github/pages/home/home_widget/home_drawer.dart';
+import 'package:flutter_github/pages/drawer/home_drawer.dart';
 import 'package:flutter_github/pages/home/home_widget/home_buttom_navigation_bar.dart';
 
 import 'package:flutter_github/pages/dynamic/dynamic_page.dart';

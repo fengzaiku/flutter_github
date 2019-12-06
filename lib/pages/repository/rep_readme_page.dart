@@ -58,18 +58,20 @@ class _RepositionReadmePageWidgetState extends State<RepositionReadmePageWidget>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-          child: ListView.builder(
-            itemCount: 1,
-              itemBuilder: (BuildContext context, int index){
-                 return MarkdownBody(
-                   selectable: true,
-                   data: _markdownData,
-                   imageDirectory: 'https://raw.githubusercontent.com',
-                 );
-              }
-          ),
-        )
+      body: RefreshIndicator(
+          onRefresh: (){
+            return Future.delayed(Duration(milliseconds: 1000));
+          },
+          child: SingleChildScrollView(
+            padding: EdgeInsets.only(left: 10,right: 10),
+            physics: BouncingScrollPhysics(),
+            child: MarkdownBody(
+              selectable: true,
+              data: _markdownData,
+              imageDirectory: 'https://raw.githubusercontent.com',
+            ),
+          )
+      ),
     );
   }
 }

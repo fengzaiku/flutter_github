@@ -97,4 +97,19 @@ class FgIcons{
     0xe60f,
     fontFamily: 'FgIcons',
   );
+  // 消息
+  static const IconData information = const IconData(
+    0xe67c,
+    fontFamily: 'FgIcons',
+  );
+  // 选项
+  static const IconData option = const IconData(
+    0xe67a,
+    fontFamily: 'FgIcons',
+  );
+  // 省略号
+  static const IconData ellipsis = const IconData(
+    0xe637,
+    fontFamily: 'FgIcons',
+  );
 }
