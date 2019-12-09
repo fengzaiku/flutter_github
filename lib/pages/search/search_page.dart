@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:flutter_github/common/iconfont.dart';
+//import 'package:flutter_github/common/iconfont.dart';
 import 'package:flutter_github/pages/search/widget/search_select_bar.dart';
 //import 'package:flutter_github/pages/user/widget/user_item.dart';
 import 'package:flutter_github/widget/flutter_sliver_app_bar.dart';
@@ -16,16 +16,19 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        endDrawer: Drawer(
+          child: Text("卡拉圣诞节福克斯的肌肤"),
+        ),
         appBar: AppBar(
           title: Text("搜索"),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(FgIcons.menus),
-              onPressed: () {
-                print("展示菜单");
-              },
-            )
-          ],
+//          actions: <Widget>[
+//            IconButton(
+//              icon: Icon(FgIcons.menus),
+//              onPressed: () {
+//                print("展示菜单");
+//              },
+//            )
+//          ],
         ),
         body: EasyRefresh.custom(
             slivers: [
