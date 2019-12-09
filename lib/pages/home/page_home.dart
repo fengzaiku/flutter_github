@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_github/common/iconfont.dart';
 import 'package:flutter_github/pages/drawer/home_drawer.dart';
 import 'package:flutter_github/pages/home/home_widget/home_buttom_navigation_bar.dart';
 
@@ -23,6 +24,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     return Scaffold(
       appBar: AppBar(
         title: Text("首页"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(FgIcons.search),
+            onPressed: (){
+              print("搜索");
+            },
+          )
+        ],
       ),
       drawer: HomeDrawerWidget(),
       body: PageView(
