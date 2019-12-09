@@ -94,7 +94,7 @@ class FgIcons{
   );
   // 搜索
   static const IconData  search = const IconData(
-    0xe60f,
+    0xe623,
     fontFamily: 'FgIcons',
   );
   // 消息
@@ -110,6 +110,11 @@ class FgIcons{
   // 省略号
   static const IconData ellipsis = const IconData(
     0xe637,
+    fontFamily: 'FgIcons',
+  );
+  // 菜单
+  static const IconData menus = const IconData(
+    0xe633,
     fontFamily: 'FgIcons',
   );
 }

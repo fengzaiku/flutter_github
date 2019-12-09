@@ -28,11 +28,15 @@ class FlutterSliverAppbarWidget extends StatefulWidget {
 
 class _FlutterSliverAppbarWidgetState extends State<FlutterSliverAppbarWidget>
     with TickerProviderStateMixin {
+
+//  final _flutterSliverApp = GlobalKey<ScaffoldState>();
+  final _flutterSliverApp = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return SliverPersistentHeader(
-      pinned: widget.pinned,
-      floating: widget.floating,
+      key: _flutterSliverApp,
+      pinned: widget?.pinned ?? false,
+      floating: widget?.floating ?? false,
       delegate: SliverPersistentHeaderDelegateWidget(
         minHeight: widget.minHeight,
         maxHeight: widget.maxHeight,

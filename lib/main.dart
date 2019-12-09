@@ -1,4 +1,4 @@
-import 'dart:async';
+//import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
@@ -21,21 +21,23 @@ int counterReducer(int state, dynamic action) {
   return state;
 }
 
-void main() {
-  runZoned(() {
-    ErrorWidget.builder = (FlutterErrorDetails details) {
-      print(details);
-      Zone.current.handleUncaughtError(details.exception, details.stack);
-      return Container(
-        color: Colors.transparent,
-      );
-    };
-    runApp(FlutterReduxApp());
-  }, onError: (Object exception, StackTrace stack) {
-    print(exception);
-    print(stack);
-  });
-}
+void main() => runApp(FlutterReduxApp());
+
+//void main() {
+//  runZoned(() {
+//    ErrorWidget.builder = (FlutterErrorDetails details) {
+//      print(details);
+//      Zone.current.handleUncaughtError(details.exception, details.stack);
+//      return Container(
+//        color: Colors.transparent,
+//      );
+//    };
+//    runApp(FlutterReduxApp());
+//  }, onError: (Object exception, StackTrace stack) {
+//    print(exception);
+//    print(stack);
+//  });
+//}
 
 // void main() => runApp(MyApp());
 class FlutterReduxApp extends StatelessWidget {
@@ -60,6 +62,9 @@ class FlutterReduxApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
         ),
+//        home: Scaffold(
+//          body: Text("看似简单发货卡死的回复"),
+//        ),
         initialRoute: 'home_page',
         routes: {
           WelcomePageWidget.routerName: (context) => WelcomePageWidget(),

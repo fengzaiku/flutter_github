@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:flutter_easyrefresh/material_header.dart';
+//import 'package:flutter_easyrefresh/material_header.dart';
 import 'package:flutter_github/pages/push/widget/push_code_header.dart';
 import 'package:flutter_github/pages/push/widget/push_code_item.dart';
 
@@ -10,7 +10,22 @@ class PushDetailPageWidget extends StatefulWidget {
 }
 
 class _PushDetailPageWidgetState extends State<PushDetailPageWidget> {
+  final GlobalKey<_PushDetailPageWidgetState> _pushDetailPage= GlobalKey();
+  EasyRefreshController _controller;
   int _count = 20;
+
+  @override
+  void initState() {
+    _controller = EasyRefreshController();
+    super.initState();
+  }
+
+//  @override
+//  void dispose() {
+//    super.dispose();
+//    _controller.dispose();
+//  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,9 +33,12 @@ class _PushDetailPageWidgetState extends State<PushDetailPageWidget> {
         title: Text("push 详情页"),
       ),
       body:  EasyRefresh.custom(
-        header: MaterialHeader(),
+        key: _pushDetailPage,
+        controller: _controller,
+//        header: MaterialHeader(),
         onRefresh: () async {
           await Future.delayed(Duration(seconds: 2), () {
+            if(!mounted)return;
             setState(() {
               _count = 20;
             });
@@ -36,6 +54,7 @@ class _PushDetailPageWidgetState extends State<PushDetailPageWidget> {
                 return PushCodeItemWidget();
               },
               childCount: _count,
+//              childCount: 20,
             ),
           ),
         ],
