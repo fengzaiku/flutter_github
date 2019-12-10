@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_easyrefresh/material_footer.dart';
-import 'package:flutter_easyrefresh/material_header.dart';
+//import 'package:flutter_easyrefresh/material_header.dart';
 import 'package:flutter_github/pages/repository/widget/issue_item.dart';
 import 'package:flutter_github/pages/repository/widget/issue_tab.dart';
 import 'package:flutter_github/widget/search_input.dart';
@@ -22,7 +22,7 @@ class _RepositionIssuePageWidgetState extends State<RepositionIssuePageWidget> {
         backgroundColor: Colors.white70,
       ),
       body: EasyRefresh.custom(
-          header: MaterialHeader(),
+//          header: MaterialHeader(),
           footer: MaterialFooter(),
           onRefresh: () async {
             return await Future.delayed(Duration(milliseconds: 1000));

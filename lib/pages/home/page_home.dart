@@ -6,7 +6,9 @@ import 'package:flutter_github/pages/home/home_widget/home_buttom_navigation_bar
 
 import 'package:flutter_github/pages/dynamic/dynamic_page.dart';
 import 'package:flutter_github/pages/center/center_page.dart';
+import 'package:flutter_github/pages/search/search_page.dart';
 import 'package:flutter_github/pages/tendency/tendency_page.dart';
+//import 'package:flutter_github/utils/common_dialog.dart';
 
 class HomePageWidget extends StatefulWidget {
   HomePageWidget({Key key}) : super(key: key);
@@ -15,9 +17,21 @@ class HomePageWidget extends StatefulWidget {
 }
 
 class _HomePageWidgetState extends State<HomePageWidget> {
-  // final TabController tabController;
-  final PageController _controller = PageController();
+//   final TabController tabController;
+  PageController _controller;
   int _currentIndex = 0;
+
+  @override
+  void initState() {
+    _controller = PageController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +42,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           IconButton(
             icon: Icon(FgIcons.search),
             onPressed: (){
-              print("搜索");
+//              CommonDialog.flutterGeneralDialog(context, SearchPageWidget());
+              Navigator.push(context, CupertinoPageRoute(builder: (BuildContext context) => SearchPageWidget()));
             },
           )
         ],
       ),
       drawer: HomeDrawerWidget(),
+//      body: Text("空手道解放和喀什酱豆腐"),
       body: PageView(
         controller: _controller,
         onPageChanged: (int index) {
@@ -51,10 +67,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       bottomNavigationBar: HomeButtonNavigationBarWidget(
         currentIndex: _currentIndex,
         onChanged: (int index) {
-          print(index);
           setState(() {
-            // _controller.jumpTo(MediaQuery.of(context).size.width * index);
-            _controller.jumpToPage(index);
+             _controller.jumpTo(MediaQuery.of(context).size.width * index);
+//            _controller.jumpToPage(index);
           });
           // return index;
         },

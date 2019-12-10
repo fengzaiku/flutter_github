@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:flutter_easyrefresh/material_header.dart';
+//import 'package:flutter_easyrefresh/material_header.dart';
 import 'package:flutter_github/widget/reposition_item.dart';
 
 class RepositoryListWidget extends StatefulWidget {
@@ -15,7 +15,7 @@ class _RepositoryListWidgetState extends State<RepositoryListWidget> {
       child: Scaffold(
         appBar: AppBar(title: Text("仓库列表")),
         body: EasyRefresh.custom(
-          header: MaterialHeader(),
+//          header: MaterialHeader(),
           onRefresh: () async {
             await Future.delayed(Duration(seconds: 2), () {
               setState(() {

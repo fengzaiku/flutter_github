@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_github/store/app_state.dart';
+import 'package:flutter_github/store/app_reducer.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_github/pages/welcome_page.dart';
@@ -37,9 +39,11 @@ void main() {
   });
 }
 
-// void main() => runApp(MyApp());
 class FlutterReduxApp extends StatelessWidget {
-  final Store store = new Store<int>(counterReducer, initialState: 0);
+  final Store store = Store<AppState>(
+    appReducer,
+    initialState: AppInitial()
+  );
 
   // This widget is the root of your application.
   @override
@@ -60,6 +64,9 @@ class FlutterReduxApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
         ),
+//        home: Scaffold(
+//          body: Text("看似简单发货卡死的回复"),
+//        ),
         initialRoute: 'home_page',
         routes: {
           WelcomePageWidget.routerName: (context) => WelcomePageWidget(),

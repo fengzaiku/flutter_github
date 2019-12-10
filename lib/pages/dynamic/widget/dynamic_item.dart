@@ -46,7 +46,6 @@ class DynamicItemWidget extends StatelessWidget {
 //      padding: EdgeInsets.all(10),
       child: FlatButton(
         onPressed: () {
-          print("不要点击我");
           Navigator.push(context,
               CupertinoPageRoute(builder: (context) => PushDetailPageWidget()));
         },

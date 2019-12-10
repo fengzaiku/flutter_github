@@ -1,5 +1,4 @@
 import 'dart:async';
-//import 'package:io/io.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_github/utils/widget_standard.dart';
 
@@ -21,8 +20,8 @@ class CommonDialog {
                 clipBehavior: config?.clipBehavior,
                 child: ConstrainedBox(
                   constraints: BoxConstraints(
-                    maxHeight: maxHeight,
-                    maxWidth: maxWidth
+                    maxHeight: maxHeight??0.0,
+                    maxWidth: maxWidth??0.0
                   ),
                   child: Padding(
                     padding: config?.padding ?? EdgeInsets.all(10),
@@ -34,6 +33,30 @@ class CommonDialog {
               ),
           );
         });
+  }
+
+  static Future<Null> flutterGeneralDialog(BuildContext context, Widget builder){
+    return showGeneralDialog(
+        context: context,
+        barrierLabel: "什么情况",
+        barrierColor: Color(0x01000000),
+        transitionDuration: const Duration(milliseconds: 200),
+        barrierDismissible: true,
+        pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation){
+          return Builder(builder: (BuildContext context){
+            return builder;
+          });
+        },
+      transitionBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child){
+          return FadeTransition(
+            opacity: CurvedAnimation(
+              parent: animation,
+              curve: Curves.easeInOut
+            ),
+            child: child,
+          );
+      }
+    );
   }
 
   static Future<Null> aboutDialog(context) {

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:flutter_easyrefresh/material_header.dart';
+//import 'package:flutter_easyrefresh/material_header.dart';
 import 'package:flutter_github/common/iconfont.dart';
 import 'package:flutter_github/pages/center/widget/center_select_item.dart';
 import 'package:flutter_github/pages/dynamic/widget/dynamic_item.dart';
@@ -22,9 +22,12 @@ class MyCenterPageWidget extends StatefulWidget {
 }
 
 class _MyCenterPageWidgetState extends State<MyCenterPageWidget> {
+  final GlobalKey<_MyCenterPageWidgetState> _centerPage = new GlobalKey();
+//  EasyRefreshController _controller;
+
   void _jumpToChildrenPage<String>(name) {
     Widget _current;
-    print(name);
+//    print(name);
     switch (name) {
       case "warehouse":
         _current = RepositoryListWidget();
@@ -51,10 +54,25 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget> {
     return Future.delayed(Duration(milliseconds: 1000));
   }
 
+//  @override
+//  void initState() {
+//    _controller = EasyRefreshController();
+//    super.initState();
+//  }
+//
+//  @override
+//  void dispose() {
+//    _controller.dispose();
+//    super.dispose();
+//  }
+
   @override
   Widget build(BuildContext context) {
+//    return Text("路上看到放假啦空手道解放");
     return EasyRefresh.custom(
-        header: MaterialHeader(),
+        key: _centerPage,
+//        controller: _controller,
+//        header: MaterialHeader(),
         onRefresh: _onReferesh,
         onLoad: _onReferesh,
         slivers: <Widget>[
@@ -136,9 +154,7 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget> {
                 bool overlapsContent) {
               double radius = ((50 - shrinkOffset) / 50) * 10;
               return CenterItemSelectWidget(
-                  onPressed: _jumpToChildrenPage,
-                  radius: radius
-              );
+                  onPressed: _jumpToChildrenPage, radius: radius);
 //              return FgCardItemWidget(
 //                padding: EdgeInsets.all(0),
 //                elevation: 0,
