@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:flutter_github/pages/search/widget/search_filter_list.dart';
 //import 'package:flutter_github/common/iconfont.dart';
 import 'package:flutter_github/pages/search/widget/search_select_bar.dart';
 //import 'package:flutter_github/pages/user/widget/user_item.dart';
@@ -16,7 +17,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        endDrawer: SearchSelectListWidget(),
+        endDrawer: SearchFilterListWidget(),
         appBar: AppBar(
           title: Text("搜索"),
 //          actions: <Widget>[
