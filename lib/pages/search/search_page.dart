@@ -16,9 +16,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        endDrawer: Drawer(
-          child: Text("卡拉圣诞节福克斯的肌肤"),
-        ),
+        endDrawer: SearchSelectListWidget(),
         appBar: AppBar(
           title: Text("搜索"),
 //          actions: <Widget>[

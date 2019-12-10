@@ -14,7 +14,7 @@ class DividerVertical {
 class RowSelectItem {
   String    selectKey;
   String    selectName;
-  dynamic    selectValue;
+  dynamic   selectValue;
   IconData  selectIcon;
 
 
@@ -24,6 +24,14 @@ class RowSelectItem {
     this.selectValue,
     this.selectIcon,
   });
+}
+
+class SearchFilterModel {
+  String  name;
+  String  value;
+  bool    select;
+
+  SearchFilterModel({this.name, this.value, this.select});
 }
 
 class ConfigurationCard {
