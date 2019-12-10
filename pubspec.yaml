@@ -30,6 +30,7 @@ dependencies:
   zefyr: ^0.8.0
   flutter_markdown: ^0.3.1
   webview_flutter: ^0.3.17
+  json_annotation: ^3.0.0
 #  io: ^0.3.3
 dev_dependencies:
   flutter_test:
@@ -40,6 +41,8 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
+  build_runner: ^1.7.2
+  json_serializable: ^3.2.3
 flutter:
 
   # The following line ensures that the Material Icons font is

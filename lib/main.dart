@@ -1,5 +1,7 @@
-//import 'dart:async';
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_github/store/app_state.dart';
+import 'package:flutter_github/store/app_reducer.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_github/pages/welcome_page.dart';
@@ -21,27 +23,27 @@ int counterReducer(int state, dynamic action) {
   return state;
 }
 
-void main() => runApp(FlutterReduxApp());
+void main() {
+  runZoned(() {
+    ErrorWidget.builder = (FlutterErrorDetails details) {
+      print(details);
+      Zone.current.handleUncaughtError(details.exception, details.stack);
+      return Container(
+        color: Colors.transparent,
+      );
+    };
+    runApp(FlutterReduxApp());
+  }, onError: (Object exception, StackTrace stack) {
+    print(exception);
+    print(stack);
+  });
+}
 
-//void main() {
-//  runZoned(() {
-//    ErrorWidget.builder = (FlutterErrorDetails details) {
-//      print(details);
-//      Zone.current.handleUncaughtError(details.exception, details.stack);
-//      return Container(
-//        color: Colors.transparent,
-//      );
-//    };
-//    runApp(FlutterReduxApp());
-//  }, onError: (Object exception, StackTrace stack) {
-//    print(exception);
-//    print(stack);
-//  });
-//}
-
-// void main() => runApp(MyApp());
 class FlutterReduxApp extends StatelessWidget {
-  final Store store = new Store<int>(counterReducer, initialState: 0);
+  final Store store = Store<AppState>(
+    appReducer,
+    initialState: AppInitial()
+  );
 
   // This widget is the root of your application.
   @override
