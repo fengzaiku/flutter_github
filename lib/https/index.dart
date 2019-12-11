@@ -22,7 +22,6 @@ class Http {
     ProgressCallback onSendProgress,
     ProgressCallback onReceiveProgress,
   }) async {
-
     Response response;
     try {
       response = await dio.post(path, data: data);
