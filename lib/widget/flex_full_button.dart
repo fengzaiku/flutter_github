@@ -9,16 +9,18 @@ class FlexFullButton extends StatelessWidget {
     this.textStyle,
     this.fontSize,
     this.textColor,
-    this.color
+    this.color,
+    this.onPressed
     }):super(key:key);
 
   final MainAxisAlignment mainAxisAlignment;
-  final Axis direction;
-  final String text;
-  final TextStyle textStyle;
-  final double fontSize;
-  final Color textColor;
-  final Color color;
+  final Axis              direction;
+  final String            text;
+  final TextStyle         textStyle;
+  final double            fontSize;
+  final Color             textColor;
+  final Color             color;
+  final VoidCallback      onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class FlexFullButton extends StatelessWidget {
       // highlightElevation:1,
       // focusElevation:1,
       onPressed: () {
-
+        onPressed?.call();
       },
       child: Flex(
         mainAxisAlignment: this.mainAxisAlignment??MainAxisAlignment.center,

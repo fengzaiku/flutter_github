@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_github/pages/login/widget/login_text_input.dart';
+import 'package:flutter_github/store/actions/user_action.dart';
 import 'package:flutter_github/widget/flex_full_button.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 class LoginPageWidget extends StatefulWidget {
   LoginPageWidget({Key key}) : super(key: key);
@@ -8,6 +11,18 @@ class LoginPageWidget extends StatefulWidget {
 }
 
 class _LoginPageWidgetState extends State<LoginPageWidget> {
+  String  _username;
+  String  _password;
+
+  void _loginInputValueChange(String name, String value){
+      if(name == 'username'){
+        _username = value;
+      }
+      if(name == 'password'){
+        _password = value;
+      }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,24 +54,42 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                       SizedBox(
                         height: 20,
                       ),
-                      TextFormField(
-                        decoration: InputDecoration(
-                            icon: Icon(Icons.person), hintText: "请输入用户名"),
+                      LoginTextInput(
+                        icon: Icons.person,
+                        name: "username",
+                        hintText: "请输入用户名",
+                        onChanged: _loginInputValueChange,
                       ),
                       SizedBox(
                         height: 20,
                       ),
-                      TextFormField(
+                      LoginTextInput(
+                        name: "password",
+                        icon: Icons.lock,
                         obscureText: true,
-                        decoration: InputDecoration(
-                            icon: Icon(Icons.lock), hintText: "请输入密码"),
+                        hintText: "请输入密码",
+                        onChanged: _loginInputValueChange,
                       ),
                       SizedBox(
                         height: 20,
                       ),
-                      FlexFullButton(
-                        text: "登录",
+                      StoreBuilder(
+                        builder: (context, store){
+                          return FlexFullButton(
+                            text: store.state,
+                            onPressed: (){
+                              print("$_username---------------$_password");
+                              store.dispatch(action);
+                            },
+                          );
+                        },
                       ),
+//                      FlexFullButton(
+//                        text: "登录",
+//                        onPressed: (){
+//                          print("$_username---------------$_password");
+//                        },
+//                      ),
                       SizedBox(
                         height: 20,
                       ),

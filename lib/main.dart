@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_github/store/app_state.dart';
 import 'package:flutter_github/store/app_reducer.dart';
+import 'package:flutter_github/store/middleware/chunk.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_github/pages/welcome_page.dart';
@@ -11,17 +12,6 @@ import 'package:flutter_github/pages/home/page_home.dart';
 
 // One simple action: Increment
 enum Actions { Increment }
-
-// The reducer, which takes the previous count and increments it in response
-// to an Increment action.
-int counterReducer(int state, dynamic action) {
-  if (action == Actions.Increment) {
-    print("更改state");
-    return state + 1;
-  }
-
-  return state;
-}
 
 void main() {
   runZoned(() {
@@ -39,10 +29,17 @@ void main() {
   });
 }
 
+//String reducer(String state, dynamic action) =>
+//    action is String ? action : state;
+
 class FlutterReduxApp extends StatelessWidget {
   final Store store = Store<AppState>(
     appReducer,
-    initialState: AppInitial()
+//    reducer,
+//    initialState: AppInitial(),
+    middleware: [
+      thunkMiddleware
+    ]
   );
 
   // This widget is the root of your application.
@@ -67,7 +64,7 @@ class FlutterReduxApp extends StatelessWidget {
 //        home: Scaffold(
 //          body: Text("看似简单发货卡死的回复"),
 //        ),
-        initialRoute: 'home_page',
+        initialRoute: 'login_page',
         routes: {
           WelcomePageWidget.routerName: (context) => WelcomePageWidget(),
           'login_page': (context) => LoginPageWidget(),
