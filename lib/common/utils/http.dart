@@ -18,7 +18,10 @@ class Http {
     Response response;
     try {
       response = await dio.post(path, data: data);
-    } catch (e) {}
+    } catch (e) {
+      print("error-------------------$e");
+    }
+    print("response-------------------$response");
 //    return response.data;
     return response.data;
   }
