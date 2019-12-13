@@ -1,6 +1,5 @@
-//import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:flutter_github/https/response/response_data.dart';
+import 'package:flutter_github/common/const/response_data.dart';
 
 class Http {
   Dio dio = Dio();
@@ -11,20 +10,18 @@ class Http {
     try {
       response = await dio.request(path, data: data, options: options);
     } catch (e) {}
+
+    return response.data;
   }
 
-  Future<ResponseData> post(
-    String path, {
-    data,
-    Map<String, dynamic> params,
-    Options options,
-    CancelToken cancelToken,
-    ProgressCallback onSendProgress,
-    ProgressCallback onReceiveProgress,
-  }) async {
+  Future<ResponseData> post(String path, data) async {
     Response response;
     try {
       response = await dio.post(path, data: data);
     } catch (e) {}
+//    return response.data;
+    return response.data;
   }
 }
+
+final Http http = Http();

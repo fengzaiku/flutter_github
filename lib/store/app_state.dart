@@ -7,11 +7,3 @@ class AppState {
 
   AppState({this.userInfo});
 }
-
-class AppInitial implements AppState {
-  User userInfo = User.empty();
-
-  AppInitial({
-    this.userInfo,
-  });
-}
