@@ -5,5 +5,8 @@ class AppState {
 //  用户信息
   User userInfo;
 
-  AppState({this.userInfo});
+//  登录状态
+  bool loginStatus;
+
+  AppState({this.userInfo,this.loginStatus});
 }

@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 class UserIconWidget extends StatelessWidget {
   final double width;
   final double height;
+  final String image;
   final VoidCallback onPressed;
 
-  UserIconWidget({
-    Key key,
-    this.width = 40.0,
-    this.height = 40.0,
-    this.onPressed
-  }) : super(key: key);
+  UserIconWidget(
+      {Key key,
+      this.width = 40.0,
+      this.height = 40.0,
+      this.image,
+      this.onPressed})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class UserIconWidget extends StatelessWidget {
       child: ClipOval(
         child: FadeInImage(
           placeholder: AssetImage("statics/images/logo.png"),
-          image: NetworkImage(
+          image: NetworkImage(image ??
               "http://e.hiphotos.baidu.com/image/pic/item/4610b912c8fcc3cef70d70409845d688d53f20f7.jpg"),
           width: width,
           height: height,

@@ -37,7 +37,8 @@ class FlutterReduxApp extends StatelessWidget {
   final Store store = Store<AppState>(
     appReducer,
     initialState: AppState(
-      userInfo: User.empty()
+      userInfo: User.empty(),
+      loginStatus: false
     ),
     middleware: [
       thunkMiddleware

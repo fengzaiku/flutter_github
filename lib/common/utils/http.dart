@@ -1,28 +1,62 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_github/common/const/response_data.dart';
+import 'package:flutter_github/common/utils/interceptors/connectivity_error.dart';
+import 'package:flutter_github/common/utils/interceptors/header.dart';
+import 'package:flutter_github/common/utils/interceptors/token.dart';
 
 class Http {
   Dio dio = Dio();
 
-  Future<ResponseData> request(String path,
-      {data, Map params, Options options}) async {
+  Http() {
+//    token
+    dio.interceptors.add(TokenInterceptors());
+//    请求日志
+    dio.interceptors.add(LogInterceptor(responseBody: false));
+//    网络链接状态判断
+    dio.interceptors.add(ErrorConnectivityInterceptors(dio));
+//    请求头设置包括，超时时间
+    dio.interceptors.add(HeaderInterceptors());
+  }
+
+  Future<Response> request(String path,data, Options options) async {
     Response response;
     try {
       response = await dio.request(path, data: data, options: options);
-    } catch (e) {}
-
+    } on DioError catch (e) {
+      print("error-------------------$e");
+    }
+    print("response-------------------$response");
     return response.data;
   }
 
-  Future<ResponseData> post(String path, data) async {
+  Future<Response> post(String path, data) async {
     Response response;
     try {
       response = await dio.post(path, data: data);
-    } catch (e) {
+    } on DioError catch (e) {
       print("error-------------------$e");
     }
     print("response-------------------$response");
 //    return response.data;
+    return response;
+  }
+
+  Future get(String path, {
+    Map<String, dynamic> queryParameters,
+    Options options,
+    CancelToken cancelToken,
+    ProgressCallback onReceiveProgress,
+  }) async {
+    Response response;
+    try {
+      response = await dio.get(path,queryParameters: queryParameters,
+        options: options,
+        cancelToken:cancelToken,
+        onReceiveProgress: onReceiveProgress,
+      );
+    } on DioError catch (e) {
+      print("error-------------------$e");
+    }
+    print("response-------------------${response.toString()}");
     return response.data;
   }
 }

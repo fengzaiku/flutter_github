@@ -80,16 +80,14 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                           ),
                           StoreConnector<AppState, dynamic>(
                               converter: (Store<AppState> store){
-                                return (String username, String password) =>
-                                    store.dispatch(loginAction(username, password));
+                                return (String username, String password,BuildContext context) =>
+                                    store.dispatch(loginAction(username, password, context));
                               },
                             builder: (BuildContext context, login){
                                 return FlexFullButton(
                                   text: store.state.userInfo.name,
                                   onPressed: (){
-                                    print("$_username---------------$_password---------------------${store.state}");
-
-                                    login(_username,_password);
+                                    login(_username,_password,context);
 //                              StoreProvider.of<AppState>(context).dispatch(loginAction(_username,_password));
                                   },
                                 );

@@ -117,4 +117,9 @@ class FgIcons{
     0xe633,
     fontFamily: 'FgIcons',
   );
+  // 位置
+  static const IconData location = const IconData(
+    0xe63b,
+    fontFamily: 'FgIcons',
+  );
 }
