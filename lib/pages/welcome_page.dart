@@ -19,6 +19,7 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
     super.didChangeDependencies();
     Future.delayed(Duration(seconds: 2,milliseconds: 500),() async{
       bool isLogin = await _initUserInfo();
+      print("登陆过了-------------$isLogin");
       if(isLogin){
         PageRouter.replaceHome(context);
       } else {

@@ -5,6 +5,9 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_github/common/const/api.dart';
 
 import 'package:flutter_github/common/iconfont.dart';
+import 'package:flutter_github/common/utils/http.dart';
+import 'package:flutter_github/model/Event.dart';
+import 'package:flutter_github/model/EventList.dart';
 import 'package:flutter_github/model/User.dart';
 import 'package:flutter_github/pages/center/widget/center_select_item.dart';
 import 'package:flutter_github/pages/dynamic/widget/dynamic_item.dart';
@@ -30,8 +33,12 @@ class MyCenterPageWidget extends StatefulWidget {
 
 class _MyCenterPageWidgetState extends State<MyCenterPageWidget> {
   final GlobalKey<_MyCenterPageWidgetState> _centerPage = new GlobalKey();
+  List<Event> eventList = List();
 
-//  EasyRefreshController _controller;
+//  final User userInfo = StoreProvider.of(context).state;
+//  final
+
+  EasyRefreshController _controller;
 
   void _jumpToChildrenPage<String>(name) {
     Widget _current;
@@ -62,17 +69,33 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget> {
     return Future.delayed(Duration(milliseconds: 1000));
   }
 
-//  @override
-//  void initState() {
-//    _controller = EasyRefreshController();
-//    super.initState();
-//  }
-//
-//  @override
-//  void dispose() {
-//    _controller.dispose();
-//    super.dispose();
-//  }
+  Future<void> _onLoadMore() async {
+    var resultDate = await http.get(Api.getUserEvent("fengzaiku"));
+
+      EventList events = EventList.fromJson(resultDate);
+
+      setState(() {
+        eventList.addAll(events.eventList);
+      });
+  }
+
+  @override
+  void initState() {
+    _controller = EasyRefreshController();
+    _controller.callLoad();
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,9 +105,10 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget> {
       builder: (BuildContext context, store) {
         User userInfo = store.state.userInfo;
         return EasyRefresh.custom(
+            controller: _controller,
             key: _centerPage,
             onRefresh: _onReferesh,
-            onLoad: _onReferesh,
+            onLoad: _onLoadMore,
             slivers: <Widget>[
               SliverToBoxAdapter(
                 child: FgCardItemWidget(
@@ -107,7 +131,7 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget> {
                             UserIconWidget(
                               width: 80,
                               height: 80,
-                              image: userInfo.avatar_url,
+                              image: userInfo.avatarUrl,
                             ),
                             SizedBox(
                               width: 10,
@@ -176,7 +200,7 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget> {
                             text: "创建于：",
                             children: <TextSpan>[
                               TextSpan(
-                                text: "${formatDate(userInfo.created_at, [
+                                text: "${formatDate(userInfo.createdAt, [
                                   yyyy,
                                   '-',
                                   mm,
@@ -273,8 +297,8 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget> {
               SliverList(
                 delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
-                  return DynamicItemWidget();
-                }, childCount: 20),
+                  return DynamicItemWidget(eventViewItem: EventViewModel.fromEventMap(eventList[index]));
+                }, childCount: eventList.length),
               ),
             ]);
       },

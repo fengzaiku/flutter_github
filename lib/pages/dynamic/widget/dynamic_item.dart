@@ -1,14 +1,18 @@
+import 'package:date_format/date_format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_github/model/Event.dart';
 import 'package:flutter_github/pages/push/push_detail_page.dart';
 import 'package:flutter_github/widget/flutter_github_card.dart';
 import 'package:flutter_github/widget/user_icon.dart';
 
 class DynamicItemWidget extends StatelessWidget {
-  final bool needUserIcon;
+  final bool            needUserIcon;
+  final EventViewModel  eventViewItem;
 
   DynamicItemWidget({
     Key key,
+    this.eventViewItem,
     this.needUserIcon = true,
   }) : super(key: key);
 
@@ -16,25 +20,28 @@ class DynamicItemWidget extends StatelessWidget {
     return needUserIcon ? Row(
       children: <Widget>[
         UserIconWidget(
+//          image: eventViewItem.actionUserPic,
           onPressed: () {
             print("什么情况");
           },
         ),
-        Text("与在校"),
+        Text(eventViewItem.actionUser ?? "暂无数据"),
         Expanded(
           child: Align(
             alignment: Alignment.topRight,
-            child: Text(" 天前"),
+            child: Text(eventViewItem.actionTime  ?? "暂无数据"),
+//            child: Text(" 天前"),
           ),
         )
       ],
     ) : Row(
       children: <Widget>[
-        Text("与在校"),
+        Text(eventViewItem.actionUser ?? "暂无数据"),
         Expanded(
           child: Align(
             alignment: Alignment.topRight,
-            child: Text(" 天前"),
+            child: Text(eventViewItem.actionTime ?? "暂无数据"),
+//            child: Text(" 天前"),
           ),
         )
       ],
@@ -68,5 +75,22 @@ class DynamicItemWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+
+class EventViewModel {
+  String actionUser;
+  String actionUserPic;
+  String actionDes;
+  String actionTime;
+  String actionTarget;
+
+  EventViewModel.fromEventMap(Event event){
+    actionUser    = event.actor.login;
+    actionUserPic = event.actor?.avatarUrl;
+    actionTime    = formatDate(event.createdAt, [yyyy,"-",mm,"-",dd]);
+//    actionDes
+//  actionTarget;
   }
 }
