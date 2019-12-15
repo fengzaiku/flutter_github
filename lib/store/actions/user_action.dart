@@ -7,10 +7,10 @@ import 'package:flutter_github/common/const/global_const.dart';
 import 'package:flutter_github/common/utils/http.dart';
 import 'package:flutter_github/common/utils/local_storage.dart';
 import 'package:flutter_github/model/User.dart';
-import 'package:flutter_github/router/page_router.dart';
 import 'package:flutter_github/store/app_state.dart';
 import 'package:flutter_github/store/reducers/user_reducers.dart';
 import 'package:redux/redux.dart';
+
 //import 'package:flutter_github/model/User.dart';
 
 final Function loginAction = (String username, String password, BuildContext context) {

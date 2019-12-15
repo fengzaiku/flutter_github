@@ -3,9 +3,9 @@ import 'package:redux/redux.dart';
 import 'package:flutter_github/pages/login/widget/login_text_input.dart';
 import 'package:flutter_github/store/actions/user_action.dart';
 import 'package:flutter_github/store/app_state.dart';
-import 'package:flutter_github/store/reducers/user_reducers.dart';
 import 'package:flutter_github/widget/flex_full_button.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginPageWidget extends StatefulWidget {
   LoginPageWidget({Key key}) : super(key: key);
@@ -26,6 +26,33 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
       }
   }
 
+  void _goTologin(store, context){
+    if(_checkSubmit()){
+      store.dispatch(loginAction(_username,_password, context));
+    }
+  }
+
+  bool _checkSubmit(){
+    String tostMsg = '';
+    if(_username == null){
+      tostMsg = "用户名不能为空";
+    }
+    if(_username != null && _password == null){
+      tostMsg = "密码不能为空";
+    }
+
+    if(tostMsg.isNotEmpty){
+      Fluttertoast.showToast(
+          msg: tostMsg,
+          toastLength: Toast.LENGTH_SHORT,
+          backgroundColor: Colors.red,
+          gravity: ToastGravity.TOP,
+//          textColor: Colors.white,
+          timeInSecForIos: 1
+      );
+    }
+    return tostMsg.isEmpty;
+  }
   @override
   Widget build(BuildContext context) {
     return StoreBuilder<AppState>(
@@ -78,30 +105,28 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                           SizedBox(
                             height: 20,
                           ),
-                          StoreConnector<AppState, dynamic>(
-                              converter: (Store<AppState> store){
-                                return (String username, String password,BuildContext context) =>
-                                    store.dispatch(loginAction(username, password, context));
-                              },
-                            builder: (BuildContext context, login){
-                                return FlexFullButton(
-                                  text: store.state.userInfo.name,
-                                  onPressed: (){
-                                    login(_username,_password,context);
-//                              StoreProvider.of<AppState>(context).dispatch(loginAction(_username,_password));
-                                  },
-                                );
-                            },
-                          ),
-//                          FlexFullButton(
-//                            text: store.state.userInfo.name,
-//                            onPressed: (){
-//                              print("$_username---------------$_password---------------------${store.state}");
-//
-//                              store.dispatch(loginAction(_username,_password));
-////                              StoreProvider.of<AppState>(context).dispatch(loginAction(_username,_password));
+//                          StoreConnector<AppState, dynamic>(
+//                              converter: (Store<AppState> store){
+//                                return (String username, String password,BuildContext context) =>
+//                                    store.dispatch(loginAction(username, password, context));
+//                              },
+//                            builder: (BuildContext context, login){
+//                                return FlexFullButton(
+//                                  text: store.state.userInfo.name,
+//                                  onPressed: (){
+//                                    login(_username,_password,context);
+//                                  },
+//                                );
 //                            },
 //                          ),
+                          FlexFullButton(
+                            text: store.state.userInfo.name,
+                            onPressed: (){
+                              print("$_username---------------$_password---------------------${store.state}");
+                              _goTologin(store,context);
+//                              store.dispatch(loginAction(_username,_password, context));
+                            },
+                          ),
                           SizedBox(
                             height: 20,
                           ),

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flare_flutter/flare_actor.dart';
+import 'package:flutter_github/common/const/global_const.dart';
+import 'package:flutter_github/common/utils/local_storage.dart';
+import 'package:flutter_github/router/page_router.dart';
+import 'package:flutter_github/store/app_state.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 class WelcomePageWidget extends StatefulWidget {
-  static String routerName = "/";
   WelcomePageWidget({Key key}) : super(key: key);
 
   _WelcomePageWidgetState createState() => _WelcomePageWidgetState();
@@ -13,16 +16,24 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
 
   @override
   void didChangeDependencies() {
-    Future.delayed(Duration(seconds: 2),(){
-      print("时间到了");
-      Navigator.pushNamed(context, 'login_page');
-    });
     super.didChangeDependencies();
+    Future.delayed(Duration(seconds: 2,milliseconds: 500),() async{
+      bool isLogin = await _initUserInfo();
+      if(isLogin){
+        PageRouter.replaceHome(context);
+      } else {
+        PageRouter.replaceLogin(context);
+      }
+    });
   }
 
+  Future<bool> _initUserInfo() async{
+      var token = await LocalStorage.getItem(GlobalConst.TOKEN_KEY);
+      return token != null;
+  }
   @override
   Widget build(BuildContext context) {
-    return StoreBuilder(
+    return StoreBuilder<AppState>(
       builder: (context, store) {
         return Container(
           color: Colors.white,
