@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_github/pages/login/widget/login_text_input.dart';
-import 'package:flutter_github/store/actions/user_action.dart';
+import 'package:flutter_github/store/async_reducers/user_reducers.dart';
 import 'package:flutter_github/store/app_state.dart';
 import 'package:flutter_github/widget/flex_full_button.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -31,6 +31,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
       store.dispatch(loginAction(_username,_password, context));
     }
   }
+
 
   bool _checkSubmit(){
     String tostMsg = '';

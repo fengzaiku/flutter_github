@@ -5,7 +5,7 @@ part 'EventList.g.dart';
 @JsonSerializable()
 class EventList{
   List<Event> eventList;
-  EventList(this.eventList);
+  EventList({this.eventList});
 
   factory EventList.fromJson(Map<String, dynamic> json) => _$EventListFromJson(json);
 

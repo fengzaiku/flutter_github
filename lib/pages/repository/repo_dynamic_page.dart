@@ -53,7 +53,8 @@ class _RepositoryDynamicPageWidgetState
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (context, index) {
-              return DynamicItemWidget(needUserIcon: false,);
+//              return DynamicItemWidget(needUserIcon: false,);
+              return Text("DynamicItemWidget $index");
             },
             childCount: 40,
           ),

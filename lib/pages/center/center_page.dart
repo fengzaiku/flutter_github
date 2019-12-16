@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_github/common/const/api.dart';
+import 'package:flutter_github/model/Repository.dart';
+import 'package:flutter_github/model/RepositoryList.dart';
+import 'package:flutter_github/store/async_reducers/repository_reducers.dart';
+import 'package:flutter_github/store/async_reducers/user_reducers.dart';
+import 'package:redux/redux.dart';
 
 import 'package:flutter_github/common/iconfont.dart';
 import 'package:flutter_github/common/utils/http.dart';
@@ -31,18 +36,14 @@ class MyCenterPageWidget extends StatefulWidget {
   _MyCenterPageWidgetState createState() => _MyCenterPageWidgetState();
 }
 
-class _MyCenterPageWidgetState extends State<MyCenterPageWidget> {
+class _MyCenterPageWidgetState extends State<MyCenterPageWidget> with AutomaticKeepAliveClientMixin{
   final GlobalKey<_MyCenterPageWidgetState> _centerPage = new GlobalKey();
   List<Event> eventList = List();
-
-//  final User userInfo = StoreProvider.of(context).state;
-//  final
-
+  int page = 0;
   EasyRefreshController _controller;
 
   void _jumpToChildrenPage<String>(name) {
     Widget _current;
-//    print(name);
     switch (name) {
       case "warehouse":
         _current = RepositoryListWidget();
@@ -65,17 +66,29 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget> {
     Navigator.push(context, CupertinoPageRoute(builder: (context) => _current));
   }
 
-  Future<void> _onReferesh() {
-    return Future.delayed(Duration(milliseconds: 1000));
+  Future<void> _onReferesh() async{
+    var store = _getStore();
+    eventList.clear();
+    store.dispatch(getUserInfo());
+    page = 0;
+    await _onLoadMore();
+    store.dispatch(getRepositoryList());
+  }
+
+  @override
+  bool get wantKeepAlive => true;
+
+  Store<AppState> _getStore() {
+    return StoreProvider.of<AppState>(context);
   }
 
   Future<void> _onLoadMore() async {
-    var resultDate = await http.get(Api.getUserEvent("fengzaiku"));
+    var resultDate = await http.get(Api.getUserEvent("fengzaiku") + Api.getPageParams(page));
 
-      EventList events = EventList.fromJson(resultDate);
-
+      var events = EventList.fromJson({"eventList": resultDate});
       setState(() {
         eventList.addAll(events.eventList);
+        page ++;
       });
   }
 
@@ -87,11 +100,6 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget> {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
-
-  @override
   void dispose() {
     super.dispose();
     _controller.dispose();
@@ -100,14 +108,15 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget> {
   @override
   Widget build(BuildContext context) {
     double width = 3 * MediaQuery.of(context).size.width / 2;
-//    return Text("路上看到放假啦空手道解放");
     return StoreBuilder<AppState>(
       builder: (BuildContext context, store) {
         User userInfo = store.state.userInfo;
+        RepositoryList repositoryList = store.state.repositoryList;
         return EasyRefresh.custom(
             controller: _controller,
             key: _centerPage,
             onRefresh: _onReferesh,
+            firstRefresh: true,
             onLoad: _onLoadMore,
             slivers: <Widget>[
               SliverToBoxAdapter(
@@ -142,7 +151,7 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget> {
                               children: <Widget>[
                                 Row(
                                   children: <Widget>[
-                                    Text(userInfo.login,
+                                    Text(userInfo.login ?? "用户不存在",
                                         style: TextStyle(
                                             fontSize: 16, color: Colors.white)),
                                     SizedBox(
@@ -200,13 +209,7 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget> {
                             text: "创建于：",
                             children: <TextSpan>[
                               TextSpan(
-                                text: "${formatDate(userInfo.createdAt, [
-                                  yyyy,
-                                  '-',
-                                  mm,
-                                  '-',
-                                  dd
-                                ])}",
+                                text: "${formatDate(userInfo.createdAt ?? DateTime.now(), [yyyy,'-',mm,'-',dd])}",
                               ),
                             ],
                           ),
@@ -225,7 +228,11 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget> {
                     bool overlapsContent) {
                   double radius = ((50 - shrinkOffset) / 50) * 10;
                   return CenterItemSelectWidget(
-                      onPressed: _jumpToChildrenPage, radius: radius);
+                    onPressed: _jumpToChildrenPage,
+                    userInfo: userInfo,
+                    started: repositoryList?.watchersCountTotal ?? 0,
+                    radius: radius,
+                  );
 //              return FgCardItemWidget(
 //                padding: EdgeInsets.all(0),
 //                elevation: 0,
@@ -281,12 +288,6 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget> {
                                 ),
                               );
                             }),
-//                            child: Image.network(
-//                              "http://e.hiphotos.baidu.com/image/pic/item/4610b912c8fcc3cef70d70409845d688d53f20f7.jpg",
-//                              width: MediaQuery.of(context).size.width * 3 / 2,
-//                              height: 140,
-//                              fit: BoxFit.cover,
-//                            ),
                           ),
                         ),
                       )
@@ -297,7 +298,7 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget> {
               SliverList(
                 delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
-                  return DynamicItemWidget(eventViewItem: EventViewModel.fromEventMap(eventList[index]));
+                  return DynamicItemWidget(EventViewModel.fromEventMap(eventList[index]));
                 }, childCount: eventList.length),
               ),
             ]);

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_github/model/RepositoryList.dart';
 import 'package:flutter_github/model/User.dart';
 import 'package:flutter_github/store/app_state.dart';
 import 'package:flutter_github/store/app_reducer.dart';
@@ -35,7 +36,11 @@ String reducer(String state, dynamic action) =>
 
 class FlutterReduxApp extends StatelessWidget {
   final Store store = Store<AppState>(appReducer,
-      initialState: AppState(userInfo: User.empty(), loginStatus: false),
+      initialState: AppState(
+          userInfo:  User.empty(),
+          repositoryList: RepositoryList.empty(),
+          loginStatus: false,
+      ),
       middleware: [thunkMiddleware]);
 
   // This widget is the root of your application.
