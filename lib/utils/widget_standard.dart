@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_github/common/utils/date_format.dart';
+import 'package:flutter_github/common/utils/event_format.dart';
+import 'package:flutter_github/model/Event.dart';
 
 class DividerVertical {
   double  width;
@@ -50,4 +53,22 @@ class ConfigurationCard {
     this.padding,
     this.clipBehavior,
   });
+}
+
+
+class EventViewModel {
+  String actionUser;
+  String actionUserPic;
+  String actionDes;
+  String actionTime;
+  String actionTarget;
+
+  EventViewModel.fromEventMap(Event event){
+    actionUser    = event.actor.login;
+    actionUserPic = event.actor?.avatarUrl;
+    actionTime    = FormatDateUtils.getRelativeTime(event.createdAt);
+    var other = EventFormat.getActionAndDes(event);
+    actionDes = other["des"];
+    actionTarget = other["actionStr"];
+  }
 }

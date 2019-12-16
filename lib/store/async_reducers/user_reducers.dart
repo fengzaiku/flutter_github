@@ -30,7 +30,7 @@ final Function loginAction = (String username, String password, BuildContext con
     };
     await http.post(Api.getAuthorization(),json.encode(requestParams));
 
-    await store.dispatch(getUserInfo());
+    store.dispatch(await getUserInfo());
     store.dispatch(LoginSuccessAction(context,true));
   };
 };

@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_github/common/const/api.dart';
-import 'package:flutter_github/model/Repository.dart';
 import 'package:flutter_github/model/RepositoryList.dart';
+import 'package:flutter_github/pages/center/model/reposition_view.dart';
+import 'package:flutter_github/router/page_router.dart';
 import 'package:flutter_github/store/async_reducers/repository_reducers.dart';
 import 'package:flutter_github/store/async_reducers/user_reducers.dart';
+import 'package:flutter_github/utils/widget_standard.dart';
 import 'package:redux/redux.dart';
 
 import 'package:flutter_github/common/iconfont.dart';
@@ -42,37 +44,40 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget> with AutomaticK
   int page = 0;
   EasyRefreshController _controller;
 
-  void _jumpToChildrenPage<String>(name) {
-    Widget _current;
+  void _jumpToChildrenPage(context, name) {
+    Store<AppState> store = StoreProvider.of<AppState>(context);
+
+//    Widget _current;
     switch (name) {
       case "warehouse":
-        _current = RepositoryListWidget();
+//        _current = RepositoryListWidget();
         break;
       case "fans":
-        _current = UserListWidget();
+//        _current = UserListWidget();
         break;
       case "attention":
-        _current = UserListWidget();
+//        _current = UserListWidget();
         break;
       case "star":
-        _current = RepositoryListWidget();
+//        _current = RepositoryListWidget();
         break;
       case "glory":
-        _current = RepositoryListWidget();
+        RepositoryList repositoryList = store.state.repositoryList;
+        print("repositoryList-----------------------$repositoryList");
+        PageRouter.goToRepositoryListPage(context, repositoryList);
         break;
       default:
 //
     }
-    Navigator.push(context, CupertinoPageRoute(builder: (context) => _current));
   }
 
   Future<void> _onReferesh() async{
     var store = _getStore();
+    await store.dispatch(getRepositoryList(store.state.userInfo?.login));
     eventList.clear();
     store.dispatch(getUserInfo());
     page = 0;
     await _onLoadMore();
-    store.dispatch(getRepositoryList());
   }
 
   @override
@@ -85,11 +90,13 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget> with AutomaticK
   Future<void> _onLoadMore() async {
     var resultDate = await http.get(Api.getUserEvent("fengzaiku") + Api.getPageParams(page));
 
+    if(resultDate.length > 0){
       var events = EventList.fromJson({"eventList": resultDate});
       setState(() {
         eventList.addAll(events.eventList);
         page ++;
       });
+    }
   }
 
   @override
@@ -228,7 +235,9 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget> with AutomaticK
                     bool overlapsContent) {
                   double radius = ((50 - shrinkOffset) / 50) * 10;
                   return CenterItemSelectWidget(
-                    onPressed: _jumpToChildrenPage,
+                    onPressed: (value){
+                      _jumpToChildrenPage?.call(context, value);
+                    },
                     userInfo: userInfo,
                     started: repositoryList?.watchersCountTotal ?? 0,
                     radius: radius,

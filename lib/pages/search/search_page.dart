@@ -47,7 +47,8 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
               ),
               SliverList(
                 delegate: SliverChildBuilderDelegate((context, index){
-                  return RepositionItemWidget();
+                  return Text("RepositionItemWidget $index");
+//                  return RepositionItemWidget();
 //                  return UserItemWidget();
                 },childCount: 10),
               )

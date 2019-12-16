@@ -25,7 +25,8 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget>{
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
-                  return RepositionItemWidget();
+//                  return RepositionItemWidget();
+                  return Text("RepositionItemWidget $index");
                 },
                 childCount: 20,
               ),

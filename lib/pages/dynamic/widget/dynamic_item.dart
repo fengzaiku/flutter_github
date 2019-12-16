@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_github/common/utils/date_format.dart';
-import 'package:flutter_github/common/utils/event_format.dart';
-import 'package:flutter_github/model/Event.dart';
 import 'package:flutter_github/pages/push/push_detail_page.dart';
+import 'package:flutter_github/utils/widget_standard.dart';
 import 'package:flutter_github/widget/flutter_github_card.dart';
 import 'package:flutter_github/widget/user_icon.dart';
 
@@ -20,7 +18,7 @@ class DynamicItemWidget extends StatelessWidget {
     return needUserIcon ? Row(
       children: <Widget>[
         UserIconWidget(
-//          image: eventViewItem.actionUserPic,
+          image: eventViewItem?.actionUserPic,
           onPressed: () {
             print("什么情况");
           },
@@ -76,23 +74,5 @@ class DynamicItemWidget extends StatelessWidget {
     ) : Container(
       child: Text("数据不存在"),
     );
-  }
-}
-
-
-class EventViewModel {
-  String actionUser;
-  String actionUserPic;
-  String actionDes;
-  String actionTime;
-  String actionTarget;
-
-  EventViewModel.fromEventMap(Event event){
-    actionUser    = event.actor.login;
-    actionUserPic = event.actor?.avatarUrl;
-    actionTime    = FormatDateUtils.getRelativeTime(event.createdAt);
-    var other = EventFormat.getActionAndDes(event);
-    actionDes = other["des"];
-    actionTarget = other["actionStr"];
   }
 }
