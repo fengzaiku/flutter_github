@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_github/common/const/api.dart';
+import 'package:flutter_github/common/const/global_const.dart';
+import 'package:flutter_github/common/utils/local_storage.dart';
 import 'package:flutter_github/model/RepositoryList.dart';
 import 'package:flutter_github/pages/center/model/reposition_view.dart';
 import 'package:flutter_github/router/page_router.dart';
@@ -88,7 +90,7 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget> with AutomaticK
   }
 
   Future<void> _onLoadMore() async {
-    var resultDate = await http.get(Api.getUserEvent("fengzaiku") + Api.getPageParams(page));
+    var resultDate = await http.get(await Api.getUserEvent() + Api.getPageParams(page));
 
     if(resultDate.length > 0){
       var events = EventList.fromJson({"eventList": resultDate});

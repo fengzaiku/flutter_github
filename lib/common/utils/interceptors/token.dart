@@ -17,7 +17,6 @@ class TokenInterceptors extends InterceptorsWrapper {
       var responseJson = response.data;
 
       if (response.statusCode == 201 && responseJson["token"] != null) {
-//        await LocalStorage.setItem(GlobalConst.TOKEN_KEY, responseJson["token"]);
 //      这里的token 必须有空格
         await LocalStorage.setItem(GlobalConst.TOKEN_KEY, "token " + responseJson["token"]);
       }
@@ -29,11 +28,11 @@ class TokenInterceptors extends InterceptorsWrapper {
 
   getAuthorizationToken() async {
     String token = await LocalStorage.getItem(GlobalConst.TOKEN_KEY);
-    print("获取到得授权token--------------------------$token");
     if (token == null) {
       String basic = await LocalStorage.getItem(GlobalConst.USER_BASIC_CODE);
       return "Basic $basic";
     }
+    print("获取到得授权token--------------------------$token");
     return token;
   }
 }

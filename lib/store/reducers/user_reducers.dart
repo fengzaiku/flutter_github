@@ -31,6 +31,8 @@ User _loginLoaded(User user, action){
 bool _loginResult(bool result, LoginSuccessAction action) {
   if (action.success == true) {
     PageRouter.replaceHome(action.context);
+  } else {
+    PageRouter.replaceLogin(action.context);
   }
   return action.success;
 }

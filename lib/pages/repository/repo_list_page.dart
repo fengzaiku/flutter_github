@@ -8,7 +8,7 @@ import 'package:flutter_github/widget/reposition_item.dart';
 class RepositoryListWidget extends StatefulWidget {
   RepositoryList repositoryList;
 
-  RepositoryListWidget(repositoryList, {Key key}) : super(key: key);
+  RepositoryListWidget(this.repositoryList, {Key key}) : super(key: key);
 
   @override
   _RepositoryListWidgetState createState() => _RepositoryListWidgetState();
@@ -25,6 +25,7 @@ class _RepositoryListWidgetState extends State<RepositoryListWidget> {
         appBar: AppBar(title: Text("仓库列表")),
         body: repositoryList.length > 0 ? ListView.builder(
           itemBuilder: (BuildContext context, int index) {
+            print("repositoryList[index]-----------${repositoryList[index]}");
             return RepositionItemWidget(RepositionViewModel.fromMap(repositoryList[index]));
           },
           itemCount: repositoryList.length,

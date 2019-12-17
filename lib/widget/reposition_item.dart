@@ -75,8 +75,8 @@ class RepositionItemWidget extends StatelessWidget {
               ),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 _renderButtomItem(context, FgIcons.star, (repositionViewModel.repositoryStar ?? 0).toString()),
                 _renderButtomItem(context, FgIcons.dynamic, (repositionViewModel.repositoryType ?? 0).toString()),

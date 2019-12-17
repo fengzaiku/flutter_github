@@ -7,7 +7,7 @@ import 'package:redux/redux.dart';
 
 final Function getRepositoryList = (String username) {
   return (Store<AppState> store) async {
-    var results = await http.get(Api.getUserRepos(username, 'pushed') + "&page=1&per_page=100");
+    var results = await http.get(await Api.getUserRepos(username, 'pushed') + "&page=1&per_page=100");
 
     if(results != null){
       store.dispatch(UpdateRepositoryListAction(RepositoryList.fromJson(results)));

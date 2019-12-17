@@ -33,7 +33,10 @@ class Http {
     try {
       response = await dio.post(path, data: data);
     } on DioError catch (e) {
-      print("error-------------------$e");
+      response = Response(
+        data: null,
+        statusCode: e.response.statusCode
+      );
     }
     print("response-------------------$response");
 //    return response.data;

@@ -44,7 +44,7 @@ class FlexFullButton extends StatelessWidget {
         direction: this.direction??Axis.horizontal,
         children: <Widget>[
           Expanded(
-            child: Text(this.text??"按钮文案",
+            child: Text(this.text??"登录",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: this.fontSize, color: this.textColor ?? Colors.white),
             ),

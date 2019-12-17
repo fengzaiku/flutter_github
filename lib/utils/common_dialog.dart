@@ -2,61 +2,57 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_github/utils/widget_standard.dart';
 
-
 class CommonDialog {
-
-  static Future<Null> flutterGitHubDialog(BuildContext context,Widget child,[ConfigurationCard config] ) {
+  static Future<Null> flutterGitHubDialog(BuildContext context, Widget child,
+      [ConfigurationCard config]) {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
-          double maxWidth = MediaQuery.of(context).size.width -40;
-          double maxHeight = MediaQuery.of(context).size.height -60;
+          double maxWidth = MediaQuery.of(context).size.width - 40;
+          double maxHeight = MediaQuery.of(context).size.height - 60;
           return Center(
-              child: Card(
-                color:        config?.color,
-                elevation:    config?.elevation,
-                shape:        config?.shape,
-                margin:       config?.margin,
-                clipBehavior: config?.clipBehavior,
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxHeight: maxHeight??0.0,
-                    maxWidth: maxWidth??0.0
-                  ),
-                  child: Padding(
+            child: Card(
+              color: config?.color,
+              elevation: config?.elevation,
+              shape: config?.shape,
+              margin: config?.margin,
+              clipBehavior: config?.clipBehavior,
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                    maxHeight: maxHeight ?? 0.0, maxWidth: maxWidth ?? 0.0),
+                child: Padding(
                     padding: config?.padding ?? EdgeInsets.all(10),
                     child: IntrinsicHeight(
                       child: child,
-                    )
-                  ),
-                ),
+                    )),
               ),
+            ),
           );
         });
   }
 
-  static Future<Null> flutterGeneralDialog(BuildContext context, Widget builder){
+  static Future<Null> flutterGeneralDialog(
+      BuildContext context, Widget builder) {
     return showGeneralDialog(
         context: context,
         barrierLabel: "什么情况",
         barrierColor: Color(0x01000000),
         transitionDuration: const Duration(milliseconds: 200),
         barrierDismissible: true,
-        pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation){
-          return Builder(builder: (BuildContext context){
+        pageBuilder: (BuildContext context, Animation<double> animation,
+            Animation<double> secondaryAnimation) {
+          return Builder(builder: (BuildContext context) {
             return builder;
           });
         },
-      transitionBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child){
+        transitionBuilder: (BuildContext context, Animation<double> animation,
+            Animation<double> secondaryAnimation, Widget child) {
           return FadeTransition(
-            opacity: CurvedAnimation(
-              parent: animation,
-              curve: Curves.easeInOut
-            ),
+            opacity:
+                CurvedAnimation(parent: animation, curve: Curves.easeInOut),
             child: child,
           );
-      }
-    );
+        });
   }
 
   static Future<Null> aboutDialog(context) {
@@ -72,7 +68,7 @@ class CommonDialog {
               height: 40,
               child: Icon(Icons.settings_applications),
             ),
-             applicationLegalese:'北京',
+            applicationLegalese: '北京',
             children: <Widget>[
               Text('我是文本'),
             ],
@@ -80,31 +76,39 @@ class CommonDialog {
         });
   }
 
-  static Future<Null> alertDialog(context) {
+  static Future<Null> alertDialog({
+    BuildContext context,
+    Widget title,
+    Widget content,
+    Widget confirm,
+    Widget cancel,
+    VoidCallback confirmCallback,
+    VoidCallback cancelCallback,
+  }) {
     return showDialog(
       context: context,
       barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('我是标题'),
-          content: Text('我是content'),
+          title: title ?? Text('提示'),
+          content: content ?? Text('我是content'),
           actions: <Widget>[
             FlatButton(
-              child: Text('YES'),
+              child: confirm ?? Text('确定'),
               onPressed: () {
-                print('yes...');
                 Navigator.of(context).pop();
+                confirmCallback?.call();
               },
             ),
             FlatButton(
-              child: Text('NO'),
+              child: cancel ?? Text('取消'),
               onPressed: () {
-                print('no...');
                 Navigator.of(context).pop();
+                cancelCallback?.call();
               },
             ),
           ],
-          backgroundColor: Colors.yellowAccent,
+//          backgroundColor: Colors.yellowAccent,
           elevation: 20,
           semanticLabel: '哈哈哈哈',
           // 设置成 圆角

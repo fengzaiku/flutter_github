@@ -42,7 +42,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           IconButton(
             icon: Icon(FgIcons.search),
             onPressed: (){
-//              CommonDialog.flutterGeneralDialog(context, SearchPageWidget());
               Navigator.push(context, CupertinoPageRoute(builder: (BuildContext context) => SearchPageWidget()));
             },
           )
@@ -57,7 +56,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             _currentIndex = index;
           });
         },
-        // scrollDirection: Axis.vertical,
+//         scrollDirection: Axis.vertical,
         children: <Widget>[
           DynamicPageWidget(),
           TendencyPageWidget(),
@@ -69,9 +68,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         onChanged: (int index) {
           setState(() {
              _controller.jumpTo(MediaQuery.of(context).size.width * index);
-//            _controller.jumpToPage(index);
           });
-          // return index;
         },
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter_github/common/const/global_const.dart';
+import 'package:flutter_github/common/utils/local_storage.dart';
 
 class Api {
   static const String host = "https://api.github.com/";
@@ -26,16 +27,19 @@ class Api {
   }
 
 //  用户相关的事件信息 get
-  static getUserEvent(userName) {
+  static getUserEvent([userName]) async{
+    userName ??= await LocalStorage.getItem(GlobalConst.USER_NAME_KEY);
     return "${host}users/$userName/events";
   }
 
 //  用户收到的事件信息 get
-  static getEventReceived(userName) {
+  static getEventReceived([userName]) async{
+    userName ??= await LocalStorage.getItem(GlobalConst.USER_NAME_KEY);
     return "${host}users/$userName/received_events";
   }
 //  用户的仓库 get
-  static getUserRepos(userName, sort) {
+  static getUserRepos(userName, sort) async{
+    userName ??= await LocalStorage.getItem(GlobalConst.USER_NAME_KEY);
     sort ??= 'pushed';
     return "${host}users/$userName/repos?sort=$sort";
   }

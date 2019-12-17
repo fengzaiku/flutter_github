@@ -22,6 +22,7 @@ void main() {
       Zone.current.handleUncaughtError(details.exception, details.stack);
       return Container(
         color: Colors.transparent,
+        child: Text(details.exception ?? "数据异常"),
       );
     };
     runApp(FlutterReduxApp());
