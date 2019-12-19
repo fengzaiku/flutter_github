@@ -26,8 +26,6 @@ import 'package:flutter_github/widget/user_icon.dart';
 import 'package:flutter_github/widget/icon_text.dart';
 import 'package:flutter_github/widget/flutter_github_card.dart';
 
-import 'package:flutter_github/pages/repository/repo_list_page.dart';
-import 'package:flutter_github/pages/user/user_list.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -55,17 +53,16 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget> with AutomaticK
 //        _current = RepositoryListWidget();
         break;
       case "fans":
-//        _current = UserListWidget();
+        PageRouter.goToUserListPage(context, "fans");
         break;
       case "attention":
-//        _current = UserListWidget();
+        PageRouter.goToUserListPage(context, "attention");
         break;
       case "star":
 //        _current = RepositoryListWidget();
         break;
       case "glory":
         RepositoryList repositoryList = store.state.repositoryList;
-        print("repositoryList-----------------------$repositoryList");
         PageRouter.goToRepositoryListPage(context, repositoryList);
         break;
       default:

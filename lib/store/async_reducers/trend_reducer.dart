@@ -5,7 +5,7 @@ import 'package:redux/redux.dart';
 
 final Function getTrendingList = () {
   return (Store<AppState> store) async {
-    var results = await http.get(Api.getTrending("daily", "Java"));
+//    var results = await http.get(Api.getTrending("daily", "Java"));
 
   };
 };

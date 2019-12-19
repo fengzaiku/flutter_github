@@ -44,6 +44,16 @@ class Api {
     return "${host}users/$userName/repos?sort=$sort";
   }
 
+//  用户的关注者 get
+  static getUserFollower(userName){
+    return "${host}users/$userName/followers";
+  }
+
+//  用户关注 get
+  static getUserFollowed(userName) {
+    return "${host}users/$userName/following";
+  }
+
 //  处理分页参数
   static getPageParams(page, [pageSize = GlobalConst.PAGE_SIZE]) {
       return page != null ? "?page=$page&per_page=$pageSize" : "";
