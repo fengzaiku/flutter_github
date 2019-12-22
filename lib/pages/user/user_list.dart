@@ -38,7 +38,7 @@ class _UserListWidgetState extends State<UserListWidget>{
     if(widget.type == "attention"){
       result = await http.get(Api.getUserFollowed(username)+ Api.getPageParams(page));
     }
-
+      print("请求了没");
     if(result != null){
       setState(() {
         userList.addAll(UserList.fromJson(result).userList);

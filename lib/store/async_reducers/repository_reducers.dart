@@ -5,7 +5,7 @@ import 'package:flutter_github/store/app_state.dart';
 import 'package:flutter_github/store/reducers/repository_reducers.dart';
 import 'package:redux/redux.dart';
 
-final Function getRepositoryList = (String username) {
+final Function getRepositoryList = ([String username]) {
   return (Store<AppState> store) async {
     var results = await http.get(await Api.getUserRepos(username, 'pushed') + "&page=1&per_page=100");
 

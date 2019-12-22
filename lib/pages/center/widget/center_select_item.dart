@@ -35,8 +35,8 @@ class CenterItemSelectWidget extends StatelessWidget {
         return Expanded(
           child: FlatButton(
             onPressed: () {
+              if(item.selectKey == "0"){return;}
               onPressed?.call(item.selectKey);
-              print(item.selectKey);
             },
             child: Column(
               children: <Widget>[

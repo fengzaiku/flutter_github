@@ -14,8 +14,8 @@ class PageRouter {
   }
 
 //  仓库列表页面
-  static goToRepositoryListPage(BuildContext context, RepositoryList repositoryList){
-    Navigator.push(context, MaterialPageRoute(builder: (context) => RepositoryListWidget(repositoryList)));
+  static goToRepositoryListPage(BuildContext context, String type){
+    Navigator.push(context, MaterialPageRoute(builder: (context) => RepositoryListWidget(type)));
   }
 
 //  用户列表页面

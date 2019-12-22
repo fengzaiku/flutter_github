@@ -45,34 +45,18 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget> with AutomaticK
   EasyRefreshController _controller;
 
   void _jumpToChildrenPage(context, name) {
-    Store<AppState> store = StoreProvider.of<AppState>(context);
+    if(name == "warehouse" || name == "star" || name == "glory"){
+      PageRouter.goToRepositoryListPage(context,name);
+    }
 
-//    Widget _current;
-    switch (name) {
-      case "warehouse":
-//        _current = RepositoryListWidget();
-        break;
-      case "fans":
-        PageRouter.goToUserListPage(context, "fans");
-        break;
-      case "attention":
-        PageRouter.goToUserListPage(context, "attention");
-        break;
-      case "star":
-//        _current = RepositoryListWidget();
-        break;
-      case "glory":
-        RepositoryList repositoryList = store.state.repositoryList;
-        PageRouter.goToRepositoryListPage(context, repositoryList);
-        break;
-      default:
-//
+    if(name == "fans" || name == "attention"){
+      PageRouter.goToUserListPage(context,name);
     }
   }
 
   Future<void> _onReferesh() async{
     var store = _getStore();
-    await store.dispatch(getRepositoryList(store.state.userInfo?.login));
+    await store.dispatch(getRepositoryList());
     eventList.clear();
     store.dispatch(getUserInfo());
     page = 0;
@@ -117,6 +101,7 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget> with AutomaticK
     return StoreBuilder<AppState>(
       builder: (BuildContext context, store) {
         User userInfo = store.state.userInfo;
+
         RepositoryList repositoryList = store.state.repositoryList;
         return EasyRefresh.custom(
             controller: _controller,
@@ -241,19 +226,6 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget> with AutomaticK
                     started: repositoryList?.watchersCountTotal ?? 0,
                     radius: radius,
                   );
-//              return FgCardItemWidget(
-//                padding: EdgeInsets.all(0),
-//                elevation: 0,
-//                color: Colors.black,
-//                margin: EdgeInsets.all(0.0),
-//                shape: RoundedRectangleBorder(
-//                  borderRadius: BorderRadius.only(
-//                      bottomLeft: Radius.circular(radius),
-//                      bottomRight: Radius.circular(radius)),
-//                ),
-////                child: Text("ksjdfhkjshdfkjsdhk"),
-//                child: CenterItemSelectWidget(onPressed: _jumpToChildrenPage),
-//              );
                 },
               ),
               SliverToBoxAdapter(

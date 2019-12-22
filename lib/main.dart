@@ -43,13 +43,14 @@ class FlutterReduxApp extends StatelessWidget {
           loginStatus: false,
       ),
       middleware: [thunkMiddleware]);
-
+  GlobalKey _flutterReduxAppKey = GlobalKey<NavigatorState>();
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return new StoreProvider<AppState>(
       store: store,
       child: MaterialApp(
+        key: _flutterReduxAppKey,
             title: 'Flutter Demo',
             theme: ThemeData(
               primarySwatch: Colors.blue,

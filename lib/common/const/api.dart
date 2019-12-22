@@ -38,7 +38,7 @@ class Api {
     return "${host}users/$userName/received_events";
   }
 //  用户的仓库 get
-  static getUserRepos(userName, sort) async{
+  static getUserRepos([userName, sort]) async{
     userName ??= await LocalStorage.getItem(GlobalConst.USER_NAME_KEY);
     sort ??= 'pushed';
     return "${host}users/$userName/repos?sort=$sort";
@@ -59,6 +59,13 @@ class Api {
       return page != null ? "?page=$page&per_page=$pageSize" : "";
   }
 
+
+  ///用户的star get
+  static getUserStar([userName, sort]) async{
+    sort ??= 'updated';
+    userName ??= await LocalStorage.getItem(GlobalConst.USER_NAME_KEY);
+    return "${host}users/$userName/starred?sort=$sort";
+  }
 
 //  趋势 get
   static getTrending(since, languageType) {
