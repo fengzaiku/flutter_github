@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_github/common/const/api.dart';
 import 'package:flutter_github/common/const/global_const.dart';
+import 'package:flutter_github/common/utils/event_format.dart';
 import 'package:flutter_github/common/utils/local_storage.dart';
 import 'package:flutter_github/model/RepositoryList.dart';
 import 'package:flutter_github/pages/center/model/reposition_view.dart';
@@ -278,7 +279,12 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget> with AutomaticK
               SliverList(
                 delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
-                  return DynamicItemWidget(EventViewModel.fromEventMap(eventList[index]));
+                  return DynamicItemWidget(
+                      EventViewModel.fromEventMap(eventList[index]),
+                    onPressed: (){
+                      EventFormat.nextEventPageDateFilter(context, eventList[index]);
+                    },
+                  );
                 }, childCount: eventList.length),
               ),
             ]);

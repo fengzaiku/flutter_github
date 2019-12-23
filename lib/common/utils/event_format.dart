@@ -1,6 +1,8 @@
 
+import 'package:flutter/material.dart';
 import 'package:flutter_github/model/Event.dart';
 import 'package:flutter_github/model/PushEventCommit.dart';
+import 'package:flutter_github/router/page_router.dart';
 
 class EventFormat{
   ///事件描述与动作
@@ -116,5 +118,67 @@ class EventFormat{
     }
 
     return {"actionStr": actionStr, "des": des != null ? des : ""};
+  }
+
+  static nextEventPageDateFilter(BuildContext context, Event event) {
+    if (event.repo == null) {
+//      NavigatorUtils.goPerson(context, event.actor.login);
+      return;
+    }
+    String owner = event.repo.name.split("/")[0];
+    String repositoryName = event.repo.name.split("/")[1];
+    String fullName = owner + '/' + repositoryName;
+    switch (event.type) {
+      case 'ForkEvent':
+        String forkName = event.actor.login + "/" + repositoryName;
+//        if (forkName.toLowerCase() == currentRepository.toLowerCase()) {
+//          return;
+//        }
+//        NavigatorUtils.goReposDetail(
+//            context, event.actor.login, repositoryName);
+        break;
+      case 'PushEvent':
+        if (event.payload.commits == null) {
+//          if (fullName.toLowerCase() == currentRepository.toLowerCase()) {
+//            return;
+//          }
+//          NavigatorUtils.goReposDetail(context, owner, repositoryName);
+//        return
+        }
+        if (event.payload.commits.length == 1) {
+          PageRouter.goToPushDetailPage(context, owner, repositoryName,
+              event.payload.commits[0].sha);
+//          NavigatorUtils.goPushDetailPage(context, owner, repositoryName,
+//              event.payload.commits[0].sha, true);
+        } else {
+//          List<String> list = new List();
+//          for (int i = 0; i < event.payload.commits.length; i++) {
+//            list.add(event.payload.commits[i].message +
+//                " " +
+//                event.payload.commits[i].sha.substring(0, 4));
+//          }
+//          CommonUtils.showCommitOptionDialog(context, list, (index) {
+//            NavigatorUtils.goPushDetailPage(context, owner, repositoryName,
+//                event.payload.commits[index].sha, true);
+//          });
+        }
+        break;
+      case 'ReleaseEvent':
+//        String url = event.payload.release.tarballUrl;
+//        CommonUtils.launchWebView(context, repositoryName, url);
+        break;
+      case 'IssueCommentEvent':
+      case 'IssuesEvent':
+//        NavigatorUtils.goIssueDetail(context, owner, repositoryName,
+//            event.payload.issue.number.toString(),
+//            needRightLocalIcon: true);
+        break;
+      default:
+//        if (fullName.toLowerCase() == currentRepository.toLowerCase()) {
+//          return;
+//        }
+//        NavigatorUtils.goReposDetail(context, owner, repositoryName);
+        break;
+    }
   }
 }

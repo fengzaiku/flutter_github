@@ -67,6 +67,11 @@ class Api {
     return "${host}users/$userName/starred?sort=$sort";
   }
 
+//  仓库提交详情 get
+  static getReposCommitsInfo(reposOwner, reposName, sha) {
+    return "${host}repos/$reposOwner/$reposName/commits/$sha";
+  }
+
 //  趋势 get
   static getTrending(since, languageType) {
     if (languageType != null) {

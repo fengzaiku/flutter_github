@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_github/common/utils/date_format.dart';
 import 'package:flutter_github/common/utils/event_format.dart';
 import 'package:flutter_github/model/Event.dart';
+import 'package:flutter_github/model/PushCommit.dart';
 
 class DividerVertical {
   double  width;
@@ -70,5 +71,39 @@ class EventViewModel {
     var other = EventFormat.getActionAndDes(event);
     actionDes = other["des"];
     actionTarget = other["actionStr"];
+  }
+}
+
+class PushHeaderViewModel {
+  String actionUser = "---";
+  String actionUserPic = "---";
+  String pushDes = "---";
+  String pushTime = "---";
+  String editCount = "---";
+  String addCount = "---";
+  String deleteCount = "---";
+  String htmlUrl = "https://www.wanandroid.com/blog/show/2260";
+
+  PushHeaderViewModel();
+
+  PushHeaderViewModel.forMap(PushCommit pushMap) {
+    String name = "---";
+    String pic = "---";
+    if (pushMap.committer != null) {
+      name = pushMap.committer.login;
+    } else if (pushMap.commit != null && pushMap.commit.author != null) {
+      name = pushMap.commit.author.name;
+    }
+    if (pushMap.committer != null && pushMap.committer.avatarUrl != null) {
+      pic = pushMap.committer.avatarUrl;
+    }
+    actionUser = name;
+    actionUserPic = pic;
+    pushDes = "Push at " + pushMap.commit.message;
+    pushTime = FormatDateUtils.getRelativeTime(pushMap.commit.committer.date);
+    editCount = pushMap.files.length.toString() + "";
+    addCount = pushMap.stats.additions.toString() + "";
+    deleteCount = pushMap.stats.deletions.toString() + "";
+    htmlUrl = pushMap.htmlUrl;
   }
 }

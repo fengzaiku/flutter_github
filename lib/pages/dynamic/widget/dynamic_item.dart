@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_github/pages/push/push_detail_page.dart';
 import 'package:flutter_github/utils/widget_standard.dart';
 import 'package:flutter_github/widget/flutter_github_card.dart';
 import 'package:flutter_github/widget/user_icon.dart';
@@ -8,9 +7,11 @@ import 'package:flutter_github/widget/user_icon.dart';
 class DynamicItemWidget extends StatelessWidget {
   final bool            needUserIcon;
   final EventViewModel  eventViewItem;
+  final VoidCallback    onPressed;
 
   DynamicItemWidget(this.eventViewItem,{
     Key key,
+    this.onPressed,
     this.needUserIcon = true,
   }) : super(key: key);
 
@@ -49,10 +50,7 @@ class DynamicItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return eventViewItem != null ? FgCardItemWidget(
       child: FlatButton(
-        onPressed: () {
-          Navigator.push(context,
-              CupertinoPageRoute(builder: (context) => PushDetailPageWidget()));
-        },
+        onPressed: onPressed,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
