@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
 class RepositionReadmePageWidget extends StatefulWidget {
+  final String string;
+  final String title;
 
+  RepositionReadmePageWidget({Key key, this.string, this.title}) : super(key:key);
   @override
   _RepositionReadmePageWidgetState createState() => _RepositionReadmePageWidgetState();
 }
@@ -57,20 +60,20 @@ class _RepositionReadmePageWidgetState extends State<RepositionReadmePageWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: RefreshIndicator(
-          onRefresh: (){
-            return Future.delayed(Duration(milliseconds: 1000));
-          },
-          child: SingleChildScrollView(
-            padding: EdgeInsets.only(left: 10,right: 10),
-            physics: BouncingScrollPhysics(),
-            child: MarkdownBody(
-              selectable: true,
-              data: _markdownData,
-              imageDirectory: 'https://raw.githubusercontent.com',
-            ),
-          )
+    return Material(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title ?? ""),
+        ),
+        body: SingleChildScrollView(
+          padding: EdgeInsets.fromLTRB(10,20,10,20),
+          physics: BouncingScrollPhysics(),
+          child: MarkdownBody(
+            selectable: true,
+            data: widget.string ?? _markdownData,
+//            imageDirectory: 'https://raw.githubusercontent.com',
+          ),
+        ),
       ),
     );
   }

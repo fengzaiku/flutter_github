@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_github/common/iconfont.dart';
+import 'package:flutter_github/utils/widget_standard.dart';
 import 'package:flutter_github/widget/flutter_github_card.dart';
 import 'package:flutter_github/widget/icon_text.dart';
 import 'package:flutter_github/widget/user_icon.dart';
 
 class PushCodeHeaderWidget extends StatelessWidget {
+  final PushHeaderViewModel pushHeaderViewModel;
+
+  PushCodeHeaderWidget(this.pushHeaderViewModel,{Key key}) : super(key:key);
+
   @override
   Widget build(BuildContext context) {
     return FgCardItemWidget(
@@ -13,16 +18,19 @@ class PushCodeHeaderWidget extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            UserIconWidget(),
+            UserIconWidget(
+              image: pushHeaderViewModel.actionUserPic,
+            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+//                变换状态
                 Row(
                   children: <Widget>[
                     IconTextWidget(
                       icon: FgIcons.edit,
                       iconColor: Colors.white,
-                      text: '7',
+                      text: pushHeaderViewModel.editCount ?? 0,
                       textStyle: TextStyle(color: Colors.white),
                     ),
                     SizedBox(
@@ -31,7 +39,7 @@ class PushCodeHeaderWidget extends StatelessWidget {
                     IconTextWidget(
                       icon: FgIcons.add,
                       iconColor: Colors.white,
-                      text: '80',
+                      text: pushHeaderViewModel.addCount ?? 0,
                       textStyle: TextStyle(color: Colors.white),
                     ),
                     SizedBox(
@@ -41,7 +49,7 @@ class PushCodeHeaderWidget extends StatelessWidget {
                       icon: FgIcons.reduce,
 //                      iconSize: 12,
                       iconColor: Colors.white,
-                      text: '9',
+                      text: pushHeaderViewModel.deleteCount ?? 0,
                       textStyle: TextStyle(color: Colors.white),
                     ),
                   ],
@@ -49,18 +57,17 @@ class PushCodeHeaderWidget extends StatelessWidget {
                 SizedBox(
                   height: 5,
                 ),
-                Text.rich(
-                  TextSpan(
-                    text: '70',
-                    style: TextStyle(color: Colors.white),
-                    children: <TextSpan>[TextSpan(text: '小时')],
-                  ),
+//                修改时间
+                Text(
+                    pushHeaderViewModel.pushTime ?? "",
+                  style: TextStyle(color: Colors.white),
                 ),
                 SizedBox(
                   width: 6,
                 ),
+//                修改内容
                 Text(
-                  "Push at 修改",
+                  pushHeaderViewModel.pushDes ?? "",
                   style: TextStyle(color: Colors.white),
                 )
               ],

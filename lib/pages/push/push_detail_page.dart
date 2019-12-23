@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_github/common/const/api.dart';
 import 'package:flutter_github/common/utils/http.dart';
+import 'package:flutter_github/model/CommitFile.dart';
+import 'package:flutter_github/model/PushCommit.dart';
 import 'package:flutter_github/pages/push/widget/push_code_header.dart';
 import 'package:flutter_github/pages/push/widget/push_code_item.dart';
+import 'package:flutter_github/router/page_router.dart';
 import 'package:flutter_github/utils/widget_standard.dart';
 
 class PushDetailPageWidget extends StatefulWidget {
@@ -18,7 +21,9 @@ class PushDetailPageWidget extends StatefulWidget {
 }
 
 class _PushDetailPageWidgetState extends State<PushDetailPageWidget> {
-  int _count = 20;
+  PushHeaderViewModel pushHeaderViewModel = new PushHeaderViewModel();
+  PushCommit pushCommit;
+  List<CommitFile> pushCommitFiles = List();
 
   @override
   void initState() {
@@ -29,7 +34,12 @@ class _PushDetailPageWidgetState extends State<PushDetailPageWidget> {
   Future<void> _onRefresh() async {
     var result = await http.get(Api.getReposCommitsInfo(
         widget.reposOwner, widget.reposName, widget.sha));
-//    PushHeaderViewModel.forMap()
+    pushCommitFiles.clear();
+    if(result != null){
+      pushCommit = PushCommit.fromJson(result);
+      pushCommitFiles.addAll(pushCommit.files);
+      pushHeaderViewModel = PushHeaderViewModel.forMap(pushCommit);
+    }
   }
 
 //  @override
@@ -46,27 +56,19 @@ class _PushDetailPageWidgetState extends State<PushDetailPageWidget> {
       ),
       body: RefreshIndicator(
         onRefresh: _onRefresh,
-//        child: SingleChildScrollView(
-//              child: ListView.builder(
-//                shrinkWrap: true,
-//                itemBuilder: (BuildContext context, int index) {
-////                  return PushCodeItemWidget();
-//                  return Text("kasjdfhksjdfh-----------------$index");
-//                },
-//                itemCount: _count,
-//              ),
-//            ),
-//        ),
         child: Column(
           children: <Widget>[
-            PushCodeHeaderWidget(),
+            PushCodeHeaderWidget(pushHeaderViewModel),
             Expanded(
                 child: ListView.builder(
                   shrinkWrap: true,
                   itemBuilder: (BuildContext context, int index) {
-                    return PushCodeItemWidget();
+                    PushCodeItemViewModel itemViewModel = PushCodeItemViewModel.fromMap(pushCommitFiles[index]);
+                    return PushCodeItemWidget(itemViewModel, onPressd: (){
+                        PageRouter.goToRepositionReadmePage(context, html: itemViewModel.patch, title: itemViewModel.name);
+                    },);
                   },
-                  itemCount: _count,
+                  itemCount: pushCommitFiles.length,
                 ),
             ),
           ],

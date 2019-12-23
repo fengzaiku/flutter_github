@@ -2,9 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_github/common/iconfont.dart';
 import 'package:flutter_github/pages/code/code_detail.dart';
+import 'package:flutter_github/utils/widget_standard.dart';
 import 'package:flutter_github/widget/flutter_github_card.dart';
 
 class PushCodeItemWidget extends StatelessWidget {
+  final PushCodeItemViewModel pushCodeItemViewModel;
+  final VoidCallback          onPressd;
+
+  PushCodeItemWidget(this.pushCodeItemViewModel,{Key key,this.onPressd}):super(key:key);
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -14,7 +20,7 @@ class PushCodeItemWidget extends StatelessWidget {
         Container(
           padding: EdgeInsets.only(left: 10, right: 10),
           child: Text(
-            "lib/widget/push_code_header.dart",
+            pushCodeItemViewModel.path ?? "",
             style: TextStyle(color: Colors.grey, fontSize: 13),
           ),
         ),
@@ -23,16 +29,10 @@ class PushCodeItemWidget extends StatelessWidget {
           child: ListTile(
             leading: Icon(FgIcons.code),
             title: Text(
-              "大海啊啊啊",
+              pushCodeItemViewModel.name ?? "",
               style: TextStyle(fontSize: 14),
             ),
-            onTap: () {
-//              print("点击代码列表了");
-              Navigator.push(
-                  context,
-                  CupertinoPageRoute(
-                      builder: (context) => CodeDetailPageWidget()));
-            },
+            onTap: onPressd,
           ),
         ),
       ],

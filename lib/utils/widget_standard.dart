@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_github/common/utils/date_format.dart';
 import 'package:flutter_github/common/utils/event_format.dart';
+import 'package:flutter_github/model/CommitFile.dart';
 import 'package:flutter_github/model/Event.dart';
 import 'package:flutter_github/model/PushCommit.dart';
 
@@ -105,5 +106,24 @@ class PushHeaderViewModel {
     addCount = pushMap.stats.additions.toString() + "";
     deleteCount = pushMap.stats.deletions.toString() + "";
     htmlUrl = pushMap.htmlUrl;
+  }
+}
+
+class PushCodeItemViewModel {
+  String path;
+  String name;
+  String patch;
+
+  String blob_url;
+
+  PushCodeItemViewModel();
+
+  PushCodeItemViewModel.fromMap(CommitFile map) {
+    String filename = map.fileName;
+    List<String> nameSplit = filename.split("/");
+    name = nameSplit[nameSplit.length - 1];
+    path = filename;
+    patch = map.patch;
+    blob_url = map.blobUrl;
   }
 }
