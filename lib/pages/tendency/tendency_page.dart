@@ -1,5 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:flutter_github/common/const/api.dart';
+import 'package:flutter_github/common/utils/http.dart';
 import 'package:flutter_github/pages/tendency/widget/tendency_header.dart';
 import 'package:flutter_github/store/app_state.dart';
 import 'package:flutter_github/store/async_reducers/trend_reducer.dart';
@@ -22,13 +25,17 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget>{
 
 //    getTrendingList
   }
+  Future<void> _onRefresh() async{
+    var result = await http.request(Api.getTrending("daily", "Java"),null, Options(contentType: "text/plain; charset=utf-8", method: "get"));
+  }
 
   @override
   Widget build(BuildContext context) {
     return StoreBuilder<AppState>(
       builder: (BuildContext context, store){
         return EasyRefresh.custom(
-          onRefresh: _onRefreshGetDate,
+          onRefresh: _onRefresh,
+          firstRefresh: true,
           slivers: <Widget>[
             TendencyHeaderWidget(),
             SliverList(

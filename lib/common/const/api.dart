@@ -75,14 +75,9 @@ class Api {
 //  趋势 get
   static getTrending(since, languageType) {
     if (languageType != null) {
-      return "https://guoshuyu.cn/github/trend/list?languageType=$languageType&since=$since";
-  }
-    return "https://guoshuyu.cn/github/trend/list?since=$since";
-
-//    if (languageType != null) {
-//      return "https://github.com/trending/$languageType?since=$since";
-//    }
-//    return "https://github.com/trending?since=$since";
+      return "https://github.com/trending/$languageType?since=$since";
+    }
+    return "https://github.com/trending?since=$since";
   }
 }
 

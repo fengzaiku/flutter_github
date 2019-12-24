@@ -17,7 +17,7 @@ class Http {
     dio.interceptors.add(HeaderInterceptors());
   }
 
-  Future<Response> request(String path,data, Options options) async {
+  Future request(String path,data, Options options) async {
     Response response;
     try {
       response = await dio.request(path, data: data, options: options);
@@ -38,8 +38,6 @@ class Http {
         statusCode: e.response.statusCode
       );
     }
-    print("response-------------------$response");
-//    return response.data;
     return response;
   }
 
@@ -58,8 +56,11 @@ class Http {
       );
     } on DioError catch (e) {
       print("error-------------------$e");
+      response = Response(
+          data: null,
+          statusCode: e.response.statusCode
+      );
     }
-    print("response-------------------${response.toString()}");
     return response.data;
   }
 }
