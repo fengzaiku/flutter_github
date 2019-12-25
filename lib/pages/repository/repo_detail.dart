@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_github/pages/center/model/reposition_view.dart';
 import 'package:flutter_github/pages/repository/rep_readme_page.dart';
 import 'package:flutter_github/pages/repository/repo_dynamic_page.dart';
 import 'package:flutter_github/pages/repository/repo_file_page.dart';
@@ -7,6 +8,9 @@ import 'package:flutter_github/pages/repository/widget/rep_bottom_bar.dart';
 import 'package:flutter_github/widget/tabar_widget.dart';
 
 class RepositionDetailPageWidget extends StatefulWidget {
+  final RepositionViewModel repositionViewModel;
+
+  RepositionDetailPageWidget(this.repositionViewModel,{Key key}):super(key:key);
   @override
   _RepositionDetailPageWidgetState createState() =>
       _RepositionDetailPageWidgetState();

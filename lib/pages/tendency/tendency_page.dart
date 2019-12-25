@@ -6,6 +6,7 @@ import 'package:flutter_github/common/utils/http.dart';
 import 'package:flutter_github/model/TrendingRepoModel.dart';
 import 'package:flutter_github/pages/center/model/reposition_view.dart';
 import 'package:flutter_github/pages/tendency/widget/tendency_header.dart';
+import 'package:flutter_github/router/page_router.dart';
 import 'package:flutter_github/store/app_state.dart';
 import 'package:flutter_github/utils/html_utils.dart';
 import 'package:flutter_github/utils/widget_standard.dart';
@@ -97,7 +98,9 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget> with AutomaticK
               delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
                     RepositionViewModel repositionViewModel = RepositionViewModel.fromTrendMap(trendingRepoModels[index]);
-                 return RepositionItemWidget(repositionViewModel);
+                 return RepositionItemWidget(repositionViewModel, onPressed: (){
+                   PageRouter.goToRepositionDetailPage(context, repositionViewModel);
+                 },);
                 },
                 childCount: trendingRepoModels.length,
               ),

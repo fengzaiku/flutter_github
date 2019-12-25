@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_github/pages/center/model/reposition_view.dart';
 // import 'package:flutter_github/model/RepositoryList.dart';
 import 'package:flutter_github/pages/push/push_detail_page.dart';
 import 'package:flutter_github/pages/repository/rep_readme_page.dart';
+import 'package:flutter_github/pages/repository/repo_detail.dart';
 import 'package:flutter_github/pages/repository/repo_list_page.dart';
 import 'package:flutter_github/pages/user/user_list.dart';
 
@@ -33,5 +35,10 @@ class PageRouter {
 //  readme 页面
   static goToRepositionReadmePage(BuildContext context, {String html, String title}){
     Navigator.push(context, MaterialPageRoute(builder: (context) => RepositionReadmePageWidget(string: html, title: title)));
+  }
+
+//  仓库详情页面
+  static goToRepositionDetailPage(BuildContext context, RepositionViewModel repositionViewModel){
+    Navigator.push(context, MaterialPageRoute(builder: (context) => RepositionDetailPageWidget(repositionViewModel)));
   }
 }

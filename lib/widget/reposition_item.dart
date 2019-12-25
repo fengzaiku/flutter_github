@@ -9,7 +9,8 @@ import 'package:flutter_github/widget/flutter_github_card.dart';
 
 class RepositionItemWidget extends StatelessWidget {
   final RepositionViewModel repositionViewModel;
-  RepositionItemWidget(this.repositionViewModel,{Key key}) : super(key: key);
+  final VoidCallback onPressed;
+  RepositionItemWidget(this.repositionViewModel,{Key key, this.onPressed}) : super(key: key);
   Widget _renderButtomItem(BuildContext context, IconData icon, String text,
       {int flex = 0}) {
     return Expanded(
@@ -32,8 +33,6 @@ class RepositionItemWidget extends StatelessWidget {
         behavior: HitTestBehavior.opaque,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          // mainAxisAlignment: MainAxisAlignment.start,
-          // mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -65,9 +64,7 @@ class RepositionItemWidget extends StatelessWidget {
               ],
             ),
             Container(
-              // margin: EdgeInsets.only(top: 6, bottom: 2),
               alignment: Alignment.topLeft,
-              // height: 10,
               child: Text(
                 repositionViewModel.repositoryDes?.trim() ?? "",
                 maxLines: 3,
@@ -82,20 +79,11 @@ class RepositionItemWidget extends StatelessWidget {
                 _renderButtomItem(context, FgIcons.star, repositionViewModel.repositoryStar),
                 _renderButtomItem(context, FgIcons.dynamic, repositionViewModel.repositoryType),
                 _renderButtomItem(context, FgIcons.point, repositionViewModel.repositoryWatch)
-                // _renderButtomItem(context, FgIcons.star, (repositionViewModel.repositoryStar ?? 0).toString()),
-                // _renderButtomItem(context, FgIcons.dynamic, (repositionViewModel.repositoryType ?? 0).toString()),
-                // _renderButtomItem(context, FgIcons.point, (repositionViewModel.repositoryWatch ?? 0).toString(),
               ],
             )
           ],
         ),
-        onTap: () {
-          print("点击了");
-          Navigator.push(
-              context,
-              CupertinoPageRoute(
-                  builder: (context) => RepositionDetailPageWidget()));
-        },
+        onTap: onPressed,
       ),
     );
   }

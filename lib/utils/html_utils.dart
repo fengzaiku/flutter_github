@@ -11,7 +11,9 @@ class HtmlUtils {
 
     if(articles.isNotEmpty){
       list.addAll(articles.map((Element element){
-        String fullName = element.querySelector('h1>a').text?.trim();
+        RegExp _replay = RegExp(r"\s*");
+        List<String> names = element.querySelector('h1>a').text.split('/');
+        String fullName = names[0].trim()+"/"+names[1].trim();
         List<String> contributors = List();
         List<Element> images = element.querySelectorAll('a[data-hovercard-type="user"]');
 
@@ -33,9 +35,8 @@ class HtmlUtils {
           String match = m.group(0);
           getMatches.add(match.split('>')[1]);
         }
-        print("getMatches0---------------------${getMatches[0]?.trim()}");
-        print("getMatches1---------------------${getMatches[1]?.trim()}");
-        print("getMatches2---------------------${getMatches[2]?.trim()}");
+        print("getMatches----fullName---------------------$fullName");
+//        print("getMatches----fullName---------------------${fullName.split("/")[1].trim()}");
 
         return TrendingRepoModel.fromJson({
           "fullName":fullName,
