@@ -74,10 +74,18 @@ class Api {
 
 //  趋势 get
   static getTrending(since, languageType) {
-    if (languageType != null) {
+    if (languageType == null && since == null) {
+      return "https://github.com/trending";
+    }
+    if (languageType == null && since != null) {
+      return "https://github.com/trending?since=$since";
+    }
+    if (languageType != null && since == null) {
+      return "https://github.com/trending/$languageType";
+    }
+    if (languageType != null && since != null) {
       return "https://github.com/trending/$languageType?since=$since";
     }
-    return "https://github.com/trending?since=$since";
   }
 }
 

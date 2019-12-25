@@ -4,6 +4,7 @@ import 'package:flutter_github/common/utils/event_format.dart';
 import 'package:flutter_github/model/CommitFile.dart';
 import 'package:flutter_github/model/Event.dart';
 import 'package:flutter_github/model/PushCommit.dart';
+import 'package:flutter_github/model/Repository.dart';
 
 class DividerVertical {
   double  width;
@@ -141,16 +142,16 @@ class ReposViewModel {
 
   ReposViewModel();
 
-//  ReposViewModel.fromMap(Repository data) {
-//    ownerName = data.owner.login;
-//    ownerPic = data.owner.avatar_url;
-//    repositoryName = data.name;
-//    repositoryStar = data.watchersCount.toString();
-//    repositoryFork = data.forksCount.toString();
-//    repositoryWatch = data.openIssuesCount.toString();
-//    repositoryType = data.language ?? '---';
-//    repositoryDes = data.description ?? '---';
-//  }
+  ReposViewModel.fromMap(Repository data) {
+    ownerName = data.owner.login;
+    ownerPic = data.owner.avatarUrl;
+    repositoryName = data.name;
+    repositoryStar = data.watchersCount.toString();
+    repositoryFork = data.forksCount.toString();
+    repositoryWatch = data.openIssuesCount.toString();
+    repositoryType = data.language ?? '---';
+    repositoryDes = data.description ?? '---';
+  }
 
   ReposViewModel.fromTrendMap(model) {
     ownerName = model.name;

@@ -81,11 +81,10 @@ class RepositionItemWidget extends StatelessWidget {
               children: <Widget>[
                 _renderButtomItem(context, FgIcons.star, repositionViewModel.repositoryStar),
                 _renderButtomItem(context, FgIcons.dynamic, repositionViewModel.repositoryType),
-                _renderButtomItem(context, FgIcons.point, repositionViewModel.repositoryWatch,
+                _renderButtomItem(context, FgIcons.point, repositionViewModel.repositoryWatch)
                 // _renderButtomItem(context, FgIcons.star, (repositionViewModel.repositoryStar ?? 0).toString()),
                 // _renderButtomItem(context, FgIcons.dynamic, (repositionViewModel.repositoryType ?? 0).toString()),
                 // _renderButtomItem(context, FgIcons.point, (repositionViewModel.repositoryWatch ?? 0).toString(),
-                    flex: 4),
               ],
             )
           ],

@@ -23,7 +23,7 @@ class HtmlUtils {
         });
 
         String description = element.querySelector('p.my-1').innerHtml;
-        String language = element.querySelector('span[itemprop="programmingLanguage"]').innerHtml;
+        String language = element.querySelector('span[itemprop="programmingLanguage"]')?.text ?? "Language";
 
         String mateHtml = element.querySelector(".f6.text-gray").innerHtml;
         RegExp mateReg = RegExp(r"(?:svg[>])(\s*[0-9\,a-z])+");
