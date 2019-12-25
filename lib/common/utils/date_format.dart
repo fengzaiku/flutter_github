@@ -35,6 +35,6 @@ class FormatDateUtils{
       return "$minute 秒前";
     }
 
-    return "未解析到时间";
+    // return "未解析到时间";
  }
 }

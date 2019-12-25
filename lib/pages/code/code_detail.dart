@@ -20,7 +20,6 @@ import 'package:webview_flutter/webview_flutter.dart';
 //          onWebViewCreated: (WebViewController webViewController) {
 ////            _controller.complete(webViewController);
 //          },
-//          // TODO(iskakaushik): Remove this when collection literals makes it to stable.
 //          // ignore: prefer_collection_literals
 ////          javascriptChannels: <JavascriptChannel>[
 ////            _toasterJavascriptChannel(context),
@@ -92,7 +91,6 @@ class _CodeDetailPageWidgetState extends State<CodeDetailPageWidget> {
 //          onWebViewCreated: (WebViewController webViewController) {
 //            _controller.complete(webViewController);
 //          },
-//           TODO(iskakaushik): Remove this when collection literals makes it to stable.
         // ignore: prefer_collection_literals
 //          javascriptChannels: <JavascriptChannel>[
 //            _toasterJavascriptChannel(context),

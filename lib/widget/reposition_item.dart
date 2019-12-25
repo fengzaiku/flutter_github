@@ -15,7 +15,7 @@ class RepositionItemWidget extends StatelessWidget {
     return Expanded(
       flex: 1,
       child: Container(
-        alignment: Alignment.centerRight,
+        alignment: Alignment.centerLeft,
         child: IconTextWidget(
           icon: icon,
           text: text,
@@ -65,22 +65,26 @@ class RepositionItemWidget extends StatelessWidget {
               ],
             ),
             Container(
-              margin: EdgeInsets.only(top: 6, bottom: 2),
+              // margin: EdgeInsets.only(top: 6, bottom: 2),
               alignment: Alignment.topLeft,
+              // height: 10,
               child: Text(
-                repositionViewModel.repositoryDes ?? "",
+                repositionViewModel.repositoryDes?.trim() ?? "",
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(fontSize: 12, color: Colors.grey),
               ),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              // crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
-                _renderButtomItem(context, FgIcons.star, (repositionViewModel.repositoryStar ?? 0).toString()),
-                _renderButtomItem(context, FgIcons.dynamic, (repositionViewModel.repositoryType ?? 0).toString()),
-                _renderButtomItem(context, FgIcons.point, (repositionViewModel.repositoryWatch ?? 0).toString(),
+                _renderButtomItem(context, FgIcons.star, repositionViewModel.repositoryStar),
+                _renderButtomItem(context, FgIcons.dynamic, repositionViewModel.repositoryType),
+                _renderButtomItem(context, FgIcons.point, repositionViewModel.repositoryWatch,
+                // _renderButtomItem(context, FgIcons.star, (repositionViewModel.repositoryStar ?? 0).toString()),
+                // _renderButtomItem(context, FgIcons.dynamic, (repositionViewModel.repositoryType ?? 0).toString()),
+                // _renderButtomItem(context, FgIcons.point, (repositionViewModel.repositoryWatch ?? 0).toString(),
                     flex: 4),
               ],
             )

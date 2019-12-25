@@ -11,7 +11,7 @@ import 'package:flutter_github/model/UserList.dart';
 import 'package:flutter_github/pages/user/widget/user_item.dart';
 
 class UserListWidget extends StatefulWidget {
-  String type;
+  final String type;
 
   UserListWidget(this.type,{Key key}) : super(key:key);
   @override

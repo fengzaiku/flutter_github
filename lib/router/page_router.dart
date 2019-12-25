@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_github/model/RepositoryList.dart';
+// import 'package:flutter_github/model/RepositoryList.dart';
 import 'package:flutter_github/pages/push/push_detail_page.dart';
 import 'package:flutter_github/pages/repository/rep_readme_page.dart';
 import 'package:flutter_github/pages/repository/repo_list_page.dart';

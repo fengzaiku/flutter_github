@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_github/common/iconfont.dart';
-import 'package:flutter_github/pages/code/code_detail.dart';
+// import 'package:flutter_github/pages/code/code_detail.dart';
 import 'package:flutter_github/utils/widget_standard.dart';
 import 'package:flutter_github/widget/flutter_github_card.dart';
 

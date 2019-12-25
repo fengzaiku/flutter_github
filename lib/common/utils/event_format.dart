@@ -127,10 +127,10 @@ class EventFormat{
     }
     String owner = event.repo.name.split("/")[0];
     String repositoryName = event.repo.name.split("/")[1];
-    String fullName = owner + '/' + repositoryName;
+    // String fullName = owner + '/' + repositoryName;
     switch (event.type) {
       case 'ForkEvent':
-        String forkName = event.actor.login + "/" + repositoryName;
+        // String forkName = event.actor.login + "/" + repositoryName;
 //        if (forkName.toLowerCase() == currentRepository.toLowerCase()) {
 //          return;
 //        }

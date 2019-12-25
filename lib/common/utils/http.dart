@@ -25,7 +25,7 @@ class Http {
       print("error-------------------$e");
     }
     print("response-------------------$response");
-    return response.data;
+    return response?.data ?? null;
   }
 
   Future<Response> post(String path, data) async {

@@ -5,7 +5,7 @@ import 'package:flutter_github/pages/search/widget/search_filter_list.dart';
 import 'package:flutter_github/pages/search/widget/search_select_bar.dart';
 //import 'package:flutter_github/pages/user/widget/user_item.dart';
 import 'package:flutter_github/widget/flutter_sliver_app_bar.dart';
-import 'package:flutter_github/widget/reposition_item.dart';
+// import 'package:flutter_github/widget/reposition_item.dart';
 import 'package:flutter_github/widget/search_input.dart';
 
 class SearchPageWidget extends StatefulWidget {

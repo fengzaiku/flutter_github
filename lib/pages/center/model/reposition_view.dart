@@ -23,4 +23,18 @@ class RepositionViewModel{
     repositoryType = data.language ?? '---';
     repositoryDes = data.description ?? '---';
   }
+  RepositionViewModel.fromTrendMap(model) {
+    ownerName = model.name;
+    if (model.contributors.length > 0) {
+      ownerPic = model.contributors[0];
+    } else {
+      ownerPic = "";
+    }
+    repositoryName = model.reposName;
+    repositoryStar = model.starCount?.trim();
+    repositoryFork = model.forkCount?.trim();
+    repositoryWatch = model.meta?.trim();
+    repositoryType = model.language;
+    repositoryDes = model.description;
+  }
 }

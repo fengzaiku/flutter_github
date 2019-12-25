@@ -4,13 +4,14 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_github/common/const/api.dart';
 import 'package:flutter_github/common/utils/http.dart';
 import 'package:flutter_github/model/TrendingRepoModel.dart';
+import 'package:flutter_github/pages/center/model/reposition_view.dart';
 import 'package:flutter_github/pages/tendency/widget/tendency_header.dart';
 import 'package:flutter_github/store/app_state.dart';
-import 'package:flutter_github/store/async_reducers/trend_reducer.dart';
+// import 'package:flutter_github/store/async_reducers/trend_reducer.dart';
 import 'package:flutter_github/utils/html_utils.dart';
 import 'package:flutter_github/widget/reposition_item.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:redux/redux.dart';
+// import 'package:redux/redux.dart';
 
 class TendencyPageWidget extends StatefulWidget {
   TendencyPageWidget({Key key}) : super(key: key);
@@ -20,20 +21,22 @@ class TendencyPageWidget extends StatefulWidget {
 }
 
 class _TendencyPageWidgetState extends State<TendencyPageWidget>{
-  Future<void> _onRefreshGetDate() async{
-    Store store = StoreProvider.of<AppState>(context);
-    store.dispatch(getTrendingList());
-//    return Future.delayed(Duration(milliseconds: 1000)).then((value) {});
+  List<TrendingRepoModel> trendingRepoModels = List();
+//   Future<void> _onRefreshGetDate() async{
+//     Store store = StoreProvider.of<AppState>(context);
+//     store.dispatch(getTrendingList());
+// //    return Future.delayed(Duration(milliseconds: 1000)).then((value) {});
 
-//    getTrendingList
-  }
+// //    getTrendingList
+//   }
   Future<void> _onRefresh() async{
-    List<TrendingRepoModel> trendingRepoModels;
     var result = await http.request(Api.getTrending("daily", "Java"),null, Options(contentType: "text/plain; charset=utf-8", method: "get"));
     if(result != null){
-      trendingRepoModels = await HtmlUtils.formatTrendingHtml(result);
+      trendingRepoModels.clear();
+      setState(() {
+        trendingRepoModels.addAll(HtmlUtils.formatTrendingHtml(result));
+      });
     }
-
   }
 
   @override
@@ -48,10 +51,10 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget>{
             SliverList(
               delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
-//                  return RepositionItemWidget();
-                  return Text("RepositionItemWidget $index");
+                    RepositionViewModel repositionViewModel = RepositionViewModel.fromTrendMap(trendingRepoModels[index]);
+                 return RepositionItemWidget(repositionViewModel);
                 },
-                childCount: 20,
+                childCount: trendingRepoModels.length,
               ),
             )
           ],

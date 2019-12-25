@@ -23,7 +23,7 @@ class Api {
 
 //  个人动态svg 图 get
   static getPersonDynamicSvg(userName,{svgColor="2016rshah"}) {
-    return "${graphicHost}/$svgColor/$userName";
+    return "$graphicHost/$svgColor/$userName";
   }
 
 //  用户相关的事件信息 get

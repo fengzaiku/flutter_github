@@ -26,7 +26,7 @@ class IconTextWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextStyle textStyle = this.textStyle;
-    textStyle ??= TextStyle(color: Colors.grey,fontSize: 12);
+    textStyle ??= TextStyle(color: Colors.black,fontSize: 12);
 
     return IntrinsicWidth(
       child: Row(
