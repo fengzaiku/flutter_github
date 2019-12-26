@@ -35,8 +35,6 @@ class HtmlUtils {
           String match = m.group(0);
           getMatches.add(match.split('>')[1]);
         }
-        print("getMatches----fullName---------------------$fullName");
-//        print("getMatches----fullName---------------------${fullName.split("/")[1].trim()}");
 
         return TrendingRepoModel.fromJson({
           "fullName":fullName,

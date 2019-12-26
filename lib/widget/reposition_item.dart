@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_github/common/iconfont.dart';
 import 'package:flutter_github/pages/center/model/reposition_view.dart';
-import 'package:flutter_github/pages/repository/repo_detail.dart';
 import 'package:flutter_github/widget/user_icon.dart';
 import 'package:flutter_github/widget/icon_text.dart';
 import 'package:flutter_github/widget/flutter_github_card.dart';
