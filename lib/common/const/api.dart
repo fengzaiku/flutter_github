@@ -69,7 +69,12 @@ class Api {
 
 //  仓库提交详情 get
   static getReposCommitsInfo(reposOwner, reposName, sha) {
-    return "${host}repos/$reposOwner/$reposName/commits/$sha";
+//    详情
+    if(sha != null){
+      return "${host}repos/$reposOwner/$reposName/commits/$sha";
+    }
+//    列表
+    return "${host}repos/$reposOwner/$reposName/commits";
   }
 
 //  趋势 get
