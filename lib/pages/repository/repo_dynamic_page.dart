@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:flutter_github/model/RepoCommit.dart';
+import 'package:flutter_github/pages/dynamic/widget/dynamic_item.dart';
+import 'package:flutter_github/pages/repository/bloc/repository_bloc.dart';
 import 'package:flutter_github/pages/repository/widget/rep_dynamic_head_card.dart';
 import 'package:flutter_github/pages/repository/widget/rep_detail_select_bar.dart';
+import 'package:flutter_github/utils/widget_standard.dart';
 import 'package:flutter_github/widget/flutter_sliver_app_bar.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_github/pages/repository/bloc/repository_entry_bloc.dart';
 
 class RepositoryDynamicPageWidget extends StatefulWidget {
   @override
@@ -11,13 +17,15 @@ class RepositoryDynamicPageWidget extends StatefulWidget {
 }
 
 class _RepositoryDynamicPageWidgetState
-    extends State<RepositoryDynamicPageWidget>{
+    extends State<RepositoryDynamicPageWidget> with TickerProviderStateMixin{
   final GlobalKey<_RepositoryDynamicPageWidgetState> _repositoryDynamicKey = GlobalKey<_RepositoryDynamicPageWidgetState>();
 
   @override
   Widget build(BuildContext context) {
+    RepositoryBloc repositoryDynamicBloc = Provider.of<RepositoryEntryBloc>(context).repositoryDynamicBloc;
     return EasyRefresh.custom(
       key: _repositoryDynamicKey,
+      firstRefresh: true,
       slivers: <Widget>[
         SliverToBoxAdapter(
           child: RepositionDynamicHeadCardWidget(),
@@ -31,22 +39,30 @@ class _RepositoryDynamicPageWidgetState
             return RepositionDetailSelectWidget(shrinkOffset);
           },
         ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-//              return DynamicItemWidget(needUserIcon: false,);
-              return Text("DynamicItemWidget $index");
-            },
-            childCount: 40,
-          ),
+        StreamBuilder<List<EventViewModel>>(
+          stream: Provider.of<RepositoryEntryBloc>(context).repositoryDynamicBloc.repoCommitsObservable,
+          builder: (BuildContext context, AsyncSnapshot<List<EventViewModel>> snapshot){
+          if(snapshot.data != null && snapshot.data.length > 0){
+            return SliverList(
+              delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      return DynamicItemWidget(snapshot.data[index]);
+                },
+                childCount: snapshot.data.length,
+              ),
+            );
+          }
+          return SliverToBoxAdapter(
+              child: Text("数据为空好了"),
+          );
+        },
         ),
       ],
       onRefresh: () async {
-        await Future.delayed(Duration(seconds: 2), () {
-          setState(() {
-//            _count = 20;
-          });
-        });
+        await repositoryDynamicBloc.getRepositoryCommits();
+      },
+      onLoad: () async{
+        await repositoryDynamicBloc.getRepositoryCommits();
       },
     );
   }

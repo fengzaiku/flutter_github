@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_github/pages/center/model/reposition_view.dart';
 import 'package:flutter_github/pages/repository/bloc/repository_entry_bloc.dart';
+import 'package:flutter_github/pages/repository/provider/files_provider.dart';
 import 'package:flutter_github/pages/repository/rep_readme_page.dart';
 import 'package:flutter_github/pages/repository/repo_dynamic_page.dart';
 import 'package:flutter_github/pages/repository/repo_file_page.dart';
@@ -9,39 +10,27 @@ import 'package:flutter_github/pages/repository/widget/rep_bottom_bar.dart';
 import 'package:flutter_github/widget/tabar_widget.dart';
 import 'package:provider/provider.dart';
 
-class RepositionDetailPageWidget extends StatefulWidget {
+
+class RepositionDetailPageWidget extends StatelessWidget {
   final RepositionViewModel repositionViewModel;
 
   RepositionDetailPageWidget(this.repositionViewModel,{Key key}):super(key:key);
-  @override
-  _RepositionDetailPageWidgetState createState() =>
-      _RepositionDetailPageWidgetState();
-}
 
-class _RepositionDetailPageWidgetState extends State<RepositionDetailPageWidget>
-    with TickerProviderStateMixin<RepositionDetailPageWidget> {
   List _tabs = ["动态", "详情", "ISSUE", "文件"];
-  TabController _tabController;
 
-  @override
-  void initState() {
-    _tabController = TabController(
-      length: _tabs.length,
-      vsync: this,
-    );
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
 //  RepositoryBloc
   @override
   Widget build(BuildContext context) {
-    return Provider<RepositoryEntryBloc>(
-      create: (_) => RepositoryEntryBloc(widget.repositionViewModel),
+    return MultiProvider(
+      providers: [
+        Provider<RepositoryEntryBloc>(
+          create:  (_) => RepositoryEntryBloc(repositionViewModel),
+          dispose: (context, value) => value.dispose(),
+        ),
+        ChangeNotifierProvider<FilesProvider>(
+          create: (_) => FilesProvider(),
+        ),
+      ],
       child: TabarPageWidget(
         tabItems: _tabs.map((name) => Tab(text: name)).toList(),
         floatingActionButton: FloatingActionButton(
@@ -59,7 +48,6 @@ class _RepositionDetailPageWidgetState extends State<RepositionDetailPageWidget>
           RepositionFileListWidget(),
         ],
       ),
-      dispose: (context, value) => value.dispose(),
     );
   }
 }

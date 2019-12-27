@@ -55,7 +55,6 @@ class Http {
         onReceiveProgress: onReceiveProgress,
       );
     } on DioError catch (e) {
-      print("error-------------------$e");
       response = Response(
           data: null,
           statusCode: e.response.statusCode

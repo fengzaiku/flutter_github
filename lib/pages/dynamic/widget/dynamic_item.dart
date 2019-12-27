@@ -19,7 +19,7 @@ class DynamicItemWidget extends StatelessWidget {
     return needUserIcon ? Row(
       children: <Widget>[
         UserIconWidget(
-          image: eventViewItem?.actionUserPic,
+          image: eventViewItem?.actionUserPic ?? "http://pic1.zhimg.com/50/v2-d5d077f05fdaadf654ab43c85ccd7db2_hd.jpg",
           onPressed: () {
             print("什么情况");
           },

@@ -55,8 +55,17 @@ class Api {
   }
 
 //  处理分页参数
-  static getPageParams(page, [pageSize = GlobalConst.PAGE_SIZE]) {
-      return page != null ? "?page=$page&per_page=$pageSize" : "";
+  static getPageParams(page, [String tab = "?",pageSize = GlobalConst.PAGE_SIZE]) {
+//      return page != null ? "?page=$page&per_page=$pageSize" : "";
+      if (page != null) {
+        if (pageSize != null) {
+          return "${tab}page=$page&per_page=$pageSize";
+        } else {
+          return "${tab}page=$page";
+        }
+      } else {
+        return "";
+      }
   }
 
 
@@ -75,6 +84,11 @@ class Api {
     }
 //    列表
     return "${host}repos/$reposOwner/$reposName/commits";
+  }
+
+//  仓库活动 get
+  static getReposEvent(reposOwner, reposName) {
+    return "${host}networks/$reposOwner/$reposName/events";
   }
 
 //  趋势 get

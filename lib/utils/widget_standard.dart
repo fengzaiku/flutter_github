@@ -4,6 +4,7 @@ import 'package:flutter_github/common/utils/event_format.dart';
 import 'package:flutter_github/model/CommitFile.dart';
 import 'package:flutter_github/model/Event.dart';
 import 'package:flutter_github/model/PushCommit.dart';
+import 'package:flutter_github/model/RepoCommit.dart';
 import 'package:flutter_github/model/Repository.dart';
 
 class DividerVertical {
@@ -73,6 +74,18 @@ class EventViewModel {
     var other = EventFormat.getActionAndDes(event);
     actionDes = other["des"];
     actionTarget = other["actionStr"];
+  }
+
+//  EventViewModel(this.actionUser);
+//  factory EventViewModel.fromCommitMap(RepoCommit eventMap) {
+//    return EventViewModel(eventMap.commentsUrl);
+//  }
+
+  EventViewModel.fromCommitMap(RepoCommit eventMap) {
+    actionTime = FormatDateUtils.getRelativeTime(eventMap.commit.committer.date);
+    actionUser = eventMap.commit.committer.name;
+    actionDes = "sha:" + eventMap.sha;
+    actionTarget = eventMap.commit.message;
   }
 }
 
