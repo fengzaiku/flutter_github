@@ -68,22 +68,6 @@ class _TendencyPageWidgetState extends State<TendencyPageWidget> with AutomaticK
   Widget build(BuildContext context) {
     return StoreBuilder<AppState>(
       builder: (BuildContext context, store){
-//        return EasyRefresh.custom(
-//          onRefresh: _onRefresh,
-//          firstRefresh: true,
-//          slivers: <Widget>[
-//            TendencyHeaderWidget(),
-//            SliverList(
-//              delegate: SliverChildBuilderDelegate(
-//                    (BuildContext context, int index) {
-//                    RepositionViewModel repositionViewModel = RepositionViewModel.fromTrendMap(trendingRepoModels[index]);
-//                 return RepositionItemWidget(repositionViewModel);
-//                },
-//                childCount: trendingRepoModels.length,
-//              ),
-//            )
-//          ],
-//        );
         return EasyRefresh.custom(
           onRefresh: _onRefresh,
           firstRefresh: true,

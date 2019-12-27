@@ -11,7 +11,6 @@ class HtmlUtils {
 
     if(articles.isNotEmpty){
       list.addAll(articles.map((Element element){
-        RegExp _replay = RegExp(r"\s*");
         List<String> names = element.querySelector('h1>a').text.split('/');
         String fullName = names[0].trim()+"/"+names[1].trim();
         List<String> contributors = List();
@@ -35,8 +34,6 @@ class HtmlUtils {
           String match = m.group(0);
           getMatches.add(match.split('>')[1]);
         }
-        print("getMatches----fullName---------------------$fullName");
-//        print("getMatches----fullName---------------------${fullName.split("/")[1].trim()}");
 
         return TrendingRepoModel.fromJson({
           "fullName":fullName,
