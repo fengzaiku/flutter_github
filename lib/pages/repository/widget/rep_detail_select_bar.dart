@@ -4,7 +4,6 @@ import 'package:flutter_github/pages/repository/bloc/repository_entry_bloc.dart'
 import 'package:flutter_github/widget/row_select_divider_list.dart';
 import 'package:flutter_github/utils/widget_standard.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_github/pages/repository/bloc/repository_entry_bloc.dart';
 
 class RepositionDetailSelectWidget extends StatelessWidget {
   final double shrinkOffset;

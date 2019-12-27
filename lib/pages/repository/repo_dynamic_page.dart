@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:flutter_github/model/RepoCommit.dart';
 import 'package:flutter_github/pages/dynamic/widget/dynamic_item.dart';
 import 'package:flutter_github/pages/repository/bloc/repository_bloc.dart';
 import 'package:flutter_github/pages/repository/widget/rep_dynamic_head_card.dart';
@@ -17,14 +16,15 @@ class RepositoryDynamicPageWidget extends StatefulWidget {
 }
 
 class _RepositoryDynamicPageWidgetState
-    extends State<RepositoryDynamicPageWidget> with TickerProviderStateMixin{
-  final GlobalKey<_RepositoryDynamicPageWidgetState> _repositoryDynamicKey = GlobalKey<_RepositoryDynamicPageWidgetState>();
+    extends State<RepositoryDynamicPageWidget> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin{
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
     RepositoryBloc repositoryDynamicBloc = Provider.of<RepositoryEntryBloc>(context).repositoryDynamicBloc;
     return EasyRefresh.custom(
-      key: _repositoryDynamicKey,
       firstRefresh: true,
       slivers: <Widget>[
         SliverToBoxAdapter(
@@ -59,6 +59,8 @@ class _RepositoryDynamicPageWidgetState
         ),
       ],
       onRefresh: () async {
+        repositoryDynamicBloc.clearRepositoryCommits();
+        await repositoryDynamicBloc.getRepositoryDetail();
         await repositoryDynamicBloc.getRepositoryCommits();
       },
       onLoad: () async{

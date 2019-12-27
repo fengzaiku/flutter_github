@@ -86,6 +86,11 @@ class Api {
     return "${host}repos/$reposOwner/$reposName/commits";
   }
 
+//  仓库详情 get
+  static getReposDetail(reposOwner, reposName) {
+    return "${host}repos/$reposOwner/$reposName";
+  }
+
 //  仓库活动 get
   static getReposEvent(reposOwner, reposName) {
     return "${host}networks/$reposOwner/$reposName/events";

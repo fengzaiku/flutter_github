@@ -126,4 +126,6 @@ class Repository {
   factory Repository.fromJson(Map<String, dynamic> json) => _$RepositoryFromJson(json);
 
   Map<String, dynamic> toJson() => _$RepositoryToJson(this);
+
+  Repository.empty();
 }

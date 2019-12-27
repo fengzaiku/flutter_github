@@ -1,13 +1,18 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_github/common/iconfont.dart';
-import 'package:flutter_github/utils/common_dialog.dart';
-import 'package:flutter_github/utils/create_widget.dart';
+import 'package:flutter_github/pages/repository/bloc/repository_bloc.dart';
+import 'package:flutter_github/pages/repository/bloc/repository_entry_bloc.dart';
+//import 'package:flutter_github/utils/common_dialog.dart';
+//import 'package:flutter_github/utils/create_widget.dart';
 import 'package:flutter_github/widget/flutter_github_card.dart';
 import 'package:flutter_github/widget/icon_text.dart';
 import 'package:flutter_github/widget/row_select_divider_list.dart';
 import 'package:flutter_github/widget/row_select_list.dart';
 import 'package:flutter_github/utils/widget_standard.dart';
+import 'package:provider/provider.dart';
 
 class RepositionDynamicHeadCardWidget extends StatefulWidget {
   @override
@@ -18,33 +23,32 @@ class RepositionDynamicHeadCardWidget extends StatefulWidget {
 class _RepositionDynamicHeadCardWidgetState
     extends State<RepositionDynamicHeadCardWidget> {
 
-  Widget _getIssueDetail(){
+//  Widget _getIssueDetail(){
+//    return Container(
+//      child: Column(
+//        children: createRepeatWidget([
+//          RowSelectItem(selectKey: "12qwe3",selectValue: "qwe"),
+//          RowSelectItem(selectKey: "12qwe3",selectValue: "lskdfj"),
+//          RowSelectItem(selectKey: "12qwe3",selectValue: "ldskfjk"),
+//        ], (item){
+//          return RaisedButton(
+//            onPressed: (){
+//              Navigator.of(context).pop();
+//            },
+//            color: Colors.amberAccent,
+//            child: Container(
+//              width: 80,
+//              alignment: Alignment.center,
+//              child: Text(item.selectValue),
+//            ),
+//          );
+//        }
+//        ),
+//      ),
+//    );
+//  }
 
-    return Container(
-      child: Column(
-        children: createRepeatWidget([
-          RowSelectItem(selectKey: "12qwe3",selectValue: "qwe"),
-          RowSelectItem(selectKey: "12qwe3",selectValue: "lskdfj"),
-          RowSelectItem(selectKey: "12qwe3",selectValue: "ldskfjk"),
-        ], (item){
-          return RaisedButton(
-            onPressed: (){
-              Navigator.of(context).pop();
-            },
-            color: Colors.amberAccent,
-            child: Container(
-              width: 80,
-              alignment: Alignment.center,
-              child: Text(item.selectValue),
-            ),
-          );
-        }
-        ),
-      ),
-    );
-  }
-
-  Widget _getRowSelectDividerList() {
+  Widget _getRowSelectDividerList(ReposHeaderViewModel data) {
     return RowSelectDividerListWidget(
       margin: EdgeInsets.only(top: 20),
       boxHeight: 50,
@@ -56,25 +60,23 @@ class _RepositionDynamicHeadCardWidgetState
                   color: Colors.white, width: 1))),
       items: <RowSelectItem>[
         RowSelectItem(
-            selectKey: "start", selectValue: "100", selectIcon: FgIcons.star),
+            selectKey: "start", selectValue: "${data?.repositoryStar}", selectIcon: FgIcons.star),
         RowSelectItem(
-            selectKey: "dynamic",
-            selectValue: "2",
+            selectKey: "fork",
+            selectValue: "${data?.repositoryFork}",
             selectIcon: FgIcons.dynamic),
         RowSelectItem(
-            selectKey: "start", selectValue: "100", selectIcon: FgIcons.star),
-        RowSelectItem(
             selectKey: "watcher",
-            selectValue: "30",
+            selectValue: "${data?.repositoryWatch}",
             selectIcon: FgIcons.watcher),
         RowSelectItem(
             selectKey: "issue",
-            selectValue: "40",
+            selectValue: "${data?.repositoryIssue}",
             selectIcon: FgIcons.electrocardiogram),
       ],
       builder: (RowSelectItem item, int index) {
         return Expanded(
-          child: GestureDetector(
+          child: Center(
             child: IconTextWidget(
               icon: item.selectIcon,
               iconColor: Colors.white,
@@ -83,31 +85,21 @@ class _RepositionDynamicHeadCardWidgetState
               text: item.selectValue,
               textStyle: TextStyle(color: Colors.white),
             ),
-            onTap: () {
-              print("${item.selectKey}");
-              if (item.selectKey == "issue") {
-                CommonDialog.flutterGitHubDialog(context, _getIssueDetail());
-              }
-            },
           ),
         );
       },
     );
   }
 
-  Widget _getRepositionTags() {
+  Widget _getRepositionTags(ReposHeaderViewModel data) {
+    if(data == null || data.topics == null){
+      return SizedBox();
+    }
+
     return RowSelectListWidget(
-      items: <RowSelectItem>[
-        RowSelectItem(selectKey: "cli", selectValue: "cli"),
-        RowSelectItem(selectKey: "information", selectValue: "information"),
-        RowSelectItem(selectKey: "linux", selectValue: "linux"),
-        RowSelectItem(selectKey: "maos", selectValue: "maos"),
-        RowSelectItem(selectKey: "osint", selectValue: "osint"),
-        RowSelectItem(selectKey: "start", selectValue: "start"),
-        RowSelectItem(selectKey: "dynamic", selectValue: "dynamic"),
-        RowSelectItem(selectKey: "watcher", selectValue: "watcher"),
-        RowSelectItem(selectKey: "issue", selectValue: "issue"),
-      ],
+      items: data.topics.map((String string){
+        return RowSelectItem(selectKey: string ?? "");
+      }).toList(),
       showWrap: true,
       spacing: 10,
       runSpacing: 10,
@@ -126,7 +118,7 @@ class _RepositionDynamicHeadCardWidgetState
               borderRadius: BorderRadius.all(Radius.circular(4)),
             ),
             child: Text(
-              item.selectValue,
+              item.selectKey,
               style: TextStyle(color: Colors.white),
             ),
           ),
@@ -137,62 +129,108 @@ class _RepositionDynamicHeadCardWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return FgCardItemWidget(
-      color: Colors.black,
-      child: IntrinsicHeight(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text.rich(
-              TextSpan(
-                text: "hecrj",
-                style: TextStyle(color: Colors.blue, fontSize: 18),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: "/",
-                    style: TextStyle(color: Colors.white),
+    RepositoryBloc repositoryDynamicBloc = Provider.of<RepositoryEntryBloc>(context).repositoryDynamicBloc;
+    return StreamBuilder<ReposHeaderViewModel>(
+      stream: repositoryDynamicBloc.repoHeaderObservable,
+      builder: (BuildContext context, AsyncSnapshot<ReposHeaderViewModel> snapshot){
+        return FgCardItemWidget(
+          padding: EdgeInsets.all(0.0),
+//          color: Colors.black,
+          child: ClipRRect(
+            borderRadius:BorderRadius.all(Radius.circular(4.0)),
+            child: Container(
+              padding: EdgeInsets.all(20.0),
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(snapshot.data?.ownerPic ?? "http://img1.imgtn.bdimg.com/it/u=229544782,3619652307&fm=11&gp=0.jpg")
+                  )
+              ),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX:8.0,sigmaY: 1.0,),
+                child: IntrinsicHeight(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text.rich(
+                        TextSpan(
+                          text: snapshot.data?.ownerName ?? "",
+                          style: TextStyle(color: Colors.blue, fontSize: 18),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: "/",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            TextSpan(
+                              text: snapshot.data?.repositoryName ?? "",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: <Widget>[
+//                    语言
+                          Text(
+                            "语言：${snapshot.data?.repositoryType}",
+                            style: TextStyle(fontSize: 14, color: Colors.white),
+                          ),
+                          SizedBox(width: 10,),
+//                    大小
+                          Text(
+                            "大小：${snapshot.data?.repositorySize}",
+                            style: TextStyle(fontSize: 14, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+//                协议
+                      Text(
+                        "协议：${snapshot.data?.license}",
+                        style: TextStyle(fontSize: 14, color: Colors.white),
+                      ),
+                      Container(
+                        alignment: Alignment.topLeft,
+                        padding: EdgeInsets.only(top: 10),
+                        child: Text(
+                          snapshot.data?.repositoryDes ?? "",
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+//                创建时间
+                      Container(
+                        margin: EdgeInsets.only(top: 5),
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          "更新于${snapshot.data?.pushAt}",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+//                上传时间
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          "创建于${snapshot.data?.createdAt}",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      _getRowSelectDividerList(snapshot.data),
+                      _getRepositionTags(snapshot.data),
+                    ],
                   ),
-                  TextSpan(
-                    text: "jsdfjhds",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ],
+                ),
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              "lskdfjlsdjflksdf",
-              style: TextStyle(fontSize: 16, color: Colors.white),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Text(
-              "lskdfjlsdjflksdfasdasdasdasd",
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 5),
-              alignment: Alignment.centerRight,
-              child: Text(
-                "创建于2019-07-15",
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                "创建于2019-07-15",
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            _getRowSelectDividerList(),
-            _getRepositionTags(),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

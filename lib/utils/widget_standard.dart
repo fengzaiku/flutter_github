@@ -68,18 +68,13 @@ class EventViewModel {
   String actionTarget;
 
   EventViewModel.fromEventMap(Event event){
-    actionUser    = event.actor.login;
+    actionUser    = event.actor?.login;
     actionUserPic = event.actor?.avatarUrl;
     actionTime    = FormatDateUtils.getRelativeTime(event.createdAt);
     var other = EventFormat.getActionAndDes(event);
     actionDes = other["des"];
     actionTarget = other["actionStr"];
   }
-
-//  EventViewModel(this.actionUser);
-//  factory EventViewModel.fromCommitMap(RepoCommit eventMap) {
-//    return EventViewModel(eventMap.commentsUrl);
-//  }
 
   EventViewModel.fromCommitMap(RepoCommit eventMap) {
     actionTime = FormatDateUtils.getRelativeTime(eventMap.commit.committer.date);
@@ -179,5 +174,66 @@ class ReposViewModel {
     repositoryWatch = model.meta;
     repositoryType = model.language;
     repositoryDes = model.description;
+  }
+}
+
+class ReposHeaderViewModel {
+  String ownerName = '---';
+  String ownerPic;
+  String repositoryName = "---";
+  String repositorySize = "---";
+  String repositoryStar = "---";
+  String repositoryFork = "---";
+  String repositoryWatch = "---";
+  String repositoryIssue = "---";
+  String repositoryIssueClose = "";
+  String repositoryIssueAll = "";
+  String repositoryType = "---";
+  String repositoryDes = "---";
+  String repositoryLastActivity = "";
+  String repositoryParentName = "";
+  String repositoryParentUser = "";
+  String createdAt = "";
+  String pushAt = "";
+  String license = "";
+  List<String> topics;
+  int allIssueCount = 0;
+  int openIssuesCount = 0;
+  bool repositoryStared = false;
+  bool repositoryForked = false;
+  bool repositoryWatched = false;
+  bool repositoryIsFork = false;
+
+  ReposHeaderViewModel();
+
+  ReposHeaderViewModel.fromHttpMap(ownerName, reposName, Repository map) {
+    this.ownerName = ownerName;
+    if (map == null || map.owner == null) {
+      return;
+    }
+    this.ownerPic = map.owner.avatarUrl;
+    this.repositoryName = reposName;
+    this.allIssueCount = map.allIssueCount;
+    this.topics = map.topics;
+    this.openIssuesCount = map.openIssuesCount;
+    this.repositoryStar =
+    map.watchersCount != null ? map.watchersCount.toString() : "";
+    this.repositoryFork =
+    map.forksCount != null ? map.forksCount.toString() : "";
+    this.repositoryWatch =
+    map.subscribersCount != null ? map.subscribersCount.toString() : "";
+    this.repositoryIssue =
+    map.openIssuesCount != null ? map.openIssuesCount.toString() : "";
+    this.repositorySize =
+        ((map.size / 1024.0)).toString().substring(0, 3) + "M";
+    this.repositoryType = map.language;
+    this.repositoryDes = map.description;
+    this.repositoryIsFork = map.fork;
+    this.license = map.license != null ? map.license.name : "";
+    this.repositoryParentName = map.parent != null ? map.parent.fullName : null;
+    this.repositoryParentUser =
+    map.parent != null ? map.parent.owner.login : null;
+    this.createdAt = FormatDateUtils.getRelativeTime(map.createdAt);
+    this.pushAt = FormatDateUtils.getRelativeTime(map.pushedAt);
   }
 }
