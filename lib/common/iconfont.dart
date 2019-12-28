@@ -33,12 +33,12 @@ class FgIcons{
     fontFamily: 'FgIcons',
   );
   // 实心星
-  static const IconData fill_star = const IconData(
+  static const IconData star = const IconData(
     0xe6b0,
     fontFamily: 'FgIcons',
   );
   // 空心星
-  static const IconData star = const IconData(
+  static const IconData un_star = const IconData(
     0xe627,
     fontFamily: 'FgIcons',
   );
@@ -77,9 +77,14 @@ class FgIcons{
     0xe60d,
     fontFamily: 'FgIcons',
   );
-  // 眼睛
-  static const IconData  watcher = const IconData(
+  // 眼睛未关注
+  static const IconData  un_watcher = const IconData(
     0xe617,
+    fontFamily: 'FgIcons',
+  );
+  // 眼睛关注
+  static const IconData  watcher = const IconData(
+    0xe63c,
     fontFamily: 'FgIcons',
   );
   // 文件

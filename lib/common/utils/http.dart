@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_github/common/utils/interceptors/connectivity_error.dart';
+import 'package:flutter_github/common/utils/interceptors/filter_path.dart';
 import 'package:flutter_github/common/utils/interceptors/header.dart';
 import 'package:flutter_github/common/utils/interceptors/token.dart';
 
@@ -15,6 +16,8 @@ class Http {
     dio.interceptors.add(ErrorConnectivityInterceptors(dio));
 //    请求头设置包括，超时时间
     dio.interceptors.add(HeaderInterceptors());
+//    路经过滤
+//    dio.interceptors.add(FilterInterceptors());
   }
 
   Future request(String path,data, Options options) async {
@@ -48,6 +51,8 @@ class Http {
     ProgressCallback onReceiveProgress,
   }) async {
     Response response;
+    RegExp starRegExp = RegExp(r"com\/user\/(subscriptions|starred)");
+
     try {
       response = await dio.get(path,queryParameters: queryParameters,
         options: options,
@@ -57,8 +62,26 @@ class Http {
     } on DioError catch (e) {
       response = Response(
           data: null,
-          statusCode: e.response.statusCode
+          statusCode: e.response.statusCode,
       );
+    }
+
+
+    print("starRegExp.hasMatch(path)-------------------------------${starRegExp.hasMatch(path)}");
+    print("response.statusCode-------------------------------${response.statusCode}");
+    if(starRegExp.hasMatch(path)){
+      if (response.statusCode == 404) {
+        response = Response(
+            data: false,
+            statusCode: response.statusCode
+        );
+      }
+      if (response.statusCode == 204) {
+        response = Response(
+            data: true,
+            statusCode: response.statusCode
+        );
+      }
     }
     return response.data;
   }

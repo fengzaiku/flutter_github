@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_github/pages/center/model/reposition_view.dart';
 import 'package:flutter_github/pages/repository/bloc/repository_entry_bloc.dart';
+import 'package:flutter_github/pages/repository/provider/action_provider.dart';
 import 'package:flutter_github/pages/repository/provider/files_provider.dart';
 import 'package:flutter_github/pages/repository/rep_readme_page.dart';
 import 'package:flutter_github/pages/repository/repo_dynamic_page.dart';
@@ -16,9 +17,8 @@ class RepositionDetailPageWidget extends StatelessWidget {
 
   RepositionDetailPageWidget(this.repositionViewModel,{Key key}):super(key:key);
 
-  List _tabs = ["动态", "详情", "ISSUE", "文件"];
+  final List _tabs = ["动态", "详情", "ISSUE", "文件"];
 
-//  RepositoryBloc
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -26,6 +26,9 @@ class RepositionDetailPageWidget extends StatelessWidget {
         Provider<RepositoryEntryBloc>(
           create:  (_) => RepositoryEntryBloc(repositionViewModel),
           dispose: (context, value) => value.dispose(),
+        ),
+        ChangeNotifierProvider<ActionProvider>(
+          create: (_) => ActionProvider(repositionViewModel),
         ),
         ChangeNotifierProvider<FilesProvider>(
           create: (_) => FilesProvider(),

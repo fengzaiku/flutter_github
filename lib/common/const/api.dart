@@ -96,6 +96,21 @@ class Api {
     return "${host}networks/$reposOwner/$reposName/events";
   }
 
+//  关注仓库
+  static resolveStarRepos(reposOwner, repos) {
+    return "${host}user/starred/$reposOwner/$repos";
+  }
+
+//  订阅仓库
+  static resolveWatcherRepos(reposOwner, repos) {
+    return "${host}user/subscriptions/$reposOwner/$repos";
+  }
+
+//  create fork post
+  static createFork(reposOwner, reposName) {
+    return "${host}repos/$reposOwner/$reposName/forks";
+  }
+
 //  趋势 get
   static getTrending(since, languageType) {
     if (languageType == null && since == null) {

@@ -81,6 +81,15 @@ class RepositoryBloc {
     return;
   }
 
+//  create Fork
+  Future updateRepositoryFork() async {
+    var result = await http.post(Api.createFork(
+            _repositionViewModel.ownerName,
+            _repositionViewModel.repositoryName), null);
+    print("result------------------------$result");
+    return;
+  }
+
 //  更新Tab把选项
   void updateSelectTab(String selectTap) {
     if (selectTap != null) {

@@ -19,11 +19,13 @@ class HtmlUtils {
         images.forEach((curElement){
           RegExp srcExp = new RegExp(r"https?.+\=\d+");
           var imgEle = curElement.querySelector("img.avatar");
-          String srcString = imgEle.attributes.toString();
-          contributors.add(srcExp.stringMatch(srcString));
+          String srcString = imgEle?.attributes?.toString();
+          if(srcString != null){
+            contributors.add(srcExp.stringMatch(srcString));
+          }
         });
 
-        String description = element.querySelector('p.my-1').innerHtml;
+        String description = element.querySelector('p.my-1')?.innerHtml ?? "hgjhgjhgjh";
         String language = element.querySelector('span[itemprop="programmingLanguage"]')?.text ?? "Language";
 
         String mateHtml = element.querySelector(".f6.text-gray").innerHtml;

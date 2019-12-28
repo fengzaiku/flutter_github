@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_github/common/iconfont.dart';
 import 'package:flutter_github/common/utils/date_format.dart';
 import 'package:flutter_github/common/utils/event_format.dart';
 import 'package:flutter_github/model/CommitFile.dart';
@@ -235,5 +236,31 @@ class ReposHeaderViewModel {
     map.parent != null ? map.parent.owner.login : null;
     this.createdAt = FormatDateUtils.getRelativeTime(map.createdAt);
     this.pushAt = FormatDateUtils.getRelativeTime(map.pushedAt);
+  }
+}
+
+class BottomStatusModel {
+  String watchText;
+  String starText;
+  IconData watchIcon;
+  IconData starIcon;
+  bool star = false;
+  bool watch = false;
+
+  BottomStatusModel();
+
+  BottomStatusModel.fromJson(Map<String, bool> json){
+    if(json == null){
+      json = {
+        "star": false,
+        "watch": false,
+      };
+    }
+    this.watchText = json["watch"] ?? false ? "UnWatch" : "Watch";
+    this.starText = json["star"] ?? false ? "UnStar" : "Star";
+    this.watchIcon = json["watch"] ?? false ? FgIcons.watcher : FgIcons.un_watcher;
+    this.starIcon = json["star"] ?? false ? FgIcons.star : FgIcons.un_star;
+    this.star = json["star"] ?? false;
+    this.watch = json["watch"] ?? false;
   }
 }
