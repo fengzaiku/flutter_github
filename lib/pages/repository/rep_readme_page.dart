@@ -1,79 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_github/widget/readme.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+
+typedef FutureValueCallBack = Future<String> Function();
 
 class RepositionReadmePageWidget extends StatefulWidget {
   final String string;
   final String title;
-
-  RepositionReadmePageWidget({Key key, this.string, this.title}) : super(key:key);
+  final FutureValueCallBack onRefresh;
+  RepositionReadmePageWidget({Key key, this.string, this.title, this.onRefresh}) : super(key:key);
   @override
   _RepositionReadmePageWidgetState createState() => _RepositionReadmePageWidgetState();
 }
 
-class _RepositionReadmePageWidgetState extends State<RepositionReadmePageWidget> {
-   final String _markdownData = """
-   This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+class _RepositionReadmePageWidgetState extends State<RepositionReadmePageWidget> with AutomaticKeepAliveClientMixin{
+// GlobalKey _refreshIndictorKey = GlobalKey<_RepositionReadmePageWidgetState>();
+ GlobalKey<RefreshIndicatorState> _refreshIndictorKey = GlobalKey<RefreshIndicatorState>();
+ String _markDownString = "";
 
- ## Available Scripts
+  @override
+  bool get wantKeepAlive => true;
 
- In the project directory, you can run:
+  @override
+  void initState() {
+    super.initState();
+    _onRefresh();
+  }
 
- ### `npm start`
+//  @override
+//  void didChangeDependencies() {
+//    print(" _refreshIndictorKey.currentState.show().then((value){});-------------------${ _refreshIndictorKey.currentState}");
+//    super.didChangeDependencies();
+////    if(_refreshIndictorKey.currentState.show != null){
+////      _refreshIndictorKey.currentState.show().then((value){});
+////    }
+//  }
 
- Runs the app in the development mode.<br>
- Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
- The page will reload if you make edits.<br>
- You will also see any lint errors in the console.
-
- ### `npm test`
-
- Launches the test runner in the interactive watch mode.<br>
- See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
- ### `npm run build`
-
- Builds the app for production to the `build` folder.<br>
- It correctly bundles React in production mode and optimizes the build for the best performance.
-
- The build is minified and the filenames include the hashes.<br>
- Your app is ready to be deployed!
-
- See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
- ### `npm run eject`
-
- **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
- If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
- Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
- You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
- ## Learn More
-
- You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
- To learn React, check out the [React documentation](https://reactjs.org/).
-   """;
+  Future _onRefresh() async {
+      if(widget.string != null){return;}
+      if(widget.onRefresh != null){
+        String result = await widget.onRefresh?.call();
+        setState(() {
+          _markDownString = result;
+        });
+      }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title ?? ""),
-        ),
-        body: SingleChildScrollView(
-          padding: EdgeInsets.fromLTRB(10,20,10,20),
-          physics: BouncingScrollPhysics(),
-          child: MarkdownBody(
-            selectable: true,
-            data: widget.string ?? _markdownData,
-//            imageDirectory: 'https://raw.githubusercontent.com',
-          ),
-        ),
+      child: RefreshIndicator(
+        key: _refreshIndictorKey,
+        onRefresh: _onRefresh,
+        child: ReadmePageWidget(data: widget.string ?? _markDownString,),
       ),
     );
   }

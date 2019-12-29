@@ -143,7 +143,7 @@ class _RepositionDynamicHeadCardWidgetState
               decoration: BoxDecoration(
                   image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: NetworkImage(snapshot.data?.ownerPic ?? "http://img1.imgtn.bdimg.com/it/u=229544782,3619652307&fm=11&gp=0.jpg")
+                      image: NetworkImage(snapshot.data?.ownerPic ?? "http://img95.699pic.com/photo/40166/2807.jpg_wh300.jpg")
                   )
               ),
               child: BackdropFilter(

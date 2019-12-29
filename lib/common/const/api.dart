@@ -126,6 +126,15 @@ class Api {
       return "https://github.com/trending/$languageType?since=$since";
     }
   }
+//  README 文件地址 get
+  static readmeFile(reposNameFullName, curBranch) {
+    return host +
+        "repos/" +
+        reposNameFullName +
+        "/" +
+        "readme" +
+        ((curBranch == null) ? "" : ("?ref=" + curBranch));
+  }
 }
 
 

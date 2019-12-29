@@ -42,7 +42,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
                 UserAccountsDrawerHeader(
                   //  decoration,
                   currentAccountPicture: CircleAvatar(
-                    backgroundImage: NetworkImage(userInfo.avatarUrl ?? "http://e.hiphotos.baidu.com/image/pic/item/4610b912c8fcc3cef70d70409845d688d53f20f7.jpg"),
+                    backgroundImage: NetworkImage(userInfo.avatarUrl ?? "http://img95.699pic.com/photo/40166/2807.jpg_wh300.jpg"),
                   ),
                   accountName: Text(userInfo.login ?? ""),
                   accountEmail: Text(userInfo.email ?? ""),
