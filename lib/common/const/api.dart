@@ -135,6 +135,12 @@ class Api {
         "readme" +
         ((curBranch == null) ? "" : ("?ref=" + curBranch));
   }
+
+//  仓库路径下的内容 get
+  static getReposDataDir(reposOwner, repos, path, [branch = 'master']) {
+    return "${host}repos/$reposOwner/$repos/contents/$path" +
+        ((branch == null) ? "" : ("?ref=" + branch));
+  }
 }
 
 

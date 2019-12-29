@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_github/widget/readme.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 
 typedef FutureValueCallBack = Future<String> Function();
 
@@ -14,8 +13,6 @@ class RepositionReadmePageWidget extends StatefulWidget {
 }
 
 class _RepositionReadmePageWidgetState extends State<RepositionReadmePageWidget> with AutomaticKeepAliveClientMixin{
-// GlobalKey _refreshIndictorKey = GlobalKey<_RepositionReadmePageWidgetState>();
- GlobalKey<RefreshIndicatorState> _refreshIndictorKey = GlobalKey<RefreshIndicatorState>();
  String _markDownString = "";
 
   @override
@@ -26,15 +23,6 @@ class _RepositionReadmePageWidgetState extends State<RepositionReadmePageWidget>
     super.initState();
     _onRefresh();
   }
-
-//  @override
-//  void didChangeDependencies() {
-//    print(" _refreshIndictorKey.currentState.show().then((value){});-------------------${ _refreshIndictorKey.currentState}");
-//    super.didChangeDependencies();
-////    if(_refreshIndictorKey.currentState.show != null){
-////      _refreshIndictorKey.currentState.show().then((value){});
-////    }
-//  }
 
   Future _onRefresh() async {
       if(widget.string != null){return;}
@@ -50,7 +38,6 @@ class _RepositionReadmePageWidgetState extends State<RepositionReadmePageWidget>
   Widget build(BuildContext context) {
     return Material(
       child: RefreshIndicator(
-        key: _refreshIndictorKey,
         onRefresh: _onRefresh,
         child: ReadmePageWidget(data: widget.string ?? _markDownString,),
       ),

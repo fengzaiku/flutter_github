@@ -24,7 +24,7 @@ class RepositionDetailPageWidget extends StatelessWidget {
 
   Future<String> getReadmeFile() async {
     String result = await http.get(Api.readmeFile(repositionViewModel.ownerName+"/"+repositionViewModel.repositoryName, null),options: Options(
-//      contentType: "text/plain; charset=utf-8",
+      contentType: "text/plain; charset=utf-8",
       headers: {"Accept": 'application/vnd.github.VERSION.raw'}
     ));
     return result;
@@ -61,7 +61,10 @@ class RepositionDetailPageWidget extends StatelessWidget {
             onRefresh: getReadmeFile
           ),
           RepositionIssuePageWidget(),
-          RepositionFileListWidget(),
+          RepositionFileListWidget(
+              repositionViewModel.ownerName,
+              repositionViewModel.repositoryName
+          ),
         ],
       ),
     );

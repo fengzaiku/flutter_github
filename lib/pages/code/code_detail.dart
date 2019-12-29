@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_github/common/utils/generate_html.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 //class CodeDetailPageWidget extends StatefulWidget {
@@ -57,19 +58,34 @@ The navigation delegate is set to block navigation to the youtube website.
 ''';
 
 class CodeDetailPageWidget extends StatefulWidget {
+  String htmlUrl;
+  String htmlBody;
+  String title;
+
+  CodeDetailPageWidget({Key key, this.htmlUrl, this.title, this.htmlBody}):super(key:key);
   @override
-  _CodeDetailPageWidgetState createState() => _CodeDetailPageWidgetState();
+  _CodeDetailPageWidgetState createState() => _CodeDetailPageWidgetState(htmlUrl);
 }
 
 class _CodeDetailPageWidgetState extends State<CodeDetailPageWidget> {
-//  final Completer<WebViewController> _controller =
-//  Completer<WebViewController>();
+  String htmlUrl;
+  _CodeDetailPageWidgetState(this.htmlUrl);
 
+  @override
+  void initState() {
+    super.initState();
+    if(htmlUrl == null && widget.htmlBody != null){
+      setState(() {
+        htmlUrl = HtmlUtils.urlFormHtml(HtmlUtils.htmlBodyGenerateHtml(widget.htmlBody));
+      });
+    }
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter WebView example'),
+        title: Text(widget.title ?? ""),
         // This drop down menu demonstrates that Flutter widgets can be shown over the web view.
         actions: <Widget>[
 //          NavigationControls(_controller.future),
@@ -80,8 +96,7 @@ class _CodeDetailPageWidgetState extends State<CodeDetailPageWidget> {
       // to allow calling Scaffold.of(context) so we can show a snackbar.
       body: Builder(builder: (BuildContext context) {
         return WebView(
-          initialUrl:
-              'https://blog.csdn.net/q9104422999/article/details/100030344',
+          initialUrl: htmlUrl,
           javascriptMode: JavascriptMode.unrestricted,
           onWebViewCreated: (WebViewController webViewController) {},
         );
