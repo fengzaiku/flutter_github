@@ -31,7 +31,7 @@ class RepositionDetailPageWidget extends StatelessWidget {
 //      contentType: "text/plain; charset=utf-8",
 //      headers: {"Accept": 'application/vnd.github.VERSION.raw'}
     ));
-    PageRouter.goToCodeDetailDetailPage(context, repositionViewModel.repositoryName, result);
+    PageRouter.goToCodeDetailDetailPage(context, repositionViewModel.repositoryName +"/README.md", result);
     return result;
   }
 
@@ -56,7 +56,7 @@ class RepositionDetailPageWidget extends StatelessWidget {
           if(index == 1){
             getReadmeFile(context);
           }
-          return false;
+//          return false;
         },
         floatingActionButton: FloatingActionButton(
           child: Text("关注"),

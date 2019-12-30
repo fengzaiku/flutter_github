@@ -115,9 +115,10 @@ class _TabarPageWidgetState extends State<TabarPageWidget>
       body: PageView(
         controller: _pageViewController,
         children: widget.tabViews,
-        onPageChanged: (int index){
-          _tabController.animateTo(index < 1 ? index : index + 1);
-        },
+//        onPageChanged: (int index){
+//          _tabController.animateTo(index < 1 ? index : index + 1);
+//        },
+        physics: NeverScrollableScrollPhysics(),
       ),
 //      body: TabBarView(
 //        controller: _tabController,
