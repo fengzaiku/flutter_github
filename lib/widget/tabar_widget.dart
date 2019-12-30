@@ -35,12 +35,17 @@ class TabarPageWidget extends StatefulWidget {
 class _TabarPageWidgetState extends State<TabarPageWidget>
     with TickerProviderStateMixin<TabarPageWidget> {
   TabController _tabController;
+  PageController _pageViewController;
 
   @override
   void initState() {
     _tabController = TabController(
+      initialIndex: 0,
       length: widget.tabItems.length,
       vsync: this,
+    );
+    _pageViewController = PageController(
+      initialPage: 0
     );
     super.initState();
   }
@@ -97,14 +102,27 @@ class _TabarPageWidgetState extends State<TabarPageWidget>
           controller: _tabController,
           tabs: widget.tabItems,
           onTap: (int index) {
+            print("index-------------------------------------$index");
             widget.onTap?.call(index);
+            if(index == 1){
+              _tabController.animateTo(_tabController.previousIndex);
+            } else {
+              _pageViewController.animateToPage(index > 1 ? index -1 : index, duration: Duration(milliseconds: 500), curve: Curves.easeIn);
+            }
           },
         ),
       ),
-      body: TabBarView(
-        controller: _tabController,
+      body: PageView(
+        controller: _pageViewController,
         children: widget.tabViews,
+        onPageChanged: (int index){
+          _tabController.animateTo(index < 1 ? index : index + 1);
+        },
       ),
+//      body: TabBarView(
+//        controller: _tabController,
+//        children: widget.tabViews,
+//      ),
       floatingActionButton: widget.floatingActionButton,
       bottomNavigationBar: widget.bottomNavigationBar,
       floatingActionButtonLocation: widget.floatingActionButtonLocation,

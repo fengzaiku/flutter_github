@@ -141,6 +141,20 @@ class Api {
     return "${host}repos/$reposOwner/$repos/contents/$path" +
         ((branch == null) ? "" : ("?ref=" + branch));
   }
+
+//  搜索issue
+  static repositoryIssueSearch(q) {
+    return "${host}search/issues?q=$q";
+  }
+
+//  仓库Issue get
+  static getReposIssue(reposOwner, reposName, state, sort, direction) {
+    state ??= 'all';
+    sort ??= 'created';
+    direction ??= 'desc';
+    return "${host}repos/$reposOwner/$reposName/issues?state=$state&sort=$sort&direction=$direction";
+  }
+
 }
 
 

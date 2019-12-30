@@ -5,7 +5,7 @@ import 'package:flutter_github/common/const/api.dart';
 import 'package:flutter_github/common/iconfont.dart';
 import 'package:flutter_github/common/utils/http.dart';
 import 'package:flutter_github/model/FileModel.dart';
-import 'package:flutter_github/pages/code/code_detail.dart';
+import 'package:flutter_github/router/page_router.dart';
 import 'package:flutter_github/widget/flutter_github_card.dart';
 
 class RepositionFileListWidget extends StatefulWidget {
@@ -60,12 +60,8 @@ class _RepositionFileListWidgetState extends State<RepositionFileListWidget> {
       headers: {"Accept": 'application/vnd.github.html'},
         contentType: "text"
     ));
-    print("result-----------------------------$result");
     if(result != null){
-      Navigator.push(context, CupertinoPageRoute(builder: (BuildContext context) => CodeDetailPageWidget(
-        title: file.name,
-        htmlBody: result,
-      )));
+      PageRouter.goToCodeDetailDetailPage(context, file.name, result);
     }
   }
 

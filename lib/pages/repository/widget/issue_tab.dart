@@ -4,6 +4,10 @@ import 'package:flutter_github/widget/flutter_sliver_app_bar.dart';
 import 'package:flutter_github/widget/row_select_divider_list.dart';
 
 class IssueSelectListWidget extends StatelessWidget {
+  final String selectKey;
+  final ValueChanged onStateChange;
+
+  IssueSelectListWidget({Key key, this.selectKey, this.onStateChange}):super(key:key);
   @override
   Widget build(BuildContext context) {
     return FlutterSliverAppbarWidget(
@@ -28,15 +32,15 @@ class IssueSelectListWidget extends StatelessWidget {
             items: [
               RowSelectItem(selectKey:"all",selectValue: "全部"),
               RowSelectItem(selectKey:"open",selectValue: "打开"),
-              RowSelectItem(selectKey:"close",selectValue: "关闭"),
+              RowSelectItem(selectKey:"closed",selectValue: "关闭"),
             ],
             builder: (RowSelectItem item,int index){
               return Expanded(
                 child: RawMaterialButton(
                   constraints: BoxConstraints(minWidth: 0,minHeight: 0),
-                  child: Text(item.selectValue,style: TextStyle(color: Colors.white),),
+                  child: Text(item.selectValue,style: TextStyle(color: item.selectKey == selectKey ?  Colors.white : Colors.grey),),
                   onPressed: (){
-                    print(item.selectKey);
+                    onStateChange(item.selectKey);
                   },
                 ),
               );

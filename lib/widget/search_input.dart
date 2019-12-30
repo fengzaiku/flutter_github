@@ -6,12 +6,14 @@ class SearchInputWidget extends StatefulWidget {
   final ValueChanged onSubmitted;
   final ValueChanged onSearch;
   final bool         autofocus;
+  final TextEditingController controller;
 
   SearchInputWidget({
     Key key,
     this.onChanged,
     this.onSubmitted,
     this.onSearch,
+    this.controller,
     this.autofocus = false
   }) : super(key:key);
 
@@ -20,20 +22,6 @@ class SearchInputWidget extends StatefulWidget {
 }
 
 class _SearchInputWidgetState extends State<SearchInputWidget> {
-  TextEditingController _controller;
-
-  @override
-  void initState() {
-    _controller = TextEditingController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -52,7 +40,7 @@ class _SearchInputWidgetState extends State<SearchInputWidget> {
           Expanded(
             child: TextField(
               autofocus: widget.autofocus,
-              controller:_controller,
+              controller:widget.controller,
               onChanged: widget.onChanged,
               onSubmitted: widget.onSubmitted,
               decoration: InputDecoration.collapsed(
@@ -64,7 +52,7 @@ class _SearchInputWidgetState extends State<SearchInputWidget> {
             constraints: BoxConstraints(minHeight: 0,minWidth: 0),
             child: Icon(FgIcons.search),
             onPressed: (){
-              widget.onSearch?.call(_controller.value);
+              widget.onSearch?.call(widget.controller.value);
             },
           )
         ],

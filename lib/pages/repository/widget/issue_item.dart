@@ -1,29 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_github/common/iconfont.dart';
+import 'package:flutter_github/utils/widget_standard.dart';
 import 'package:flutter_github/widget/flutter_github_card.dart';
 import 'package:flutter_github/widget/icon_text.dart';
 import 'package:flutter_github/widget/user_icon.dart';
 
 class IssueListItemWidget extends StatelessWidget {
+  final IssueItemViewModel issueItemViewModel;
+  IssueListItemWidget(this.issueItemViewModel, {Key key}):super(key:key);
   @override
   Widget build(BuildContext context) {
     return FgCardItemWidget(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          UserIconWidget(),
+          UserIconWidget(
+            image: issueItemViewModel.actionUserPic ?? "http://img4.imgtn.bdimg.com/it/u=3539647612,3468243892&fm=26&gp=0.jpg",
+          ),
           Expanded(
               child:Column(
                 children: <Widget>[
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text("dahai",style: TextStyle(fontSize: 14),),
-                      Text("9 天前",style: TextStyle(fontSize: 14, color: Colors.grey),)
+                      Text("${issueItemViewModel.actionUser}",style: TextStyle(fontSize: 14),),
+                      Text("${issueItemViewModel.actionTime}",style: TextStyle(fontSize: 14, color: Colors.grey),)
                     ],
                   ),
                   SizedBox(height: 5,),
-                  Text("拉萨扩大飞机螺丝扣江东父老看世界的方式来上课的房间里上空的飞机乐山大佛就是领导看",style: TextStyle(fontSize: 12, color: Colors.grey)),
+                  Text("${issueItemViewModel.issueComment}",style: TextStyle(fontSize: 12, color: Colors.grey)),
                   SizedBox(height: 5,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -32,12 +37,12 @@ class IssueListItemWidget extends StatelessWidget {
                         children: <Widget>[
                           IconTextWidget(
                             icon: FgIcons.point,
-                            iconColor: Colors.green,
+                            iconColor: issueItemViewModel.state == "closed" ? Colors.green : Colors.red,
                             iconSize: 12,
-                            text: "closed",
-                            textStyle: TextStyle(fontSize: 12, color: Colors.green),
+                            text: "${issueItemViewModel.state}",
+                            textStyle: TextStyle(fontSize: 12, color: issueItemViewModel.state == "closed" ? Colors.green : Colors.red),
                           ),
-                          Text("#345345",style: TextStyle(fontSize: 12, color: Colors.grey))
+                          Text("${issueItemViewModel.issueTag}",style: TextStyle(fontSize: 12, color: Colors.grey))
                         ],
                       ),
                       IconTextWidget(
@@ -45,7 +50,7 @@ class IssueListItemWidget extends StatelessWidget {
                         iconColor: Colors.grey,
                         iconSize: 12,
                         textStyle:TextStyle(fontSize: 12, color: Colors.grey) ,
-                        text: "1",
+                        text: "${issueItemViewModel.commentCount}",
                       ),
                     ],
                   )

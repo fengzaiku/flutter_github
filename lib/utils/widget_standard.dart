@@ -4,6 +4,7 @@ import 'package:flutter_github/common/utils/date_format.dart';
 import 'package:flutter_github/common/utils/event_format.dart';
 import 'package:flutter_github/model/CommitFile.dart';
 import 'package:flutter_github/model/Event.dart';
+import 'package:flutter_github/model/Issue.dart';
 import 'package:flutter_github/model/PushCommit.dart';
 import 'package:flutter_github/model/RepoCommit.dart';
 import 'package:flutter_github/model/Repository.dart';
@@ -262,5 +263,36 @@ class BottomStatusModel {
     this.starIcon = json["star"] ?? false ? FgIcons.star : FgIcons.un_star;
     this.star = json["star"] ?? false;
     this.watch = json["watch"] ?? false;
+  }
+}
+
+class IssueItemViewModel {
+  String actionTime = "---";
+  String actionUser = "---";
+  String actionUserPic = "---";
+  String issueComment = "---";
+  String commentCount = "---";
+  String state = "---";
+  String issueTag = "---";
+  String number = "---";
+  String id = "";
+
+  IssueItemViewModel();
+
+  IssueItemViewModel.fromMap(Issue issueMap, {needTitle = true}) {
+    String fullName = EventFormat.getFullName(issueMap.repoUrl);
+    actionTime = FormatDateUtils.getRelativeTime(issueMap.createdAt);
+    actionUser = issueMap.user.login;
+    actionUserPic = issueMap.user.avatarUrl;
+    if (needTitle) {
+      issueComment = fullName + "- " + issueMap.title;
+      commentCount = issueMap.commentNum.toString();
+      state = issueMap.state;
+      issueTag = "#" + issueMap.number.toString();
+      number = issueMap.number.toString();
+    } else {
+      issueComment = issueMap.body ?? "";
+      id = issueMap.id.toString();
+    }
   }
 }

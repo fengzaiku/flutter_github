@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_github/common/utils/generate_html.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+typedef FutureFunction = Future Function();
+
 //class CodeDetailPageWidget extends StatefulWidget {
 //  @override
 //  _CodeDetailPageWidgetState createState() => _CodeDetailPageWidgetState();
@@ -61,8 +63,9 @@ class CodeDetailPageWidget extends StatefulWidget {
   String htmlUrl;
   String htmlBody;
   String title;
+  FutureFunction htmlCallBack;
 
-  CodeDetailPageWidget({Key key, this.htmlUrl, this.title, this.htmlBody}):super(key:key);
+  CodeDetailPageWidget({Key key, this.htmlUrl, this.title, this.htmlBody, this.htmlCallBack}):super(key:key);
   @override
   _CodeDetailPageWidgetState createState() => _CodeDetailPageWidgetState(htmlUrl);
 }
@@ -78,6 +81,13 @@ class _CodeDetailPageWidgetState extends State<CodeDetailPageWidget> {
       setState(() {
         htmlUrl = HtmlUtils.urlFormHtml(HtmlUtils.htmlBodyGenerateHtml(widget.htmlBody));
       });
+    } if(widget.htmlCallBack is FutureFunction){
+      widget.htmlCallBack().then((html){
+        print("html----------------------------------$html");
+        setState(() {
+          htmlUrl = HtmlUtils.urlFormHtml(HtmlUtils.htmlBodyGenerateHtml(html));
+        });
+      });
     }
   }
   
@@ -85,7 +95,7 @@ class _CodeDetailPageWidgetState extends State<CodeDetailPageWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title ?? ""),
+        title: widget.title != null ? Text(widget.title ) : SizedBox(),
         // This drop down menu demonstrates that Flutter widgets can be shown over the web view.
         actions: <Widget>[
 //          NavigationControls(_controller.future),
