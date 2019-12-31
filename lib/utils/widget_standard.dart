@@ -9,12 +9,14 @@ import 'package:flutter_github/model/PushCommit.dart';
 import 'package:flutter_github/model/RepoCommit.dart';
 import 'package:flutter_github/model/Repository.dart';
 
+typedef SelectedFunction = void Function();
 class DividerVertical {
   double  width;
   double  thickness;
   double  indent;
   double  endIndent;
   Color   color;
+
 
   DividerVertical(
       {this.width, this.thickness, this.indent, this.endIndent, this.color});
@@ -25,13 +27,14 @@ class RowSelectItem {
   String    selectName;
   dynamic   selectValue;
   IconData  selectIcon;
-
+  SelectedFunction onSelected;
 
   RowSelectItem({
     this.selectKey,
     this.selectName,
     this.selectValue,
     this.selectIcon,
+    this.onSelected
   });
 }
 

@@ -37,6 +37,8 @@ class RepositionDetailPageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("repositionViewModel.repositoryHtmlUrl-----------------------------${repositionViewModel.repositoryHtmlUrl}");
+
     return MultiProvider(
       providers: [
         Provider<RepositoryEntryBloc>(
@@ -51,6 +53,7 @@ class RepositionDetailPageWidget extends StatelessWidget {
         ),
       ],
       child: TabarPageWidget(
+        shareUrl: repositionViewModel.repositoryHtmlUrl,
         tabItems: _tabs.map((name) => Tab(text: name)).toList(),
         onTap: (int index){
           if(index == 1){

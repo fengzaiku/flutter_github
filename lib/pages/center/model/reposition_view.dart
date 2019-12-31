@@ -10,6 +10,7 @@ class RepositionViewModel{
   String hideWatchIcon;
   String repositoryType = "";
   String repositoryDes;
+  String repositoryHtmlUrl;
 
   RepositionViewModel();
 
@@ -22,6 +23,7 @@ class RepositionViewModel{
     repositoryWatch = data.openIssuesCount.toString();
     repositoryType = data.language ?? '---';
     repositoryDes = data.description ?? '---';
+    repositoryHtmlUrl = data.htmlUrl ?? 'https://github.com/${data.name}';
   }
   RepositionViewModel.fromTrendMap(model) {
     ownerName = model.name;
@@ -36,5 +38,6 @@ class RepositionViewModel{
     repositoryWatch = model.meta?.trim();
     repositoryType = model.language;
     repositoryDes = model.description;
+    repositoryHtmlUrl = 'https://github.com/${model.name}/${model.reposName}';
   }
 }

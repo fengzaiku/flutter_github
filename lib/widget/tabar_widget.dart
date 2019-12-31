@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_github/common/iconfont.dart';
+import 'package:flutter_github/widget/app_bar_action.dart';
 
 class TabarPageWidget extends StatefulWidget {
   final Widget title;
+
+  final String shareUrl;
 
   final List<Widget> tabItems;
 
@@ -22,6 +25,7 @@ class TabarPageWidget extends StatefulWidget {
     @required this.tabItems,
     @required this.tabViews,
     this.onTap,
+    this.shareUrl,
     this.onPageChanged,
     this.bottomNavigationBar,
     this.floatingActionButton,
@@ -62,39 +66,8 @@ class _TabarPageWidgetState extends State<TabarPageWidget>
       appBar: AppBar(
         title: widget.title,
         actions: <Widget>[
-          PopupMenuButton(
-            onCanceled: (){
-
-            },
-            onSelected: (select){
-              print(select);
-            },
-            child: Icon(FgIcons.ellipsis),
-            itemBuilder: (BuildContext context){
-              return [
-                PopupMenuItem(
-                  value: "浏览器打开",
-//                  textStyle: TextStyle(color: Colors.black),
-                  child: Text('浏览器打开'),
-                ),
-                PopupMenuItem(
-                  value: "复制链接",
-                  child: Text('复制链接'),
-                ),
-                PopupMenuItem(
-                  value: "分享",
-                  child: Text('分享'),
-                ),
-                PopupMenuItem(
-                  value: "版本",
-                  child: Text('版本'),
-                ),
-                PopupMenuItem(
-                  value: "分支",
-                  child: Text('分支'),
-                ),
-              ];
-            },
+          AppBarActionWidget(
+            url: widget.shareUrl,
           ),
           SizedBox(width: 20,)
         ],
