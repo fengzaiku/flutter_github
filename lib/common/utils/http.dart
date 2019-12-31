@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_github/common/const/http_status.dart';
 import 'package:flutter_github/common/utils/interceptors/connectivity_error.dart';
 import 'package:flutter_github/common/utils/interceptors/filter_path.dart';
 import 'package:flutter_github/common/utils/interceptors/header.dart';
@@ -25,9 +26,8 @@ class Http {
     try {
       response = await dio.request(path, data: data, options: options);
     } on DioError catch (e) {
-      print("error-------------------$e");
+      response = resolveDioErrorRepository(e);
     }
-    print("response-------------------$response");
     return response?.data ?? null;
   }
 
@@ -36,10 +36,7 @@ class Http {
     try {
       response = await dio.post(path, data: data);
     } on DioError catch (e) {
-      response = Response(
-        data: null,
-        statusCode: e.response.statusCode
-      );
+      response = resolveDioErrorRepository(e);
     }
     return response;
   }
@@ -60,15 +57,9 @@ class Http {
         onReceiveProgress: onReceiveProgress,
       );
     } on DioError catch (e) {
-      response = Response(
-          data: null,
-          statusCode: e.response.statusCode,
-      );
+      response = resolveDioErrorRepository(e);
     }
 
-
-    print("starRegExp.hasMatch(path)-------------------------------${starRegExp.hasMatch(path)}");
-    print("response.statusCode-------------------------------${response.statusCode}");
     if(starRegExp.hasMatch(path)){
       if (response.statusCode == 404) {
         response = Response(
@@ -84,6 +75,22 @@ class Http {
       }
     }
     return response.data;
+  }
+
+  resolveDioErrorRepository(DioError e){
+    Response errorResponse;
+    if(e.response != null){
+      errorResponse = e.response;
+    } else {
+      errorResponse = Response(
+          statusCode: 911
+      );
+    }
+
+    if(e.type == DioErrorType.CONNECT_TIMEOUT || e.type == DioErrorType.RECEIVE_TIMEOUT){
+      errorResponse.statusCode = HttpStatus.NETWORK_TIMEOUT;
+    }
+    return errorResponse;
   }
 }
 
