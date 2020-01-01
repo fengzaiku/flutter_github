@@ -37,6 +37,10 @@ class HtmlUtils {
           getMatches.add(match.split('>')[1]);
         }
 
+        if(contributors.isEmpty){
+          contributors.add("https://avatars0.githubusercontent.com/u/2115102?s=40&v=4");
+        }
+
         return TrendingRepoModel.fromJson({
           "fullName":fullName,
           "url": "/"+fullName,

@@ -1,14 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_github/common/iconfont.dart';
+//import 'package:flutter_github/common/iconfont.dart';
 import 'package:flutter_github/pages/drawer/home_drawer.dart';
 import 'package:flutter_github/pages/home/home_widget/home_buttom_navigation_bar.dart';
 
 import 'package:flutter_github/pages/dynamic/dynamic_page.dart';
 import 'package:flutter_github/pages/center/center_page.dart';
-import 'package:flutter_github/pages/search/search_page.dart';
+//import 'package:flutter_github/pages/search/search_page.dart';
 import 'package:flutter_github/pages/tendency/tendency_page.dart';
-//import 'package:flutter_github/utils/common_dialog.dart';
 
 class HomePageWidget extends StatefulWidget {
   HomePageWidget({Key key}) : super(key: key);
@@ -17,7 +16,6 @@ class HomePageWidget extends StatefulWidget {
 }
 
 class _HomePageWidgetState extends State<HomePageWidget> {
-//   final TabController tabController;
   PageController _controller;
   int _currentIndex = 0;
 
@@ -38,17 +36,16 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     return Scaffold(
       appBar: AppBar(
         title: Text("首页"),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(FgIcons.search),
-            onPressed: (){
-              Navigator.push(context, CupertinoPageRoute(builder: (BuildContext context) => SearchPageWidget()));
-            },
-          )
-        ],
+//        actions: <Widget>[
+//          IconButton(
+//            icon: Icon(FgIcons.search),
+//            onPressed: (){
+//              Navigator.push(context, CupertinoPageRoute(builder: (BuildContext context) => SearchPageWidget()));
+//            },
+//          )
+//        ],
       ),
       drawer: HomeDrawerWidget(),
-//      body: Text("空手道解放和喀什酱豆腐"),
       body: PageView(
         controller: _controller,
         onPageChanged: (int index) {
@@ -56,7 +53,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             _currentIndex = index;
           });
         },
-//         scrollDirection: Axis.vertical,
         children: <Widget>[
           DynamicPageWidget(),
           TendencyPageWidget(),

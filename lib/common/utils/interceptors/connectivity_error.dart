@@ -2,8 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter_github/common/const/http_status.dart';
 
-import 'package:flutter_github/common/const/result_data.dart';
-
 class ErrorConnectivityInterceptors extends InterceptorsWrapper{
   final Dio _dio;
 
@@ -20,10 +18,11 @@ class ErrorConnectivityInterceptors extends InterceptorsWrapper{
     }
 
     if(result == ConnectivityResult.none){
-        return _dio.resolve(ResultData(
-          data: {},
-          statusCode: HttpStatus.NETWORK_ERROR,
-        ));
+      HttpStatus.handleHttpError(HttpStatus.NETWORK_ERROR, "网络错误");
+      return _dio.resolve(Response(
+        data: null,
+        statusCode: HttpStatus.NETWORK_ERROR,
+      ));
     }
     return options;
   }

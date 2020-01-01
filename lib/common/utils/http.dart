@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_github/common/const/http_status.dart';
 import 'package:flutter_github/common/utils/interceptors/connectivity_error.dart';
-import 'package:flutter_github/common/utils/interceptors/filter_path.dart';
 import 'package:flutter_github/common/utils/interceptors/header.dart';
 import 'package:flutter_github/common/utils/interceptors/token.dart';
 
@@ -90,6 +89,7 @@ class Http {
     if(e.type == DioErrorType.CONNECT_TIMEOUT || e.type == DioErrorType.RECEIVE_TIMEOUT){
       errorResponse.statusCode = HttpStatus.NETWORK_TIMEOUT;
     }
+    errorResponse.statusMessage = HttpStatus.handleHttpError(errorResponse.statusCode, errorResponse.statusMessage);
     return errorResponse;
   }
 }

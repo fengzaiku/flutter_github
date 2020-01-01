@@ -113,7 +113,7 @@ class PushHeaderViewModel {
       pic = pushMap.committer.avatarUrl;
     }
     actionUser = name;
-    actionUserPic = pic;
+    actionUserPic = pic ?? "https://avatars0.githubusercontent.com/u/2115102?s=40&v=4";
     pushDes = "Push at " + pushMap.commit.message;
     pushTime = FormatDateUtils.getRelativeTime(pushMap.commit.committer.date);
     editCount = pushMap.files.length.toString() + "";

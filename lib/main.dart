@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_github/common/event/event_bus.dart';
 import 'package:flutter_github/mixin/http_error_listener.dart';
 import 'package:flutter_github/model/RepositoryList.dart';
 import 'package:flutter_github/model/User.dart';
@@ -14,8 +13,6 @@ import 'package:flutter_github/pages/login/login_page.dart';
 import 'package:flutter_github/pages/home/page_home.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 
-// One simple action: Increment
-enum Actions { Increment }
 
 void main() {
   runZoned(() {

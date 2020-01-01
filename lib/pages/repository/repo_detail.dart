@@ -37,7 +37,6 @@ class RepositionDetailPageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("repositionViewModel.repositoryHtmlUrl-----------------------------${repositionViewModel.repositoryHtmlUrl}");
 
     return MultiProvider(
       providers: [
@@ -59,7 +58,6 @@ class RepositionDetailPageWidget extends StatelessWidget {
           if(index == 1){
             getReadmeFile(context);
           }
-//          return false;
         },
         floatingActionButton: FloatingActionButton(
           child: Text("关注"),
@@ -71,22 +69,6 @@ class RepositionDetailPageWidget extends StatelessWidget {
         bottomNavigationBar: RepositoryDetailBottomAppBar(),
         tabViews: <Widget>[
           RepositoryDynamicPageWidget(),
-//          SizedBox(),
-//          FutureBuilder(
-//            future: getReadmeFile(getReadmeFile),
-//            builder: (BuildContext context, AsyncSnapshot<String> snapshot){
-//              if(snapshot.hasData){
-//                return CodeDetailPageWidget(
-//                    title: repositionViewModel.repositoryName,
-//                    htmlBody: snapshot.data,
-//                );
-//              }
-//              return Text("哎啊！数据在哪里...");
-//            },
-//          ),
-//          RepositionReadmePageWidget(
-//            onRefresh: getReadmeFile
-//          ),
           RepositionIssuePageWidget(repositionViewModel),
           RepositionFileListWidget(
               repositionViewModel.ownerName,
