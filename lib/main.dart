@@ -12,7 +12,7 @@ import 'package:flutter_github/pages/welcome_page.dart';
 import 'package:flutter_github/pages/login/login_page.dart';
 import 'package:flutter_github/pages/home/page_home.dart';
 import 'package:redux_thunk/redux_thunk.dart';
-
+import 'package:bot_toast/bot_toast.dart';
 
 void main() {
   runZoned(() {
@@ -54,18 +54,21 @@ class _FlutterReduxAppState extends State<FlutterReduxApp> with HttpListenerErro
   Widget build(BuildContext context) {
     return new StoreProvider<AppState>(
       store: store,
-      child: MaterialApp(
-        key: _flutterReduxAppKey,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: WelcomePageWidget(),
+      child: BotToastInit(
+        child: MaterialApp(
+          key: _flutterReduxAppKey,
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home: WelcomePageWidget(),
+          navigatorObservers: [BotToastNavigatorObserver()],
 //            initialRoute: 'login_page',
-        routes: {
-          'login_page': (context) => LoginPageWidget(),
-          'home_page': (context) => HomePageWidget(),
-        },
+          routes: {
+            'login_page': (context) => LoginPageWidget(),
+            'home_page': (context) => HomePageWidget(),
+          },
+        ),
       ),
     );
   }

@@ -71,7 +71,7 @@ class _MyCenterPageWidgetState extends State<MyCenterPageWidget> with AutomaticK
   Future<void> _onLoadMore() async {
     var resultDate = await http.get(await Api.getUserEvent() + Api.getPageParams(page));
 
-    if(resultDate.length > 0){
+    if(resultDate != null && resultDate.length > 0){
       var events = EventList.fromJson({"eventList": resultDate});
       setState(() {
         eventList.addAll(events.eventList);

@@ -1,11 +1,10 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
-// import 'package:redux/redux.dart';
 import 'package:flutter_github/pages/login/widget/login_text_input.dart';
 import 'package:flutter_github/store/async_reducers/user_reducers.dart';
 import 'package:flutter_github/store/app_state.dart';
 import 'package:flutter_github/widget/flex_full_button.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginPageWidget extends StatefulWidget {
   LoginPageWidget({Key key}) : super(key: key);
@@ -43,14 +42,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
     }
 
     if(tostMsg.isNotEmpty){
-      Fluttertoast.showToast(
-          msg: tostMsg,
-          toastLength: Toast.LENGTH_SHORT,
-          backgroundColor: Colors.red,
-          gravity: ToastGravity.TOP,
-//          textColor: Colors.white,
-          timeInSecForIos: 1
-      );
+      BotToast.showText(text: tostMsg);
     }
     return tostMsg.isEmpty;
   }
@@ -106,26 +98,10 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                           SizedBox(
                             height: 20,
                           ),
-//                          StoreConnector<AppState, dynamic>(
-//                              converter: (Store<AppState> store){
-//                                return (String username, String password,BuildContext context) =>
-//                                    store.dispatch(loginAction(username, password, context));
-//                              },
-//                            builder: (BuildContext context, login){
-//                                return FlexFullButton(
-//                                  text: store.state.userInfo.name,
-//                                  onPressed: (){
-//                                    login(_username,_password,context);
-//                                  },
-//                                );
-//                            },
-//                          ),
                           FlexFullButton(
                             text: store.state.userInfo.name,
                             onPressed: (){
-                              print("$_username---------------$_password---------------------${store.state}");
                               _goTologin(store,context);
-//                              store.dispatch(loginAction(_username,_password, context));
                             },
                           ),
                           SizedBox(
