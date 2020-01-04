@@ -1,5 +1,9 @@
+//def keystorePropertiesFile = rootProject.file("key.properties")
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
+//if (keystorePropertiesFile.exists()){
+//    localProperties.load(new FileInputStream(keystorePropertiesFile))
+//}
 if (localPropertiesFile.exists()) {
     localPropertiesFile.withReader('UTF-8') { reader ->
         localProperties.load(reader)
@@ -45,12 +49,26 @@ android {
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    signingConfigs {
+        release {
+            storeFile file("./sign/sign_key.jks")
+            keyAlias "key"
+            keyPassword "123321"
+            storePassword "123321"
+        }
+//        release {
+//            keyAlias localProperties['keyAlias']
+//            keyPassword localProperties['keyPassword']
+//            storeFile file(localProperties['storeFile'])
+//            storePassword localProperties['storePassword']
+//        }
+    }
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
+//            signingConfig signingConfigs.debug
         }
     }
 }
