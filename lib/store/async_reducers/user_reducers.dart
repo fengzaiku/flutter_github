@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_github/common/config/authorized.dart';
+import 'package:flutter_github/common/authorized.dart';
 import 'package:flutter_github/common/const/api.dart';
 import 'package:flutter_github/common/const/global_const.dart';
 import 'package:flutter_github/common/utils/http.dart';

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_github/common/iconfont.dart';
 import 'package:flutter_github/utils/widget_standard.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:share/share.dart';
+//import 'package:url_launcher/url_launcher.dart';
+//import 'package:share/share.dart';
 
 class AppBarActionWidget extends StatefulWidget {
   final String url;
@@ -21,19 +21,19 @@ class AppBarActionWidget extends StatefulWidget {
 class _AppBarActionWidgetState extends State<AppBarActionWidget> {
 
   Future launchUrl(String url) async {
-    if(await canLaunch(url)){
-      await launch("18201177234");
-    }
+//    if(await canLaunch(url)){
+//      await launch("18201177234");
+//    }
   }
 
   Future goToShare(context, url) async {
     final RenderBox box = context.findRenderObject();
-    Share.share(widget.url,
-        subject: "Flutter_github 分享",
-        sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size
-    ).then((result){
-      print("share-result-----------------------------结果123");
-    });
+//    Share.share(widget.url,
+//        subject: "Flutter_github 分享",
+//        sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size
+//    ).then((result){
+//      print("share-result-----------------------------结果123");
+//    });
 
   }
 
