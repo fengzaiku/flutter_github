@@ -1,9 +1,6 @@
-//def keystorePropertiesFile = rootProject.file("key.properties")
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
-//if (keystorePropertiesFile.exists()){
-//    localProperties.load(new FileInputStream(keystorePropertiesFile))
-//}
+
 if (localPropertiesFile.exists()) {
     localPropertiesFile.withReader('UTF-8') { reader ->
         localProperties.load(reader)
@@ -29,6 +26,9 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
+def keystorePropertiesFile = rootProject.file("key.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 android {
     compileSdkVersion 28
 
@@ -51,18 +51,13 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file("./sign/sign_key.jks")
-            keyAlias "key"
-            keyPassword "123321"
-            storePassword "123321"
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
         }
-//        release {
-//            keyAlias localProperties['keyAlias']
-//            keyPassword localProperties['keyPassword']
-//            storeFile file(localProperties['storeFile'])
-//            storePassword localProperties['storePassword']
-//        }
     }
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
