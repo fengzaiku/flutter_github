@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_github/common/config/authorized.dart';
@@ -12,7 +13,6 @@ import 'package:flutter_github/store/reducers/user_reducers.dart';
 import 'package:redux/redux.dart';
 
 final Function loginAction = (String username, String password, BuildContext context) {
-  print("i为u热帖u让他也");
   return (Store<AppState> store) async {
     username = username.trim();
     password = password.trim();
@@ -30,6 +30,7 @@ final Function loginAction = (String username, String password, BuildContext con
       "client_id": AuthorizedOAuthApps.CLIENT_ID,
       "client_secret": AuthorizedOAuthApps.CLIENT_SECRET
     };
+    BotToast.showLoading();
     Response response = await http.post(Api.getAuthorization(),json.encode(requestParams));
 
     if(response.data != null){
@@ -37,6 +38,7 @@ final Function loginAction = (String username, String password, BuildContext con
       store.dispatch(UpdateUserAction(User.fromJson(userInfo)));
       store.dispatch(LoginSuccessAction(context,true));
     }
+    BotToast.closeAllLoading();
   };
 };
 
