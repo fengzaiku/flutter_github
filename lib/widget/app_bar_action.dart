@@ -21,9 +21,10 @@ class AppBarActionWidget extends StatefulWidget {
 class _AppBarActionWidgetState extends State<AppBarActionWidget> {
 
   Future launchUrl(String url) async {
-    if(await canLaunch(url)){
-      await launch("18201177234");
-    }
+    await launch(url ?? "https://github.com/fengzaiku?tab=repositories");
+//    if(await canLaunch(url)){
+//      await launch(url ?? "https://github.com/fengzaiku?tab=repositories");
+//    }
   }
 
   Future goToShare(context, url) async {
